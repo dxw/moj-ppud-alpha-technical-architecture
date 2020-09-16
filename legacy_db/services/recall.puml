@@ -48,7 +48,7 @@ remove moj.caseworkers.CLIENT_SYSTEM
 remove moj.caseworkers.CASEWORKER_TEAM
 remove moj.caseworkers.UNIT
 
-remove moj.TRIBUNAL_OFFICE
-remove moj.CORONER_AREA
+remove registers.TRIBUNAL_OFFICE
+remove registers.CORONER_AREA
 
 @enduml

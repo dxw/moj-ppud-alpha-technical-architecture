@@ -240,7 +240,7 @@ namespace recalls $MinorPackage {
 	RECALL }o-u-|| ppcs.reviews.REVIEW_TYPE
 	RECALL }o-u-|| ppcs.reviews.FURTHER_REVIEW_REASON
 	RECALL }o-u-|| offenders.sentences.CUSTODY_TYPE
-	RECALL }o-u-|| moj.POLICE_FORCE
+	RECALL }o-u-|| registers.POLICE_FORCE
 	RECALL }o-u-|| moj.caseworkers.CASEWORKER_TEAM
 	RECALL }o-u-|| ppcs.reviews.REVIEW_STATUS
 	RECALL }o-u-o| ppcs.reviews.REVIEW

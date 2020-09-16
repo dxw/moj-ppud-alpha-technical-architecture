@@ -158,7 +158,7 @@ namespace movements $MinorPackage {
 	MOVEMENT }o-u-o{ mhcs.detention_authorities.DETENTION_AUTHORITY
 	MOVEMENT }o-u-o{ moj.establishments.ESTABLISHMENT
 	MOVEMENT }o--o{ moj.establishments.ESTABLISHMENT_TYPE
-	MOVEMENT }o-u-o{ moj.POLICE_FORCE
+	MOVEMENT }o-u-o{ registers.POLICE_FORCE
 	MOVEMENT }o-u-o{ courts.COURT
 	MOVEMENT }o--o{ unknown.COUNTRY
 	MOVEMENT }o--o{ moj.establishments.ESTABLISHMENT_UNIT

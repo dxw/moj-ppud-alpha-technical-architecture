@@ -185,11 +185,11 @@ namespace establishments $MinorPackage {
 	ESTABLISHMENT_TEAM }o--|| moj.caseworkers.CASEWORKER_TEAM
 	ESTABLISHMENT_TEAM }o--|| moj.caseworkers.CASEWORKER
 	ESTABLISHMENT_TEAM }o--|| moj.caseworkers.UNIT
-	ESTABLISHMENT }o-u-o| moj.POLICE_FORCE
+	ESTABLISHMENT }o-u-o| registers.POLICE_FORCE
 	ESTABLISHMENT }o-u-o| organisations.TRUST
-	ESTABLISHMENT }o-u-o| moj.TRIBUNAL_OFFICE
-	ESTABLISHMENT }o-u-o| moj.NOMS_REGION
-	ESTABLISHMENT }o-u-o| moj.CORONER_AREA
+	ESTABLISHMENT }o-u-o| registers.TRIBUNAL_OFFICE
+	ESTABLISHMENT }o-u-o| registers.NOMS_REGION
+	ESTABLISHMENT }o-u-o| registers.CORONER_AREA
 
 	ESTABLISHMENT_UNIT }o--|| ESTABLISHMENT
 

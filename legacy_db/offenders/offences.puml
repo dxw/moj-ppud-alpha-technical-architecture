@@ -132,7 +132,7 @@ namespace offences $MinorPackage {
   offenders.sentences.SENTENCE |o--o{ FURTHER_OFFENCE
   offenders.OFFENDER ||--o{ FURTHER_OFFENCE
   moj.caseworkers.CASEWORKER_TEAM ||--o{ FURTHER_OFFENCE
-  moj.POLICE_FORCE |o--o{ FURTHER_OFFENCE
+  registers.POLICE_FORCE |o--o{ FURTHER_OFFENCE
 
   OFFENCE ||-o{ FURTHER_OFFENCE
 
