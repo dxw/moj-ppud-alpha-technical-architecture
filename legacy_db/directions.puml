@@ -255,11 +255,11 @@ namespace directions $MinorPackage {
   DIRECTION }o--|| DIRECTION_REPORT_TYPE
   DIRECTION }o-u-|{ moj.caseworkers.CASEWORKER
   DIRECTION }o-u-|| moj.caseworkers.CASEWORKER_TEAM
-  DIRECTION }o-u-|| parole.reviews.REVIEW
+  DIRECTION }o-u-|| ppcs.reviews.REVIEW
   DIRECTION }o-u-o| documents.DOCUMENT
   DIRECTION }o-u-o| moj.PROBATION_AREA
 
-  DIRECTION_COMPLETED }o-u-|| parole.reviews.REVIEW
+  DIRECTION_COMPLETED }o-u-|| ppcs.reviews.REVIEW
   DIRECTION_COMPLETED }o--|| DIRECTION_TYPE
 
   DIRECTION_CHASER }o-|| DIRECTION
@@ -268,13 +268,13 @@ namespace directions $MinorPackage {
   DIRECTION_RESPONSIBILITY }o-u-|| moj.caseworkers.CASEWORKER
 
   DIRECTION_TYPE }o--|| DIRECTION_UPLOAD_ACTION
-  DIRECTION_TYPE }o--o| parole.milestones.MAIL_MERGE
-  DIRECTION_TYPE }o--o| parole.milestones.MAIL_MERGE_ACCESS
+  DIRECTION_TYPE }o--o| ppcs.milestones.MAIL_MERGE
+  DIRECTION_TYPE }o--o| ppcs.milestones.MAIL_MERGE_ACCESS
 
   DIRECTION_RESULT }o--o| DIRECTION_TYPE
   DIRECTION_RESULT }o-u-o| hearings.HEARING_RESULT
   DIRECTION_RESULT }o-u-o{ hearings.HEARING_STATUS
-  DIRECTION_RESULT }o-u-o| parole.reviews.REVIEW_RECOMMENDATION
+  DIRECTION_RESULT }o-u-o| ppcs.reviews.REVIEW_RECOMMENDATION
   DIRECTION_RESULT }o-u-o| hearings.HEARING_TYPE
   DIRECTION_RESULT }o-u-o| panels.fees.MEMBER_FEE_TYPE
 

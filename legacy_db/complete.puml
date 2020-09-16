@@ -6,7 +6,7 @@
 !include moj/index.puml
 !include offenders/index.puml
 !include mhcs/index.puml
-' !include parole/index.puml
+' !include ppcs/index.puml
 !include panels/index.puml
 !include complaints/index.puml
 

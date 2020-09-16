@@ -203,7 +203,7 @@ namespace fii $MinorPackage {
 
   offenders.OFFENDER ||--o{ FII
   moj.ESTABLISHMENT }|--o{ FII
-  parole.reviews.REVIEW ||--o{ FII
+  ppcs.reviews.REVIEW ||--o{ FII
   moj.caseworkers.CASEWORKER }o--o{ FII
 
   DEATH_TYPE ||-o{ DEATH_SUBTYPE

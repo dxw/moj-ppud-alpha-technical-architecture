@@ -1,7 +1,7 @@
 @startuml
 !include ../style.puml
 
-namespace parole $MajorPackage {
+namespace ppcs $MajorPackage {
 
   !include reviews.puml
   !include releases.puml

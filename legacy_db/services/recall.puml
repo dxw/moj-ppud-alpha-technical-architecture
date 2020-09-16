@@ -4,7 +4,7 @@
 !include ../common.puml
 !include ../moj/index.puml
 !include ../offenders/index.puml
-!include ../parole/index.puml
+!include ../ppcs/index.puml
 
 ' Hide some tables we probably don't need in this slice
 remove mhcs.detention_authorities
@@ -15,22 +15,22 @@ remove common
 remove application.wam
 remove wam_messages
 
-remove parole.milestones
+remove ppcs.milestones
 
-remove parole.reviews.MILESTONE_TEMPLATE
-remove parole.reviews.MILESTONE_TEMPLATE_EMAIL
-remove parole.reviews.REVIEW_MILESTONE_DATE
-remove parole.reviews.REVIEW_MILESTONE_DATE_EMAIL
-remove parole.reviews.REVIEW_TYPE_MILESTONE
-remove parole.reviews.REVIEW_ASSESSOR_HISTORY
-remove parole.reviews.REVIEW_ADHOC_PROCESS_LOG
-remove parole.reviews.LATE_REASON
-remove parole.reviews.REVIEW_COLOUR_HISTORY
-remove parole.reviews.SOLICITOR_STATUS
+remove ppcs.reviews.MILESTONE_TEMPLATE
+remove ppcs.reviews.MILESTONE_TEMPLATE_EMAIL
+remove ppcs.reviews.REVIEW_MILESTONE_DATE
+remove ppcs.reviews.REVIEW_MILESTONE_DATE_EMAIL
+remove ppcs.reviews.REVIEW_TYPE_MILESTONE
+remove ppcs.reviews.REVIEW_ASSESSOR_HISTORY
+remove ppcs.reviews.REVIEW_ADHOC_PROCESS_LOG
+remove ppcs.reviews.LATE_REASON
+remove ppcs.reviews.REVIEW_COLOUR_HISTORY
+remove ppcs.reviews.SOLICITOR_STATUS
 
-remove parole.recalls.RECALL_MILESTONE_TEMPLATE
-remove parole.recalls.RECALL_MILESTONE_DATE
-remove parole.recalls.RTC_NOTIF_METHOD
+remove ppcs.recalls.RECALL_MILESTONE_TEMPLATE
+remove ppcs.recalls.RECALL_MILESTONE_DATE
+remove ppcs.recalls.RTC_NOTIF_METHOD
 
 remove offenders.sentences.PPO_SENTENCE_TYPE
 remove offenders.sentences.TRANSCRIPT_WRITER

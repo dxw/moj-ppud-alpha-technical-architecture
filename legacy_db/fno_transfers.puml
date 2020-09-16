@@ -124,7 +124,7 @@ namespace fno_transfers $MinorPackage {
 		LOV_CREATED_DATE : datetime
 	}
 
-	FNO_TRANSFER }o-u-|| parole.reviews.REVIEW
+	FNO_TRANSFER }o-u-|| ppcs.reviews.REVIEW
 	FNO_TRANSFER }o--|| FNO_TRANSFER_AGREEMENT
 	FNO_TRANSFER }o--|| FNO_TRANSFER_REJECTED_REASON
 	FNO_TRANSFER }o--|| FNO_TRANSFER_STATUS

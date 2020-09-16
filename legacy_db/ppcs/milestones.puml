@@ -228,9 +228,9 @@ namespace milestones $MinorPackage {
 	' MAIL_MERGE_LOOKUP }|-u-|| moj.caseworkers.CASEWORKER_TEAM
 	' MAIL_MERGE_LOOKUP }|-u-|| moj.caseworkers.UNIT
 
-	' MILESTONE_TEMPLATE }|-u-o| parole.reviews.REVIEW_RECOMMENDATION
-	' MILESTONE_TEMPLATE }|-u-o| parole.reviews.REVIEW_RESULT
-	' MILESTONE_TEMPLATE }|-u-o| parole.reviews.REVIEW_TYPE
+	' MILESTONE_TEMPLATE }|-u-o| ppcs.reviews.REVIEW_RECOMMENDATION
+	' MILESTONE_TEMPLATE }|-u-o| ppcs.reviews.REVIEW_RESULT
+	' MILESTONE_TEMPLATE }|-u-o| ppcs.reviews.REVIEW_TYPE
 	' MILESTONE_TEMPLATE }|-u-o| moj.caseworkers.CASEWORKER
 	' MILESTONE_TEMPLATE }|-u-o| moj.caseworkers.CASEWORKER_TEAM
 	' MILESTONE_TEMPLATE }o-u-o| common.PRIORITY
