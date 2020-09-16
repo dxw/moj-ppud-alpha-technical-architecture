@@ -1,7 +1,7 @@
 @startuml
 !include ../style.puml
 
-namespace complaints $MinorPackage {
+namespace ppo $MajorPackage {
 	class COMPLAINT_CATEGORY <<LookupTable>> {
 		* ID : int
 		-- Foreign Keys --

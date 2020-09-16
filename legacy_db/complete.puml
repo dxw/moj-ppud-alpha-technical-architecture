@@ -8,7 +8,7 @@
 !include mhcs/index.puml
 ' !include ppcs/index.puml
 !include panels/index.puml
-!include complaints/index.puml
+!include ppo/index.puml
 
 !include organisations.puml
 !include probation.puml
