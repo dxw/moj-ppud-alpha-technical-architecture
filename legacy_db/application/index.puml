@@ -1,0 +1,9 @@
+@startuml
+!include ../style.puml
+
+namespace application $MajorPackage {
+  !include aspnet.puml
+  !include wam_users.puml
+}
+
+@enduml

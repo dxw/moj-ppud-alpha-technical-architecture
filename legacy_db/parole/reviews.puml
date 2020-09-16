@@ -1,0 +1,537 @@
+@startuml
+!include ../style.puml
+
+namespace reviews $MinorPackage {
+
+	class REVIEW {
+		* REVIEW_ID : int
+		-- Foreign Keys --
+		* OFFENDER_ID : int
+		* REVIEW_TYPE : int
+		* REVIEW_REASON : int
+		REVIEW_RECOMMENDATION : int
+		REVIEW_RESULT : int
+		REVIEW_STATUS : int
+		OWNING_CASEWORKER : int
+		DOSSIER_CASEWORKER : int
+		PAROLE_BOARD_CASEWORKER : int
+		PRISON_CASEWORKER : int
+		SOLICITOR_ATTENDEE : int
+		PROBATION_CONTACT_ATTENDEE : int
+		OFFENDER_SUPERVISOR_ATTENDEE : int
+		SOLICITOR_ID : int
+		SOLICITOR_STATUS : int
+		DETENTION_AUTHORITY : int
+		* HOLDING_ESTABLISHMENT : int
+		REASON_FOR_FURTHER_REVIEW : int
+		* SIFT_RESULT : int
+		SUBSEQUENT_OUTCOME : int
+		TRIBUNAL_OFFICE : int
+		PROBATION_AREA : int
+		ADVOCATE_WHO_ATTENDED_THE_HEARING : int
+		S_OF_S_VIEW_WRITER : int
+		REASON_FOR_LATE_REFERRAL : int
+		DOSSIER_ESTABLISHMENT : int
+		SENTENCE : int
+		ASSESSOR : int
+		---
+		REVIEW_DATE : datetime
+		RECOMMENDATION_TARGET : datetime
+		RECOMMENDATION_ACTUAL : datetime
+		REVIEW_COMMENTS : text
+		* VIDEOLINK : bit
+		* VICTIM_DETAILS_OBTAINED : bit
+		SOLICITOR : varchar(50)
+		ADVOCATE_DETAILS : varchar(255)
+		WITNESS_DETAILS : varchar(255)
+		PANEL_DETAILS : varchar(255)
+		* ADVOCATE_ATTENDED : bit
+		* ISRECALL_FLAG : bit
+		NOTIONAL_LED : datetime
+		SLED : datetime
+		tempid : int
+		NEXT_REVIEW_DATE : datetime
+		SUBS_OUTCOME_TARGET : datetime
+		SUBS_OUTCOME_DATE : datetime
+		RECOMMENDATION_OVERRIDDEN : bit
+		* IS_DA : bit
+		ADVOCATE_ATTENDANCE_REQUIRED : bit
+		ADVOCATE_ATTENDED_HEARING : bit
+		HEARING_BY_VIDEO_LINK : bit
+		NON_DISCLOSURE_MATERIAL : bit
+		VICTIM_ATTENDING_HEARING : bit
+		VICTIM_CONTACT : bit
+		VICTIM_IMPACT_STATEMENT_SUBMITTED : bit
+		VLO_ATTENDING_HEARING : bit
+		PB_SECRETARIAT_CASEWORKER : varchar(100)
+		PPA_SOLICITOR : varchar(100)
+		ORAL_HEARING_DATE : datetime
+		ACTUAL_REFERRAL_DATE : datetime
+		DATE_CHECKED_BY_PB : datetime
+		LATE_REFERRAL : bit
+		SOLICITOR_FIRM : varchar(50)
+		SOLICITOR_ADDRESS_1 varchar(50)
+		SOLICITOR_ADDRESS_2 varchar(50)
+		SOLICITOR_ADDRESS_3 varchar(50)
+		SOLICITOR_POSTCODE : varchar(10)
+		SOLICITOR_PHONE : varchar(20)
+		SOLICITOR_FAX : varchar(20)
+		SOLICITOR_EMAIL : varchar(50)
+		ASSIGNED_SOLICITOR : varchar(50)
+		ASSIGNED_COUNSEL : varchar(50)
+		PROBATION_CONTRACT : varchar(50)
+		ORGINAL_TARGET_DATE : datetime
+		CURRENT_TARGET_DATE : datetime
+		DX_ADDRESS_1 varchar(50)
+		DX_ADDRESS_2 varchar(50)
+		DX_ADDRESS_3 varchar(50)
+		DX_ADDRESS_4 varchar(50)
+		DX_POSTCODE : varchar(10)
+		* MILESTONES_CREATED : bit
+		SOLICITOR_ADDRESS_4 varchar(250)
+		TEMP_DATE : datetime
+		TEMP_ACCEPT : int
+		COLOUR : varchar(30)
+		ADJUSTED_SED : datetime
+		REFERRED_TO_PPA : bit
+		RE_REFERRAL : bit
+		RE_REFERRAL_DATE : datetime
+		ACTIVE_HEARING : bit
+		FAILURE_IN_OPEN_CONDITION : int
+		* VISIBLE_ON_WAM : bit
+		* CURRENT_WAM_REVIEW : bit
+		* MAND_DOCS_RECEIVED : int
+		MAND_DOC_PRE_SENTENCE_REP : bit
+		MAND_DOC_PREV_CONV : bit
+		MAND_DOC_JUD_SENT_REMARKS : bit
+		* ADDITIONAL_APPLICATIONS_RECEIVED : bit
+		NO_OF_APPLICATIONS : int
+		LOCK_PB_CASEWORKER : bit
+		-- Audit --
+		ARCHIVED : datetime
+		* CHANGED : timestamp
+		RECORD_CREATION_DATE : datetime
+		RECORD_CREATED_BY : int
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class SOLICITOR_STATUS <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class REVIEW_ADHOC_PROCESS_LOG {
+		* ID : int
+		-- Foreign Keys --
+		REVIEW : int
+		---
+		PROCESS : int
+		SEED_DATE : datetime
+		COMMENT : varchar(30)
+	}
+
+	class REVIEW_ASSESSOR_HISTORY {
+		* ID : int
+		-- Foreign Keys --
+		* REVIEW_ID : int
+		OLD_ASSESSOR : int
+		NEW_ASSESSOR : int
+		---
+		recommendation : int
+		-- Audit --
+		CREATED_BY : int
+		CREATED_DATE : datetime
+		* CHANGE_DATE : datetime
+		* CHANGE_CASEWORKER : int
+	}
+
+	class REVIEW_COLOUR_HISTORY {
+		* ID : int
+		-- Foreign Keys --
+		REVIEW : int
+		CASEWORKER : int
+		---
+		COLOUR : varchar(50)
+		NO_DAYS : int
+		-- Audit --
+		CHANGED_DATE : datetime
+	}
+
+	class REVIEW_MILESTONE_DATE {
+		* REVIEW_MILESTONE_DATE_ID : int
+		-- Foreign Keys --
+		* REVIEW_ID : int
+		* OFFENDER_ID : int
+		MILESTONE_TEMPLATE_ID : int
+		OWNING_CASEWORKER : int
+		OWNING_TEAM : int
+		HEARING : int
+		LATE_REASON : int
+		PRIORITY : int
+		---
+		TARGET : datetime
+		ACTUAL : datetime
+		COMMENT : varchar(1000)
+		TITLE : varchar(255)
+		tempid : int
+		LEAVE_REQUEST : int
+		MOVEMENT : int
+		MOVE_PERSON : int
+		MOVE_DATE : datetime
+		INACTIVE : bit
+		BATCH_ID : int
+		keep_me : bit
+		PERFORMANCE_DASHBOARD_EXCEPTION : int
+		DIRECTION : bit
+		-- Audit --
+		* CHANGED : timestamp
+		CREATED_BY : int
+		CREATED_DATE : datetime
+		RECORD_LAST_SAVED_DATE : datetime
+		RECORD_LAST_SAVED_BY : int
+		DELETED : datetime
+		deleted_by : int
+	}
+
+	'class REVIEW_MILESTONE_DATE_DELETED_ARCHIVED {
+	'	* REVIEW_MILESTONE_DATE_ID : int
+	'	-- Foreign Keys --
+	'	* REVIEW_ID : int
+	'	* OFFENDER_ID : int
+	'	MILESTONE_TEMPLATE_ID : int
+	'	OWNING_CASEWORKER : int
+	'	OWNING_TEAM : int
+	'	HEARING : int
+	'	---
+	'	TARGET : datetime
+	'	ACTUAL : datetime
+	'	COMMENT : varchar(1000)
+	'	TITLE : varchar(255)
+	'	* CHANGED : binary(8)
+	'	tempid : int
+	'	PRIORITY : int
+	'	LEAVE_REQUEST : int
+	'	MOVEMENT : int
+	'	LATE_REASON : int
+	'	MOVE_PERSON : int
+	'	MOVE_DATE : datetime
+	'	INACTIVE : bit
+	'	BATCH_ID : int
+	'	keep_me : bit
+	'	PERFORMANCE_DASHBOARD_EXCEPTION : int
+	'	DIRECTION : bit
+	'	-- Audit --
+	'	CREATED_BY : int
+	'	CREATED_DATE : datetime
+	'	RECORD_LAST_SAVED_DATE : datetime
+	'	RECORD_LAST_SAVED_BY : int
+	'	DELETED : datetime
+	'	deleted_by : int
+	'}
+
+	class REVIEW_MILESTONE_DATE_EMAIL {
+		* ID : int
+		-- Foreign Keys --
+		* REVIEW_MILESTONE_DATE_ID : int
+		* MILESTONE_TEMPLATE_EMAIL_ID : int
+		* OUTBOUND_EMAIL_ID : int
+	}
+
+	class REVIEW_REASON <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		SORT_ORDER : int
+		SORT_ORDER2 int
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+		LOV_DELETED_BY : int
+	}
+
+	class FURTHER_REVIEW_REASON <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class REVIEW_RECOMMENDATION <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		SUBS_OUTCOME_ONLY : bit
+		* ALLOW_CONDUCTION_FEE : int
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class REVIEW_RESULT <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class REVIEW_STATUS <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		active : bit
+		ALLOW_AUTO_ATTACH : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class REVIEW_TYPE {
+		* ID : int
+		-- Foreign Keys --
+		* REVIEW_REASON_ID : int
+		HEARING_TYPE : int
+		HEARING_DATE_MILESTONE : int
+		* MEMBER_FEE_TYPE : int
+		---
+		* DESCRIPTION : varchar(50)
+		* MANDATORY_DATE : bit
+		* ENABLED_CALC : bit
+		* ISRECALL_TYPE : bit
+		* ISEXPIRY_DATE_MANDATORY : bit
+		STARTING_STATUS : int
+		AUTO_CALCULATE_TARGET_PERIOD : varchar(10)
+		AUTO_CALCULATE_TARGET_VALUE : int
+		TARGET_READ_ONLY : bit
+		UNIT : int
+		AUTO_UPDATE : bit
+		USE_OFFENDER_CASEWORKER : bit
+		IS_DA_TYPE : bit
+		ripple_caseworker_by_establishment : bit
+		ripple_review_caseworker : bit
+		owned_unit : int
+		* STATUS_UPDATE_UNITS : int
+		* HEARING_COMPLETE_DAYS : int
+		* FNO_TRANSFER_TYPE : bit
+		* PPO_REVIEW_TYPE : bit
+		USE_LDU_COM_ALLOCATION : bit
+		* AUTO_COPY_SOLICITOR : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class REVIEW_TYPE_MILESTONE <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		REVIEW_TYPE : int
+		MILESTONE_TEMPLATE : int
+		---
+		TRACKER_ACTION : varchar(25)
+	}
+
+	class AUDIT_REVIEW_MILESTONE_DATE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* REVIEW_MILESTONE_DATE_ID : int
+		---
+		* REVIEW_ID : int
+		* OFFENDER_ID : int
+		MILESTONE_TEMPLATE_ID : int
+		TARGET : datetime
+		ACTUAL : datetime
+		COMMENT : varchar(255)
+		TITLE : varchar(255)
+		OWNING_CASEWORKER : varchar(50)
+		OWNING_TEAM : varchar(50)
+		PRIORITY : varchar(50)
+		LEAVE_REQUEST : int
+		MOVEMENT : int
+		LATE_REASON : varchar(50)
+		MOVE_PERSON : varchar(50)
+		MOVE_DATE : datetime
+		HEARING : int
+		inactive : bit
+		BATCH_ID : int
+		-- Audit --
+		RECORD_LAST_SAVED_DATE : datetime
+		RECORD_LAST_SAVED_BY : varchar(50)
+		DELETED : datetime
+	}
+
+	class AUDIT_REVIEW_TYPE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* REVIEW_TYPE_ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		* REVIEW_REASON_ID : varchar(50)
+		* MANDATORY_DATE : bit
+		ENABLED_CALC : bit
+		ISRECALL_TYPE : bit
+		ISEXPIRY_DATE_MANDATORY : bit
+		STARTING_STATUS : varchar(50)
+		HEARING_TYPE : varchar(50)
+		AUTO_CALCULATE_TARGET_PERIOD : varchar(10)
+		AUTO_CALCULATE_TARGET_VALUE : int
+		TARGET_READ_ONLY : bit
+		UNIT : varchar(50)
+		USE_OFFENDER_CASEWORKER : bit
+		IS_DA_TYPE : int
+		RIPPLE_CASEWORKER_BY_ESTABLISHMENT : bit
+		RIPPLE_REVIEW_CASEWORKER : bit
+		HEARING_DATE_MILESTONE : int
+		STATUS_UPDATE_UNITS : int
+		USE_LDU_COM_ALLOCATION : bit
+		AUTO_COPY_SOLICITOR : bit
+		MEMBER_FEE_TYPE : varchar(50)
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class LATE_REASON <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class LATE_REFERRAL_REASON <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	REVIEW }o-u-|| offenders.OFFENDER
+	REVIEW }o-u-o{ moj.caseworkers.CASEWORKER
+	REVIEW }o-u-o{ unknown.ATTENDEE
+	REVIEW }o-u-o{ organisations.SOLICITOR
+	REVIEW }o--o{ SOLICITOR_STATUS
+	REVIEW }o-u-o{ mhcs.detention_authorities.DETENTION_AUTHORITY
+	REVIEW }o-u-|| moj.establishments.ESTABLISHMENT
+
+
+	REVIEW_COLOUR_HISTORY }o-o| REVIEW
+	REVIEW_COLOUR_HISTORY }o--o| moj.caseworkers.CASEWORKER
+
+	REVIEW_ASSESSOR_HISTORY }o--|| REVIEW
+	REVIEW_ASSESSOR_HISTORY }o-o{ unknown.ASSESSOR
+
+
+	REVIEW }o-|| REVIEW_TYPE
+	REVIEW }o--|| REVIEW_REASON
+	REVIEW }o--o| FURTHER_REVIEW_REASON
+	REVIEW }o--o| REVIEW_RECOMMENDATION
+	REVIEW }o--o| REVIEW_RESULT
+	REVIEW }o--o| REVIEW_STATUS
+	REVIEW ||-o{ REVIEW_MILESTONE_DATE
+	REVIEW }o--o| LATE_REFERRAL_REASON
+
+	AUDIT_REVIEW_MILESTONE_DATE }o--|| REVIEW_MILESTONE_DATE
+	AUDIT_REVIEW_TYPE }o--|| REVIEW_TYPE
+
+	REVIEW_TYPE_MILESTONE }o--|| MILESTONE_TEMPLATE
+	REVIEW_TYPE_MILESTONE }o--|| REVIEW
+
+	REVIEW_ADHOC_PROCESS_LOG }o--|| REVIEW
+
+	REVIEW_MILESTONE_DATE }o-u-|| offenders.OFFENDER
+	REVIEW_MILESTONE_DATE }o--o| parole.milestones.MILESTONE_TEMPLATE
+	REVIEW_MILESTONE_DATE }o-u-o| moj.caseworkers.CASEWORKER
+	REVIEW_MILESTONE_DATE }o-u-o| moj.caseworkers.CASEWORKER_TEAM
+	REVIEW_MILESTONE_DATE }o-u-o| hearings.HEARING
+	REVIEW_MILESTONE_DATE }o--o| LATE_REASON
+	REVIEW_MILESTONE_DATE ||-o{ REVIEW_MILESTONE_DATE_EMAIL
+	REVIEW_MILESTONE_DATE }o-u-o| common.PRIORITY
+
+	'REVIEW_MILESTONE_DATE_DELETED_ARCHIVED }o--|| REVIEW
+	'REVIEW_MILESTONE_DATE_DELETED_ARCHIVED }o--|| OFFENDER
+	'REVIEW_MILESTONE_DATE_DELETED_ARCHIVED }o--o| MILESTONE_TEMPLATE
+	'REVIEW_MILESTONE_DATE_DELETED_ARCHIVED }o--o| moj.caseworkers.CASEWORKER
+	'REVIEW_MILESTONE_DATE_DELETED_ARCHIVED }o--o| moj.caseworkers.CASEWORKER_TEAM
+	'REVIEW_MILESTONE_DATE_DELETED_ARCHIVED }o--o| HEARING
+
+	REVIEW_TYPE }|--|| REVIEW_REASON
+	REVIEW_TYPE }|--o| hearings.HEARING_TYPE
+	REVIEW_TYPE }|-o| REVIEW_MILESTONE_DATE
+	REVIEW_TYPE }|--|| panels.fees.MEMBER_FEE_TYPE
+
+	REVIEW_MILESTONE_DATE_EMAIL }o--|| parole.milestones.MILESTONE_TEMPLATE_EMAIL
+	REVIEW_MILESTONE_DATE_EMAIL }o--|| unknown.OUTBOUND_EMAIL
+
+}
+
+@enduml

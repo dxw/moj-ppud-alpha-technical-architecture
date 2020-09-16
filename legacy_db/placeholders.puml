@@ -1,0 +1,112 @@
+@startuml
+!include style.puml
+
+namespace placeholders $MinorPackage {
+
+  class PLACEHOLDER {
+    * PLACEHOLDER_ID : int
+    -- Foreign Keys --
+    STOCK_LETTER_ID : int
+    * DOSSIER_ID : int
+    * DOSSIER_BASELINE_ID : int
+    * PLACEHOLDER_TYPE_ID : int
+    * PLACEHOLDER_SUB_TYPE : int
+    * DISCLOSURE_STATUS_ID : int
+    TEMPLATE_PLACEHOLDER_ID : int
+    * RESPONSIBLE_OWNER : int
+    DOCUMENT_ID : int
+    POPULATE_MILESTONE : int
+    DIRECTION : int
+    * SECONDARY_TEAM_ID : int
+    ---
+    * INDEX_NO : int
+    * IS_REQUIRED : bit
+    PAGES : varchar(255)
+    DESCRIPTION : varchar(100)
+    CAN_DELETE : bit
+    * LOCKED : bit
+    -- Audit --
+    * CREATED_BY : int
+    * CREATED_DATE : datetime
+    LAST_UPDATED_DATE : datetime
+    * LAST_UPDATED_BY : int
+    DELETED_DATE : datetime
+    DELETED_BY : int
+  }
+
+  class PLACEHOLDER_SUBTYPE <<LookupTable>> {
+    * ID : int
+    -- Foreign Keys --
+    PLACEHOLDER_TYPE : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class PLACEHOLDER_TYPE <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+
+class DISCLOSURE_STATUS <<LookupTable>> {
+	* ID : int
+	-- Foreign Keys --
+	---
+	* DESCRIPTION : varchar(50)
+	-- Visibility --
+	SHOW_TO_UNIT : int
+	-- Audit --
+	DELETED : datetime
+	LOV_DELETED_BY : int
+	LOV_UPDATED_BY : int
+	LOV_UPDATED_DATE : datetime
+	LOV_CREATED_BY : int
+	LOV_CREATED_DATE : datetime
+}
+
+
+class TEMPLATE_PLACEHOLDERS {
+	* TEMPLATE_PLACEHOLDER_ID : int
+	-- Foreign Keys --
+	* TEMPLATE_ID : int
+	* PLACEHOLDER_TYPE_ID : int
+	* PLACEHOLDER_SUB_TYPE : int
+	STOCK_LETTER_ID : int
+	* DISCLOSURE_STATUS_ID : int
+	* RESPONSIBLE_OWNER_TYPE : int
+	* SECONDARY_TEAM_ID : int
+	---
+	* IS_REQUIRED : bit
+	* INDEX_NO : int
+	CAN_DELETE : bit
+	POPULATE_MILESTONE : int
+	* CAN_ALWAYS_UPLOAD : bit
+	COPY_PREVIOUS_DOC : bit
+	-- Foreign Keys --
+	---
+	DELETED_DATE : datetime
+	DELETED_BY : int
+}
+
+}
+
+@enduml

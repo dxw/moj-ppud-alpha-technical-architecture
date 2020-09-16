@@ -1,0 +1,55 @@
+@startuml
+!include style.puml
+
+namespace organisations $MinorPackage {
+
+  class SOLICITOR {
+    * ID : int
+    -- Foreign Keys --
+    ---
+    DESCRIPTION : varchar(250)
+    ADDRESS_1 varchar(100)
+    ADDRESS_2 varchar(100)
+    ADDRESS_3 varchar(100)
+    ADDRESS_4 varchar(100)
+    POSTCODE : varchar(10)
+    PHONE_NUMBER : varchar(50)
+    FAX : varchar(50)
+    EMAIL : varchar(100)
+    -- Audit --
+    CREATED_BY : int
+    CREATED_DATE : datetime
+    UPDATED_BY : int
+    UPDATED_DATE : datetime
+    DELETED_DATE : datetime
+    DELETED_BY : int
+  }
+
+  class TRUST {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(100)
+    ADDRESS_1 varchar(50)
+    ADDRESS_2 varchar(50)
+    ADDRESS_3 varchar(50)
+    ADDRESS_4 varchar(50)
+    POSTCODE : varchar(10)
+    PHONE_NUMBER : varchar(20)
+    FAX : varchar(20)
+    EMAIL : varchar(50)
+    CONTACT : varchar(50)
+    OTHER : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+}
+
+@enduml

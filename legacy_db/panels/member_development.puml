@@ -1,0 +1,134 @@
+@startuml
+!include ../style.puml
+
+namespace development $MinorPackage {
+
+	class PANEL_MEMBER_DEVELOPMENT {
+		* ID : int
+		-- Foreign Keys --
+		* PANEL_MEMBER : int
+		* DEVELOPMENT_TYPE : int
+		* DEVELOPMENT_STATUS : int
+		* DEVELOPMENT_OUTCOME : int
+		* ACCREDITATION_TYPE : int
+		* QUALITY_ASSESSOR : int
+		---
+		ACTUAL_DATE : datetime
+		COMMENTS : text
+		CONTACT_DATE : datetime
+		CONTACT_BY : int
+		PAPERS_SENT : datetime
+		PAPERS_RETURN_TARGET : datetime
+		PAPERS_RETURN_ACTUAL : datetime
+		ASSESSMENT_SENT : datetime
+		ASSESSMENT_TARGET : datetime
+		ASSESSMENT_ACTUAL : datetime
+		OTHER_ACTION : int
+		ACTION_TARGET : datetime
+		ACTION_ACTUAL : datetime
+		OWNER : int
+		-- Audit --
+		* DATE_CREATED : datetime
+		* CREATED_BY : int
+		DATE_UPDATE : datetime
+		UPDATED_BY : int
+	}
+
+  class MEMBER_DEVELOPMENT_OUTCOME <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class MEMBER_DEVELOPMENT_STATUS <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class MEMBER_DEVELOPMENT_TYPE <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class ACCREDITATION_TYPE <<LookupTable>> {
+    * ID : int
+    -- Foreign Keys --
+    ---
+    * DESCRIPTION : varchar(50)
+    HEARING_SELECTABLE : bit
+    ABBREVIATION : char(3)
+    ALIAS : varchar(500)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+	class PANEL_MEMBER_ACCREDITATION <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		PANEL_MEMBER : int
+		ACCREDITATION_TYPE : int
+		---
+		ACCREDITATION_DATE : datetime
+		TMP_MEM_ID : int
+	}
+
+  class ACCREDITATION_MEMBER_TYPE <<JoinTable>> {
+    * ID : int
+    -- Foreign Keys --
+    ACCREDITATION : int
+    MEMBER_TYPE : int
+  }
+
+  panels.members.PANEL_MEMBER ||--o{ PANEL_MEMBER_ACCREDITATION
+  PANEL_MEMBER_ACCREDITATION }o--|| ACCREDITATION_TYPE
+
+  panels.members.MEMBER_TYPE ||--o{ ACCREDITATION_MEMBER_TYPE
+  ACCREDITATION_TYPE ||-u-o{ ACCREDITATION_MEMBER_TYPE
+
+  panels.members.PANEL_MEMBER ||--o{ PANEL_MEMBER_DEVELOPMENT
+
+  PANEL_MEMBER_DEVELOPMENT ||--o{ MEMBER_DEVELOPMENT_TYPE
+  PANEL_MEMBER_DEVELOPMENT ||--o{ MEMBER_DEVELOPMENT_STATUS
+  PANEL_MEMBER_DEVELOPMENT ||--o{ MEMBER_DEVELOPMENT_OUTCOME
+  PANEL_MEMBER_DEVELOPMENT }o--|| ACCREDITATION_TYPE
+
+}
+
+
+@enduml

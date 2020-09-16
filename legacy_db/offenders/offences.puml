@@ -1,0 +1,151 @@
+@startuml
+!include ../style.puml
+
+namespace offences $MinorPackage {
+
+  class OFFENCE <<ExternalData>> {
+    * ID : int
+    -- Foreign Keys --
+    * SENTENCE : int
+    * INDEX_OFFENCE_ID : int
+    ---
+    * OFFENCE_TIMES : int
+    OFFENCE_COMMENTS : text
+    INDEX_OFFENCE_DATE : datetime
+    -- Audit --
+    CHANGED : timestamp
+    RECORD_CREATION_DATE : datetime
+    RECORD_CREATED_BY : int
+    RECORD_LAST_SAVED_DATE : datetime
+    RECORD_LAST_SAVED_BY : int
+    DELETED : datetime
+    DELETED_BY : int
+  }
+
+  class OFFENCE_GROUP <<LookupTable>> {
+    * ID : int
+    ---
+    * Description : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+
+  class INDEX_OFFENCE <<ExternalData>> {
+    * ID : int
+    -- Foreign Keys --
+    OFFENCE_GROUP : int
+    ---
+    * DESCRIPTION : varchar(500)
+    SFO : bit
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    UPDATED_BY : int
+    UPDATED_DATE : datetime
+    CREATED_BY : int
+    CREATED_DATE : datetime
+    DELETED : datetime
+    DELETED_BY : int
+  }
+
+  class FURTHER_OFFENCE <<ExternalData>> {
+    * FURTHER_OFFENCE_ID : int
+    -- Foreign Keys --
+    * OFFENDER_ID : int
+    * OFFENCE : int
+    POLICE_FORCE : int
+    OUTCOME : int
+    SENTENCE : int
+    HOW_NOTIFIED : int
+    * OWNING_TEAM : int
+    ---
+    DATE_OF_CHARGE : datetime
+    DATE_OF_OFFENCE : datetime
+    DURING_CURFEW : bit
+    COURT_NAME : varchar(90)
+    COURT_DATE : datetime
+    SUBMITTED_FLAG : bit
+    SUBMITTED_DATE : datetime
+    OUTCOME_DATE : datetime
+    DATE_REVOKED : datetime
+    SECTION_REVOKED : varchar(200)
+    COMMENTS : text
+    -- Audit --
+    * CHANGED : timestamp
+    DELETED : datetime
+  }
+
+  class FURTHER_OFFENCE_NOTIFN <<LookupTable>> {
+    * ID : int
+    ---
+    * Description : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class FURTHER_OFFENCE_OUTCOME <<LookupTable>> {
+    * ID : int
+    ---
+    * Description : varchar(50)
+    SENTENCED : bit
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+
+  class AUDIT_INDEX_OFFENCE <<AuditTable>> {
+    * ID : int
+    -- Foreign Keys --
+    * INDEX_OFFENCE_ID : int
+    ---
+    * DESCRIPTION : varchar(500)
+    SFO : bit
+    OFFENCE_GROUP : varchar(50)
+    -- Audit --
+    CHANGE_BY : varchar(50)
+    CHANGE_DATE : datetime
+  }
+
+  offenders.sentences.SENTENCE ||--o{ OFFENCE
+  offenders.sentences.SENTENCE |o--o{ FURTHER_OFFENCE
+  offenders.OFFENDER ||--o{ FURTHER_OFFENCE
+  moj.caseworkers.CASEWORKER_TEAM ||--o{ FURTHER_OFFENCE
+  moj.POLICE_FORCE |o--o{ FURTHER_OFFENCE
+
+  OFFENCE ||-o{ FURTHER_OFFENCE
+
+  FURTHER_OFFENCE }o--o| FURTHER_OFFENCE_OUTCOME
+  FURTHER_OFFENCE }o--o| FURTHER_OFFENCE_NOTIFN
+
+  OFFENCE_GROUP |o-o{ INDEX_OFFENCE
+  AUDIT_INDEX_OFFENCE }o-u-|| INDEX_OFFENCE
+
+  INDEX_OFFENCE ||-o{ OFFENCE
+
+}
+
+
+
+@enduml

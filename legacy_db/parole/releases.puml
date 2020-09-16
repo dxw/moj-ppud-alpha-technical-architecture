@@ -1,0 +1,157 @@
+@startuml
+!include ../style.puml
+
+namespace releases $MinorPackage {
+
+	class RELEASE {
+		* RELEASE_ID : int
+		-- Foreign Keys --
+		OFFENDER_ID : int
+		RELEASE_TYPE : int
+		RELEASED_FROM : int
+		RELEASED_UNDER : int
+		RELEASED_FROM_CATEGORY_ID : int
+		RELEASE_FROM_TYPE : int
+		SENTENCE : int
+		---
+		RELEASE_DATE : datetime
+		COMMENTS : text
+		POLICE_INFORMED_FLAG : bit
+		NIS_NOTIFN_DATE : datetime
+		SUPERVISION_IMPOSED : datetime
+		-- Audit --
+		ARCHIVED : datetime
+		CHANGED : timestamp
+		RECORD_CREATION_DATE : datetime
+		RECORD_CREATED_BY : int
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class RELEASE_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		CHANGE_TO_STATUS : int
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class RELEASED_FROM_CATEGORY <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class RELEASED_UNDER <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+
+	class POST_RELEASE {
+		* ID : int
+		-- Foreign Keys --
+		OFFENDER_ID : int
+		RELEASE_ID : int
+		PROBATION_SERVICE : int
+		TYPE_OF_LICENCE : int
+		REPORT_FREQUENCY : int
+		---
+		SUPERVISION_CANCELLED_FLAG : bit
+		NON_STANDARD_CONDITIONS : bit
+		LICENCE_TERMINATED : bit
+		OFF_MANAGER : varchar(50)
+		OM_FAX_EMAIL : varchar(50)
+		OM_PHONE : varchar(50)
+		ACO : varchar(255)
+		ACO_FAX_EMAIL : varchar(50)
+		SPOC : varchar(255)
+		SPOC_FAX_EMAIL : varchar(50)
+		PROBATION_COMMENTS : text
+		-- Audit --
+		* CHANGED : timestamp
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		RECORD_CREATED_BY : int
+		RECORD_CREATED_DATE : datetime
+	}
+
+
+	class REPORT_FREQUENCY <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class TYPE_OF_LICENCE <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	RELEASE ||-o{ POST_RELEASE
+	RELEASE }o--|| RELEASE_TYPE
+	RELEASE }o--|| RELEASED_FROM_CATEGORY
+	RELEASE }o--|| RELEASED_UNDER
+
+	POST_RELEASE }o--|| TYPE_OF_LICENCE
+	POST_RELEASE }o--|| REPORT_FREQUENCY
+
+	RELEASE }o-u-|| offenders.OFFENDER
+	POST_RELEASE }o-u-|| offenders.OFFENDER
+
+	RELEASE }o-u-|| offenders.sentences.SENTENCE
+
+	POST_RELEASE }o-u-|| moj.PROBATION_SERVICE
+
+}
+
+
+@enduml

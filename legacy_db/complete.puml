@@ -1,0 +1,25 @@
+@startuml
+!include style_minimal.puml
+
+!include common.puml
+!include application/index.puml
+!include moj/index.puml
+!include offenders/index.puml
+!include mhcs/index.puml
+' !include parole/index.puml
+!include panels/index.puml
+!include complaints/index.puml
+
+!include organisations.puml
+!include probation.puml
+!include courts.puml
+!include fno_transfers.puml
+!include serious_further_offences.puml
+!include cppc_cases.puml
+!include risk_assessments.puml
+!include wam_messages.puml
+!include attendees.puml
+!include hearings.puml
+
+!include unknown.puml
+@enduml

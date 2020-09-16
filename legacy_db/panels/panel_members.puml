@@ -1,0 +1,273 @@
+@startuml
+!include ../style.puml
+
+namespace members $MinorPackage {
+
+	class PANEL_MEMBER {
+		* ID : int
+		-- Foreign Keys --
+		* PANEL_MEMBER_SUPER_TYPE : int
+		MEMBER_TYPE : int
+		MEMBER_SUB_TYPE : int
+		DOSSIER_ID : int
+		CORRESPONDENCE_ID : int
+		HOME_ID : int
+		OTHER_ID : int
+		MEMBER_STATUS : int
+		TITLE : int
+		NOMS_REGION : int
+		---
+		FAMILY_NAME : varchar(50)
+		FIRST_NAMES : varchar(50)
+		START_DATE : datetime
+		END_DATE : datetime
+		ADDRESS_1 varchar(50)
+		ADDRESS_2 varchar(50)
+		ADDRESS_3 varchar(50)
+		ADDRESS_4 varchar(50)
+		POSTCODE : varchar(20)
+		TEL_NO : varchar(30)
+		FAX_NO : varchar(30)
+		EMAIL : varchar(100)
+		PREFERRED_NAME : varchar(20)
+		TITLE_SUFFIX : varchar(50)
+		APPRASIAL_1_TARGET datetime
+		APPRASIAL_1_ACTUAL datetime
+		APPRASIAL_1_PANEL int
+		APPRASIAL_2_TARGET datetime
+		APPRASIAL_2_ACTUAL datetime
+		APPRASIAL_2_PANEL int
+		APPRASIAL_3_TARGET datetime
+		APPRASIAL_3_ACTUAL datetime
+		APPRASIAL_3_PANEL int
+		REAPPOINTMENT_ACTUAL : datetime
+		MEMBER_END_DATE : datetime
+		PREFERRED_TELNO : varchar(20)
+		ALT_TELNO_1 varchar(20)
+		ALT_TELNO_2 varchar(20)
+		PREFERRED_FAXNO : varchar(20)
+		ALT_FAXNO_1 varchar(20)
+		ALT_FAXNO_2 varchar(20)
+		PREFERRED_EMAIL : varchar(100)
+		ALT_EMAIL_1 varchar(100)
+		ALT_EMAIL_2 varchar(100)
+		PHOTOGRAPH : varchar(255)
+		COMMENTS_BIOGRAPHY : varchar(2000)
+		COMMENTS_SPECIAL_REQTS : varchar(2000)
+		COMMENTS_GENERAL : varchar(2000)
+		temp_id : int
+		CONTACT : bit
+		COMMENTS_ADDINFO : varchar(2000)
+		MENTOR : int
+		REAPPOINTMENT_2_ACTUAL datetime
+		APPRASIAL_4_TARGET datetime
+		APPRASIAL_4_ACTUAL datetime
+		APPRASIAL_4_PANEL int
+		WARNING_TEXT : varchar(50)
+		PAYROLL : varchar(50)
+		HAS_PHOTO : bit
+		* HAS_LAPTOP : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : int
+		DELETED : datetime
+		DELETED_BY : int
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class PANEL_MEMBER_AVAILIBLE_DATE {
+		* ID : int
+		-- Foreign Keys --
+		PANEL_MEMBER : int
+		PANEL_MEMBER_PERIOD : int
+		PANEL_TYPE : int
+		INITIAL_PANEL : int
+		---
+		AVAILABLE_DATE : datetime
+	}
+
+	class PANEL_MEMBER_PAPER_AVAILABILITY {
+		* ID : int
+		-- Foreign Keys --
+		PANEL_MEMBER : int
+		* PAPER_PERIOD : int
+		---
+		NUM_PANELS : int
+		* MONDAY : bit
+		* TUESDAY : bit
+		* WEDNESDAY : bit
+		* THURSDAY : bit
+		* FRIDAY : bit
+		* SATURDAY : bit
+		* SUNDAY : bit
+		-- Audit --
+		CHANGED : timestamp
+	}
+
+	class PANEL_MEMBER_PAPER_PERIOD {
+		* ID : int
+		-- Foreign Keys --
+		---
+		YEAR : int
+		WEEK : int
+		START_DATE : datetime
+		DESCRIPTION : varchar(50)
+	}
+
+	class PANEL_MEMBER_PERIOD {
+		* ID : int
+		-- Foreign Keys --
+		PANEL_MEMBER : int
+		PANEL_TYPE : int
+		---
+		FIRST_DAY_OF_MONTH : datetime
+		MAX_DAYS : int
+		* SUBMIT_STATUS : int
+		NOTES : varchar(1024)
+		DATE_SUBMITTED : datetime
+		DATE_LAST_CHANGED : datetime
+	}
+
+	class PANEL_MEMBER_PREFERRED_LOCATION <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		PANEL_MEMBER : int
+		ESTABLISHMENT : int
+	}
+
+	class PANEL_MEMBER_ROLE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		SORT_ORDER : int
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+  class MEMBER_SUB_TYPE <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class MEMBER_TYPE <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+	class PANEL_MEMBER_SUPER_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class MEMBER_STATUS <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		ACTIVE : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class PANEL_PANEL_MEMBERS <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* PANEL : int
+		* PANEL_MEMBER : int
+		ROLE : int
+	}
+
+	PANEL_MEMBER_PREFERRED_LOCATION }o-u-|| moj.establishments.ESTABLISHMENT
+	PANEL_MEMBER_PREFERRED_LOCATION }o-|| PANEL_MEMBER
+	panels.PANEL_TYPE |o--o{ PANEL_MEMBER_AVAILIBLE_DATE
+	panels.PANEL_TYPE ||--o{ PANEL_MEMBER_PERIOD
+
+	PANEL_PANEL_MEMBERS }o-|| PANEL_MEMBER
+	PANEL_PANEL_MEMBERS }o--|| PANEL_MEMBER_ROLE
+
+	panels.PANEL ||-o{ PANEL_PANEL_MEMBERS
+
+	PANEL_MEMBER ||-o{ PANEL_MEMBER_PAPER_AVAILABILITY
+	PANEL_MEMBER }o--|| PANEL_MEMBER_SUPER_TYPE
+	PANEL_MEMBER }o--|| MEMBER_TYPE
+	PANEL_MEMBER }o--|| MEMBER_SUB_TYPE
+	PANEL_MEMBER }o--|| MEMBER_STATUS
+	PANEL_MEMBER }o--o| common.TITLE
+	PANEL_MEMBER }o--o| moj.NOMS_REGION
+
+
+	PANEL_MEMBER |o-o{ PANEL_MEMBER_AVAILIBLE_DATE
+	PANEL_MEMBER_AVAILIBLE_DATE }o--o| PANEL_MEMBER_PERIOD
+	PANEL_MEMBER_AVAILIBLE_DATE }o--o| panels.PANEL
+
+	PANEL_MEMBER_PAPER_AVAILABILITY }o--|| PANEL_MEMBER_PAPER_PERIOD
+
+	PANEL_MEMBER ||--o{ unknown.PANEL_MEMBER_DOWNLOAD
+	hearings.HEARING ||--o{ unknown.PANEL_MEMBER_DOWNLOAD
+
+}
+
+class unknown.PANEL_MEMBER_DOWNLOAD {
+	* ID : int
+	-- Foreign Keys --
+	* PANEL_MEMBER : int
+	* HEARING : int
+	---
+	DOSSIER_DOWNLOAD_DATE : datetime
+	DOSSIER_DOWNLOAD_VERSION : int
+	TIMETABLE_DOWNLOAD_DATE : datetime
+}
+
+
+@enduml

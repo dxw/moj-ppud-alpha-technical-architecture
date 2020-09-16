@@ -1,0 +1,178 @@
+@startuml
+!include ../style.puml
+
+' ASP.NET Users and Roles
+namespace iam $MinorPackage {
+
+  class aspnet_Applications {
+    * ApplicationId : uniqueidentifier
+    -- Foreign Keys --
+    ---
+    * ApplicationName : nvarchar(256) UNIQUE
+    * LoweredApplicationName : nvarchar(256) UNIQUE
+    Description : nvarchar(256)
+  }
+
+  class aspnet_Membership {
+    -- Foreign Keys --
+    * UserId : uniqueidentifier
+    * ApplicationId : uniqueidentifier
+    ---
+    * Password : nvarchar(128)
+    * PasswordFormat : int
+    * PasswordSalt : nvarchar(128)
+    MobilePIN : nvarchar(16)
+    Email : nvarchar(256)
+    LoweredEmail : nvarchar(256)
+    PasswordQuestion : nvarchar(256)
+    PasswordAnswer : nvarchar(128)
+    * IsApproved : bit
+    * IsLockedOut : bit
+    * CreateDate : datetime
+    * LastLoginDate : datetime
+    * LastPasswordChangedDate : datetime
+    * LastLockoutDate : datetime
+    * FailedPasswordAttemptCount : int
+    * FailedPasswordAttemptWindowStart : datetime
+    * FailedPasswordAnswerAttemptCount : int
+    * FailedPasswordAnswerAttemptWindowStart : datetime
+    Comment : ntext
+    MemorableWord : nvarchar(256)
+    * FailedMemorableWordAttemptCount : int
+    MemorableWordLastChanged : datetime
+  }
+
+  class aspnet_PasswordHistory {
+    -- Foreign Keys --
+    * UserId : uniqueidentifier
+    ---
+    * Password : nvarchar(128)
+  *   PasswordChangedDate datetime
+  }
+
+  class aspnet_PasswordResetToken {
+    -- Foreign Keys --
+    * UserId : uniqueidentifier
+    ---
+    PasswordVerificationToken : nvarchar(128)
+    PasswordVerificationTokenExpirationDate : datetime
+  }
+
+  class aspnet_Paths {
+    * PathId : uniqueidentifier
+    -- Foreign Keys --
+    * ApplicationId : uniqueidentifier
+    ---
+    * Path : nvarchar(256)
+    * LoweredPath : nvarchar(256)
+  }
+
+  class aspnet_PersonalizationAllUsers {
+    -- Foreign Keys --
+    * PathId : uniqueidentifier
+    ---
+    * PageSettings : image
+    * LastUpdatedDate : datetime
+  }
+
+  class aspnet_PersonalizationPerUser <<JoinTable>> {
+    * Id : uniqueidentifier
+    -- Foreign Keys --
+    PathId : uniqueidentifier
+    UserId : uniqueidentifier
+    ---
+    * PageSettings : image
+    * LastUpdatedDate : datetime
+  }
+
+  class aspnet_Profile {
+    -- Foreign Keys --
+    * UserId : uniqueidentifier
+    ---
+    * PropertyNames : ntext
+    * PropertyValuesString : ntext
+    * PropertyValuesBinary : image
+    * LastUpdatedDate : datetime
+  }
+
+  class aspnet_Roles {
+    * RoleId : uniqueidentifier
+    -- Foreign Keys --
+    * ApplicationId : uniqueidentifier
+    ---
+    * RoleName : nvarchar(256)
+    * LoweredRoleName : nvarchar(256)
+    Description : nvarchar(256)
+  }
+
+  class aspnet_SchemaVersions {
+    * Feature : nvarchar(128)
+    * CompatibleSchemaVersion : nvarchar(128)
+    -- Foreign Keys --
+    ---
+    * IsCurrentVersion : bit
+  }
+
+  class aspnet_Users {
+    * UserId : uniqueidentifier
+    -- Foreign Keys --
+    * ApplicationId : uniqueidentifier
+    ---
+    * UserName : nvarchar(256)
+    * LoweredUserName : nvarchar(256)
+    MobileAlias : nvarchar(16)
+    * IsAnonymous : bit
+    * LastActivityDate : datetime
+  }
+
+  class aspnet_UsersInRoles <<JoinTable>> {
+    -- Foreign Keys --
+    * UserId : uniqueidentifier
+    * RoleId : uniqueidentifier
+  }
+
+  class aspnet_WebEvent_Events {
+    * EventId : char(32)
+    -- Foreign Keys --
+    ---
+    * EventTimeUtc : datetime
+    * EventTime : datetime
+    * EventType : nvarchar(256)
+    * EventSequence : decimal(19, 0)
+    * EventOccurrence : decimal(19, 0)
+    * EventCode : int
+    * EventDetailCode : int
+    Message : nvarchar(1024)
+    ApplicationPath : nvarchar(256)
+    ApplicationVirtualPath : nvarchar(256)
+    * MachineName : nvarchar(256)
+    RequestUrl : nvarchar(1024)
+    ExceptionType : nvarchar(256)
+    Details : ntext
+  }
+
+  aspnet_Membership }o-|| aspnet_Users
+  aspnet_Membership }o-|| aspnet_Applications
+
+  aspnet_PasswordHistory }o--|| aspnet_Users
+
+  aspnet_PasswordResetToken }o--|| aspnet_Users
+
+  aspnet_Paths }o--|| aspnet_Applications
+
+  aspnet_PersonalizationAllUsers }o--|| aspnet_Paths
+
+  aspnet_PersonalizationPerUser }o--|| aspnet_Users
+  aspnet_PersonalizationPerUser }o--|| aspnet_Paths
+
+  aspnet_Profile }o--|| aspnet_Users
+
+  aspnet_Roles }o--|| aspnet_Applications
+
+  aspnet_Users }o--|| aspnet_Applications
+
+  aspnet_UsersInRoles }o-|| aspnet_Users
+  aspnet_UsersInRoles }o-|| aspnet_Roles
+}
+
+@enduml

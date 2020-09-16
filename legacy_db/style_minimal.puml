@@ -1,0 +1,10 @@
+@startuml
+!include style.puml
+
+hide members
+remove <<LookupTable>>
+remove <<AuditTable>>
+' remove @unlinked
+hide <<AuditTable>>
+
+@enduml

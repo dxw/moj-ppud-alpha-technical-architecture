@@ -1,0 +1,121 @@
+@startuml
+!include style.puml
+
+namespace dossiers $MinorPackage {
+	class DOSSIER {
+		* DOSSIER_ID : int
+		-- Foreign Keys --
+		---
+		* DOSSIER_TYPE_ID : int
+		DOSSIER_TITLE : varchar(255)
+		* OWNING_CASEWORKER : int
+		* TEMPLATE_DOSSIER_ID : int
+		* DOSSIER_STATUS : int
+		REVIEW_ID : int
+		OFFENDER_ID : int
+		VERSION_NUMBER : int
+		ACTION_STARTED : datetime
+		MOST_RECENT_CHANGE : datetime
+		-- Foreign Keys --
+		---
+		* CHANGED : timestamp
+		* CREATED_BY : int
+		* CREATED_ON : datetime
+		LAST_UPDATED_ON : datetime
+		* LAST_UPDATED_BY : int
+	}
+
+	class DOSSIER_ACTION_TASK_UPDATE {
+		* DOSSIER_ACTION_TASK_UPDATE_ID : int
+		-- Foreign Keys --
+		---
+		* PARENT_DOSSIER_ID : int
+		* DOSSIER_ACTION_ID : int
+		* TEMPLATE_MILESTONE_TASK_ID : int
+		TEMPLATE_TASK_ID : int
+	}
+
+	class DOSSIER_ACTION_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		DISPLAY_MESSAGE : varchar(1000)
+		ALWAYS_SHOW_MESSAGE : bit
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class DOSSIER_BASELINE {
+		* DOSSIER_BASELINE_ID : int
+		-- Foreign Keys --
+		---
+		* DOSSIER_ID : int
+		DATE_CREATED : datetime
+		IS_CURRENT : bit
+		* CREATED_BY_CASEWORKER : int
+		DATE_COMPILED : datetime
+		* VERSION_NUMBER : int
+	}
+
+	class DOSSIER_CONTACT {
+		* DOSSIER_CONTACT_ID : int
+		-- Foreign Keys --
+		---
+		* PARENT_DOSSIER_ID : int
+		* DOSSIER_CONTACT_TYPE_ID : int
+		* DOSSIER_ACTION_ID : int
+		EMAIL_ADDRESS : varchar(255)
+		* ATTENDEE_TYPE_ID : int
+	}
+
+	class DOSSIER_CONTACT_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class DOSSIER_STATUS <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class DOSSIER_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		SECURITY_CLASSIFICATION : int
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+}
+@enduml

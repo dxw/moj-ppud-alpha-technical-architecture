@@ -1,0 +1,179 @@
+@startuml
+!include style.puml
+
+namespace movements $MinorPackage {
+	class MOVE_SUB_SUB_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* MOVE_SUB_TYPE : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class MOVE_SUB_TYPE {
+		* ID : int
+		-- Foreign Keys --
+		* MOVE_TYPE : int
+		---
+		* DESCRIPTION : varchar(50)
+		* PATIENT_STATUS : int
+		* DA_STATUS : int
+		* LR_STATUS : int
+		* UPDATE_OFFENDER : bit
+		* FROM_COUNTRY_ENABLED : bit
+		* TO_COUNTRY_ENABLED : bit
+		-- Audit --
+		DELETED : datetime
+	}
+
+
+	class AUDIT_MOVE_SUB_TYPE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		MOVE_SUB_TYPE_ID : int
+		---
+		* MOVE_TYPE : varchar(50)
+		* DESCRIPTION : varchar(50)
+		* PATIENT_STATUS : varchar(50)
+		* DA_STATUS : varchar(50)
+		* LR_STATUS : varchar(50)
+		* UPDATE_OFFENDER : bit
+		* FROM_COUNTRY_ENABLED : bit
+		* TO_COUNTRY_ENABLED : bit
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class MOVE_TYPE {
+		* ID : int
+		-- Foreign Keys --
+		---
+		DESCRIPTION : varchar(50)
+		* ENABLE_FIELDS : bit
+		* LR_POPUP : bit
+		* IS_RECALL : bit
+		SHOW_TRIAL_TRANSFER : bit
+		SHOW_ESCAPE : bit
+		SHOW_CONDITIONAL_DISCHARGE : bit
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class AUDIT_MOVE_TYPE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		MOVE_TYPE_ID : int
+		---
+		DESCRIPTION : varchar(50)
+		* ENABLE_FIELDS : bit
+		* LR_POPUP : bit
+		* IS_RECALL : bit
+		SHOW_TRIAL_TRANSFER : bit
+		SHOW_ESCAPE : bit
+		SHOW_CONDITIONAL_DISCHARGE : bit
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class CD_CONDITION {
+		* ID : int
+		-- Foreign Keys --
+		* MOVEMENT : int
+		---
+		DESCRIPTION : varchar(max)
+	}
+
+	class MOVEMENT {
+		* ID : int
+		-- Foreign Keys --
+		* OFFENDER : int
+		* MOVE_TYPE : int
+		MOVE_SUB_TYPE : int
+		MOVE_SUB_SUB_TYPE : int
+		DETENTION_AUTHORITY : int
+		FROM_ESTABLISHMENT : int
+		TO_ESTABLISHMENT : int
+		FROM_ESTABLISHMENT_TYPE : int
+		TO_ESTABLISHMENT_TYPE : int
+		FROM_COURT : int
+		TO_COURT : int
+		FROM_POLICE_FORCE : int
+		TO_POLICE_FORCE : int
+		FROM_COUNTRY : int
+		TO_COUNTRY : int
+		ESTABLISHMENT_UNIT_TO : int
+		ESTABLISHMENT_UNIT_FROM : int
+		---
+		AUTHORISATION_DATE : datetime
+		ACTUAL_DATE : datetime
+		* CREATED_BY : int
+		NEW_CLINICAL_SUPERVISOR : int
+		FNO_INFORMED : bit
+		FNO_INFORMED_DATE : datetime
+		VLO : varchar(50)
+		VLO_TEL : varchar(20)
+		VLO_EMAIL : varchar(50)
+		VLO_INFORMED_DATE : datetime
+		WI_INFORMED_DATE : datetime
+		WI_CLOSED_DATE : datetime
+		WI_REFERENCE : varchar(50)
+		SENTENCE_RECALC_TEAM_INFORMED : datetime
+		SOCIAL_SUPERVISOR : int
+		PSYCHIATRIC_SUPERVISOR : int
+		TRIAL_LENGTH : int
+		TRIAL_EXPIRY_DATE : datetime
+		COMMENTS : varchar(2000)
+		REPORT_FREQUENCY : int
+		SECURITY_LEVEL : int
+		PROBATION_AREA : int
+		DATE_COMPLETED : datetime
+		CURRENT_CLINICAL_SUPERVISOR : int
+		tempid : int
+		APPLICATION_RECEIVED_IN_MHU : datetime
+		-- Audit --
+		ARCHIVED : datetime
+		* CHANGED : timestamp
+		RECORD_CREATION_DATE : datetime
+		RECORD_CREATED_BY : int
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	CD_CONDITION }o-|| MOVEMENT
+
+	MOVEMENT }o-u-|| offenders.OFFENDER
+	MOVEMENT }o-u-o{ mhcs.detention_authorities.DETENTION_AUTHORITY
+	MOVEMENT }o-u-o{ moj.establishments.ESTABLISHMENT
+	MOVEMENT }o--o{ moj.establishments.ESTABLISHMENT_TYPE
+	MOVEMENT }o-u-o{ moj.POLICE_FORCE
+	MOVEMENT }o-u-o{ courts.COURT
+	MOVEMENT }o--o{ unknown.COUNTRY
+	MOVEMENT }o--o{ moj.establishments.ESTABLISHMENT_UNIT
+	MOVEMENT }o-|| MOVE_TYPE
+	MOVEMENT }o-o| MOVE_SUB_TYPE
+	MOVEMENT }o-o| MOVE_SUB_SUB_TYPE
+
+	MOVE_TYPE }|-o{ MOVE_SUB_TYPE
+
+	MOVE_SUB_TYPE }|-o{ MOVE_SUB_SUB_TYPE
+	MOVE_SUB_TYPE }o-u-|| unknown.LR_STATUS
+
+	AUDIT_MOVE_TYPE }o-u-|| MOVE_TYPE
+	AUDIT_MOVE_SUB_TYPE }o-u-|| MOVE_SUB_TYPE
+
+}
+
+@enduml

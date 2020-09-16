@@ -1,0 +1,219 @@
+@startuml
+!include style.puml
+
+namespace hearings $MinorPackage {
+	class HEARING {
+		* ID : int
+		-- Foreign Keys --
+		* OFFENDER : int
+		* REVIEW : int
+		PANEL : int
+		HEARING_TYPE : int
+		HEARING_LISTING_STATUS : int
+		HEARING_RESULT : int
+		PARENT_HEARING : int
+		OWNING_CASEWORKER : int
+		OWNING_CASEWORKER_TEAM : int
+		TIMESCALE_FOR_HEARING : int
+		* REPRESENTATION_STATUS : int
+		---
+		PRE_HEARING_COMMENTS : varchar(2000)
+		CURRENT_LOCATION : int
+		PLANNED_LOCATION_EDIT : bit
+		PLANNED_LOCATION : int
+		HEARING_START_DATE : datetime
+		POST_HEARING_COMMENTS : varchar(2000)
+		ESTIMATE_DURATION : float
+		MAIN : bit
+		LAST_STATUS_CHANGED : datetime
+		APPEALED : bit
+		ABBREVIATED : varchar(30)
+		LISTING_TEAM_COMMENTS : varchar(1000)
+		LAST_SAVED_DATE : datetime
+		LAST_SAVED_BY : int
+		DIRECTION_ERRORS : text
+		* EXCLUDED_FROM_TRACKER : bit
+		ESTIMATE_DURATION_MINUTES : int
+		RECOMMENDED_MEMBERS : int
+		* CASE_CONFERENCING : bit
+		CASECONFERENCING_DATE : date
+		-- Audit --
+		ARCHIVED : datetime
+		CHANGED : timestamp
+		CREATION_DATE : datetime
+		CREATED_BY : int
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class REPRESENTATION_STATUS <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class CASE_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class HEARING_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		CASE_TYPE : int
+		---
+		* DESCRIPTION : varchar(50)
+		CHECK_LOCATION : bit
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class HEARING_ACCREDITATION_REQUIRED <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		HEARING : int
+		ACCREDITATION : int
+	}
+
+	class HEARING_LISTING_STATUS <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		TRACKER_COLOUR : varchar(20)
+		ACTIVE : bit
+		UPDATE_PLANNED_LOCATION : bit
+		ALLOW_WAM_ACCESS : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		LOV_DELETED_BY : int
+		DELETED : datetime
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class HEARING_RESULT <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		CHANGE_TO_STATUS : int
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class HEARING_SPECIALIST_REQUIRED <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		HEARING : int
+		MEMBER_TYPE : int
+	}
+
+	class HEARING_TYPE_PANEL_TYPE <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys
+		* HEARING_TYPE : int
+		*	PANEL_TYPE : int
+	}
+
+	class TIMESCALE_FOR_HEARING <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class AUDIT_HEARING_LISTING_STATUS <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* HEARING_LISTING_STATUS_ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		TRACKER_COLOUR : varchar(20)
+		ACTIVE : bit
+		UPDATE_PLANNE3D_LOCATION bit
+		ALLOW_WAM_ACCESS : bit
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class AUDIT_HEARING_TYPE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* HEARING_TYPE_ID : varchar(50)
+		---
+		* DESCRIPTION : varchar(50)
+		case_type : varchar(50)
+		CHECK_LOCATION : bit
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	HEARING }o-u-|| offenders.OFFENDER
+	HEARING }o-u-|| parole.reviews.REVIEW
+	HEARING }o-u-o| panels.PANEL
+	HEARING }o--o| HEARING_TYPE
+	HEARING }o--o| HEARING_LISTING_STATUS
+	HEARING }o--o| HEARING_RESULT
+	HEARING }o--o| HEARING
+	HEARING }o--o| TIMESCALE_FOR_HEARING
+	HEARING }o--|| REPRESENTATION_STATUS
+	HEARING }o-u-o| moj.caseworkers.CASEWORKER
+	HEARING }o-u-o| moj.caseworkers.CASEWORKER_TEAM
+
+	HEARING ||-o{ HEARING_SPECIALIST_REQUIRED
+	HEARING_SPECIALIST_REQUIRED }o--|| panel.members.MEMBER_TYPE
+
+	HEARING ||-o{ HEARING_ACCREDITATION_REQUIRED
+	HEARING_ACCREDITATION_REQUIRED }o--|| unknown.ACCREDITATION
+
+	HEARING ||-o{ HEARING_TYPE_PANEL_TYPE
+	HEARING_TYPE_PANEL_TYPE }o--|| unknown.PANEL_TYPE
+
+	AUDIT_HEARING_LISTING_STATUS }o-u-|| HEARING_LISTING_STATUS
+	AUDIT_HEARING_TYPE }o-u-|| HEARING_TYPE
+
+	CASE_TYPE |o-|{ HEARING_TYPE
+
+}
+
+@enduml

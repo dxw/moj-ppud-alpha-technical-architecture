@@ -1,0 +1,19 @@
+@startuml
+skinparam linetype ortho
+
+hide circle
+
+skinparam class {
+  BackgroundColor<<ExternalData>> #LightGreen
+  BackgroundColor<<AuditTable>> #LightGrey
+  BackgroundColor<<JoinTable>> #LightPink
+  BackgroundColor<<LookupTable>> #LightSteelBlue
+}
+
+!$MajorPackage = "#eee"
+!$MinorPackage = "#ddd"
+
+hide <<LookupTable>> members
+hide <<AuditTable>>
+
+@enduml

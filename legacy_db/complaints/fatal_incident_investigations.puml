@@ -1,0 +1,221 @@
+@startuml
+!include ../style.puml
+
+' Fatal Incident Investigations
+namespace fii $MinorPackage {
+
+  class FII {
+    * FII_ID : int
+    -- Foreign Keys --
+    * OFFENDER_ID : int
+    * DEATH_TYPE_ID : int
+    * DEATH_SUBTYPE_ID : int
+    * ESTABLISHMENT_ID : int
+    SECOND_ESTABLISHMENT_ID : int
+    * DEATH_LOCATION_ID : int
+    * INQUEST_VERDICT_ID : int
+    * INQUEST_NEGLECT_ID : int
+    * FII_STATUS_ID : int
+    * COMPLEXITY_ID : int
+    ADMIN_CASEWORKER_ID : int
+    INVESTIGATOR_CASEWORKER_ID : int
+    TEAM_LEADER_CASEWORKER_ID : int
+    FLO_CASEWORKER_ID : int
+    OMBUD_CASEWORKER_ID : int
+    DEP_OMBUD_CASEWORKER_ID : int
+    * REVIEW_ID : int
+    ---
+    * DEATH_DATE : datetime
+    SECOND_ESTABLISHMENT_REASON : varchar(200)
+    * DATE_CREATED : datetime
+    * CREATED_BY : int
+    INQUEST_DATE : datetime
+    INQUEST_NOTES : text
+    * PRESS_ATTENTION : bit
+    * MP_INTEREST : bit
+    * HL_INTEREST : bit
+    DETAILS : text
+    * INQUEST_NOT_REQUIRED : bit
+    * PPO_PRESS_RELEASE : bit
+    * DATE_NOTIFIED : datetime
+    CAUSE_DEATH1A varchar(200)
+    CAUSE_DEATH1B varchar(200)
+    CAUSE_DEATH2 varchar(200)
+    -- Audit --
+    * CHANGED : timestamp
+    RECORD_LAST_SAVED_BY : int
+    RECORD_LAST_SAVED_DATE : datetime
+    DELETED : datetime
+    DELETED_BY : int
+  }
+
+
+  class CAUSE_DEATH1A <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class CAUSE_DEATH1B <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class CAUSE_DEATH2 <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class FII_STATUS <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class DEATH_LOCATION <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class DEATH_SUBTYPE <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    DEATH_TYPE_ID : int
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class DEATH_TYPE <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class INQUEST_NEGLECT <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class INQUEST_VERDICT <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class COMPLEXITY <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  offenders.OFFENDER ||--o{ FII
+  moj.ESTABLISHMENT }|--o{ FII
+  parole.reviews.REVIEW ||--o{ FII
+  moj.caseworkers.CASEWORKER }o--o{ FII
+
+  DEATH_TYPE ||-o{ DEATH_SUBTYPE
+
+  FII }o--|| FII_STATUS
+  FII }o--|| DEATH_TYPE
+  FII }o--|| DEATH_SUBTYPE
+  FII }o--|| DEATH_LOCATION
+  FII }o--|| INQUEST_VERDICT
+  FII }o--|| INQUEST_NEGLECT
+  FII }o--|| COMPLEXITY
+
+}
+
+@enduml

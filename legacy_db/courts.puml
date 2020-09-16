@@ -1,0 +1,188 @@
+@startuml
+!include style.puml
+
+namespace courts $MinorPackage {
+	class CPS <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		ADDRESS_1 varchar(50)
+		ADDRESS_2 varchar(50)
+		ADDRESS_3 varchar(50)
+		ADDRESS_4 varchar(50)
+		POSTCODE : varchar(10)
+		PHONE : varchar(20)
+		FAX : varchar(20)
+		EMAIL : varchar(50)
+		OTHER : varchar(100)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class COURT {
+		* ID : int
+		-- Foreign Keys --
+		CPS : int
+		---
+		DESCRIPTION : varchar(50)
+		ADDRESS_1 varchar(50)
+		ADDRESS_2 varchar(50)
+		ADDRESS_3 varchar(50)
+		ADDRESS_4 varchar(50)
+		POSTCODE : varchar(10)
+		PHONE_NUMBER : varchar(20)
+		COURT_TYPE : int
+		FAX : varchar(20)
+		email : varchar(20)
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class COURT_APPEARANCE {
+		* ID : int
+		-- Foreign Keys --
+		OFFENDER : int
+		COURT : int
+		COURT_TYPE : int
+		COURT_RESULT : int
+		DETENTION_AUTHORITY : int
+		---
+		APPEARANCE_DATE : datetime
+		COMMENTS : varchar(8000)
+		tempid : int
+		-- Audit --
+		ARCHIVED : datetime
+		* CHANGED : timestamp
+		RECORD_CREATED_BY : int
+		RECORD_CREATION_DATE : datetime
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class COURT_APPEARANCE_OFFENCE <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* COURT_APPEARANCE : int
+		* OFFENCE : int
+		---
+		COURT_OFFENCE_TEXT : varchar(255)
+		-- Audit --
+		* CHANGED : timestamp
+	}
+
+	class COURT_RESULT {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* Description : varchar(50)
+		New_Stage : int
+		* Conviction_Fields_Enabled : bit
+		* IS_MHU_ONLY : bit
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class COURT_SENTENCE {
+		* ID : int
+		-- Foreign Keys --
+		Offender_Status : int
+		Establishment : int
+		---
+		* Description : varchar(50)
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class COURT_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class AUDIT_COURT <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* COURT_ID : int
+		---
+		DESCRIPTION : varchar(50)
+		CPS : varchar(50)
+		ADDRESS_1 varchar(50)
+		ADDRESS_2 varchar(50)
+		ADDRESS_3 varchar(50)
+		ADDRESS_4 varchar(50)
+		POSTCODE : varchar(10)
+		PHONE_NUMBER : varchar(20)
+		COURT_TYPE : varchar(50)
+		FAX : varchar(20)
+		email : varchar(20)
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class AUDIT_COURT_RESULT <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* COURT_RESULT_ID : int
+		---
+		* Description : varchar(50)
+		New_Stage : varchar(50)
+		* Conviction_Fields_Enabled : bit
+		* IS_MHU_ONLY : bit
+		-- Audit --
+		* CHANGE_BY : varchar(50)
+		* CHANGE_DATE : datetime
+	}
+
+	class AUDIT_COURT_SENTENCE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* COURT_SENTENCE_ID : int
+		---
+		* Description : varchar(50)
+		Offender_Status : varchar(50)
+		Establishment : varchar(100)
+		-- Audit --
+		* CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	COURT }o--o| CPS
+
+	COURT |o-o{ COURT_APPEARANCE
+	COURT_APPEARANCE }o--o| COURT_TYPE
+	COURT_APPEARANCE }o-o| COURT_RESULT
+	COURT_APPEARANCE }o-u-o| mhcs.detention_authorities.DETENTION_AUTHORITY
+
+	COURT_SENTENCE }o-u-o| moj.ESTABLISHMENT
+
+	COURT_APPEARANCE_OFFENCE }o-|| COURT_APPEARANCE
+	COURT_APPEARANCE_OFFENCE }o-u-|| offenders.OFFENCE
+
+	AUDIT_COURT }o-u-|| COURT
+	AUDIT_COURT_RESULT }o-u-|| COURT_RESULT
+	AUDIT_COURT_SENTENCE }o-u-|| COURT_SENTENCE
+
+}
+
+@enduml

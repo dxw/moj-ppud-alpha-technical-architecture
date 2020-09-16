@@ -1,0 +1,13 @@
+@startuml
+!include ../style.puml
+
+namespace parole $MajorPackage {
+
+  !include reviews.puml
+  !include releases.puml
+  !include recalls.puml
+  !include milestones.puml
+
+}
+
+@enduml

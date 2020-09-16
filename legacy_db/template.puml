@@ -1,0 +1,10 @@
+@startuml
+!include style.puml
+
+namespace template $MinorPackage {
+
+
+
+}
+
+@enduml

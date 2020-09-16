@@ -1,0 +1,89 @@
+@startuml
+!include ../style.puml
+
+namespace leave $MinorPackage {
+
+  class LEAVE_REQUEST {
+    * ID : int
+    -- Foreign Keys --
+    * OFFENDER : int
+    DETENTION_AUTHORITY : int
+    * LEAVE_TYPE : int
+    * LR_STATUS : int
+    * DISCRETION_TYPE : int
+    * ESCORT_TYPE : int
+    * HOSPITAL : int
+    POLICE_AUTHORITY : int
+    ---
+    DATE_OF_REQUEST : datetime
+    DATE_RECIEVED_IN_MHU : datetime
+    APPROVAL_TARGET_DATE : datetime
+    APPROVAL_ACTUAL_DATE : datetime
+    LETTERS_SENT_ACTUAL : datetime
+    * APPROVED_BY : int
+    * RESCINDED_FLAG : bit
+    DATE_RESCINDED : datetime
+    CONSIDERATION : varchar(2000)
+    CONDITIONS : varchar(2000)
+    INFORMATION_RECEIVED : datetime
+    INFORMATION_REQUESTED : datetime
+    -- Audit --
+    ARCHIVED : datetime
+    * CHANGED : timestamp
+    RECORD_CREATION_DATE : datetime
+    RECORD_CREATED_BY : int
+    RECORD_LAST_SAVED_BY : int
+    RECORD_LAST_SAVED_DATE : datetime
+    DELETED : datetime
+    DELETED_BY : int
+  }
+
+  class LR_STATUS <<LookupTable>> {
+  }
+
+  class LEAVE_TYPE <<LookupTable>> {
+    * ID : int
+    ---
+    DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class DISCRETION_TYPE <<LookupTable>> {
+    * ID : int
+    -- Foreign Keys --
+    * LR_STATUS : int
+    ---
+    DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  LEAVE_REQUEST }o-u-|| offenders.OFFENDER
+  LEAVE_REQUEST }o-u-|| mhcs.detention_authorities.DETENTION_AUTHORITY
+  LEAVE_REQUEST }o-u-|| moj.ESTABLISHMENT
+  LEAVE_REQUEST }o-u-|| moj.POLICE_AUTHORITY
+
+  LEAVE_REQUEST }o--|| LEAVE_TYPE
+  LEAVE_REQUEST }o--|| DISCRETION_TYPE
+  LEAVE_REQUEST }o--|| LR_STATUS
+  DISCRETION_TYPE }o-|| LR_STATUS
+
+}
+
+
+@enduml

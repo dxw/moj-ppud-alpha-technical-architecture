@@ -1,0 +1,200 @@
+@startuml
+!include ../style.puml
+
+namespace sentences $MinorPackage {
+	class CUSTODY_TYPE <<ExternalData>> {
+		* ID : int
+		-- Foreign Keys --
+		* PPO_SENTENCE_TYPE_ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		DETERMINATE_FLAG : bit
+		FULL_DESCRIPTION : varchar(50)
+		DEFAULT_REVIEW_ON_REPS : int
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class AUDIT_CUSTODY_TYPE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		CUSTODY_TYPE_ID : int
+		---
+		DESCRIPTION : varchar(50)
+		DETERMINATE_FLAG : varchar(50)
+		FULL_DESCRIPTION : varchar(50)
+		DEFAULT_REVIEW_ON_REPS : varchar(50)
+		-- Audit --
+		CHANGED_BY : varchar(100)
+		CHANGED_DATE : datetime
+	}
+
+	class SENTENCE <<ExternalData>> {
+		* ID : int
+		-- Foreign Keys --
+		OFFENDER_ID : int
+		TRANSCRIPT_WRITER : int
+		MAPPA_LEVEL : int
+		MONITORING_CO : int
+		SENTENCED_UNDER : int
+		---
+		CO_DEFENDANTS : varchar(50)
+		SENTENCING_COURT : varchar(50)
+		DOR : datetime
+		DOS : datetime
+		SENTENCING_REMARKS_RECEIVED : datetime
+		REVIEW_DATE_NOTIFN_TARGET : datetime
+		REVIEW_DATE_NOTIFN_ACTUAL : datetime
+		CSTT_REVIEW_ACTUAL : datetime
+		SENTENCING_REMARK_TARGET : datetime
+		INTERMITTENT_CUSTODY : bit
+		LICENCE_START : datetime
+		LICENCE_END : datetime
+		CRD : datetime
+		PED : datetime
+		NPD : datetime
+		OLED : datetime
+		NLED : datetime
+		SED : datetime
+		SENTENCING_COURT_REF : varchar(100)
+		-- Prison API /offender-sentences --
+		CUSTODY_TYPE : int
+		WHOLE_LIFE : bit
+		PART_YRS : int
+		PART_MNTHS : int
+		PART_DAYS : int
+		ESP_CUSTODIAL_YRS : int
+		ESP_CUSTODIAL_MNTHS : int
+		ESP_EXTENSION_YRS : int
+		ESP_EXTENSION_MNTHS : int
+		-- Audit --
+		CHANGED : timestamp
+		RECORD_CREATION_DATE : datetime
+		RECORD_CREATED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		RECORD_LAST_SAVED_BY : int
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+  class TARIFF <<ExternalData>> {
+    * TARIFF_ID : int
+    -- Foreign Keys --
+    OFFENDER_ID : int
+    REASON_FOR_CHANGE : int
+    HDC_MONITORING_CO : int
+    SENTENCE : int
+    ---
+    DOR : datetime
+    DOS : datetime
+    TARIFF_EXPIRY_DATE : datetime
+    HMP_HALFWAY : datetime
+    FIRST_REVIEW_DATE : datetime
+    TARIFF_FP_YRS : int
+    TARIFF_FP_MNTHS : int
+    TARIFF_ADJUST_YRS : int
+    TARIFF_ADJUST_MNTHS : int
+    TARIFF_ADJUST_DAYS : int
+    SPEC_PART_YRS : int
+    SPEC_PART_MNTHS : int
+    SPEC_PART_DAYS : int
+    CREATED_ON : datetime
+    CRD : datetime
+    PED : datetime
+    NPD : datetime
+    LED : datetime
+    OLED : datetime
+    NLED : datetime
+    SED : datetime
+    HDC_ELIGIBILITY_DATE : datetime
+    HDC_LED : datetime
+    EXPIRED : datetime
+    WHOLE_LIFE : bit
+    TARIFF_FP_DAYS : int
+    -- Audit --
+    CHANGED : timestamp
+  }
+
+	class HDC_MONITORING_CO <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		PHONE_NUMBER : varchar(255)
+		ADDRESS_1 varchar(55)
+		ADDRESS_2 varchar(50)
+		ADDRESS_3 varchar(50)
+		ADDRESS_4 varchar(50)
+		POSTCODE : varchar(20)
+		FAX : varchar(20)
+		EMAIL : varchar(50)
+		OTHER : varchar(100)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class REASON_FOR_TARIFF_CHANGE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+  class TRANSCRIPT_WRITER <<LookupTable>> {
+    * ID : int
+    ---
+    * Description : varchar(50)
+    ADDRESS_1 varchar(55)
+    ADDRESS_2 varchar(50)
+    ADDRESS_3 varchar(50)
+    ADDRESS_4 varchar(50)
+    POSTCODE : varchar(20)
+    PHONE : varchar(20)
+    FAX : varchar(20)
+    EMAIL : varchar(50)
+    OTHER : varchar(100)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+	SENTENCE }o-u-o| offenders.OFFENDER
+	SENTENCE }o-o| CUSTODY_TYPE
+	SENTENCE }o--o| TRANSCRIPT_WRITER
+	SENTENCE }o-u-o| moj.MAPPA_LEVEL
+	SENTENCE }o--o| HDC_MONITORING_CO
+
+	SENTENCE ||-o{ TARIFF
+	offenders.OFFENDER ||--o{ TARIFF
+
+	TARIFF }o--o| HDC_MONITORING_CO
+	TARIFF }o--o| REASON_FOR_TARIFF_CHANGE
+
+	CUSTODY_TYPE }o--|| PPO_SENTENCE_TYPE
+
+	AUDIT_CUSTODY_TYPE }o-u-|| CUSTODY_TYPE
+
+}
+
+
+@enduml

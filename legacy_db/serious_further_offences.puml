@@ -1,0 +1,387 @@
+@startuml
+!include style.puml
+
+' Serious Further Offences
+namespace sfo $MinorPackage {
+	class SFO {
+		* SFO_ID : int
+		-- Foreign Keys --
+		* OFFENDER_ID : int
+		* STATUS : int
+		* PROBATION_AREA : int
+		* CURRENT_STAGE : int
+		SUPERVISION_REQUIREMENT : int
+		* SUPERVISION_TYPE : int
+		* SUPERVISION_SUPERTYPE : int
+		* STAGE_1_MAPPA_CAT int
+		TYPE_OF_REVIEW : int
+		---
+		* HIGH_PROFILE : bit
+		CONTACT_NAME : varchar(50)
+		CONTACT_TELNO : varchar(30)
+		CONTACT_EMAIL : varchar(100)
+		SFO_COMMENTS : text
+		OFFENCE_DETAILS : varchar(255)
+		HANDLING_DETAILS : varchar(255)
+		COURT_INFO : varchar(255)
+		NEXT_COURT_DATE : datetime
+		LAST_SUBMIT_DATE : datetime
+		LAST_SUBMIT_UPDATE_DATE : datetime
+		* USED_AS_SAMPLE_STG3 bit
+		* USED_AS_SAMPLE_STG45 bit
+		COURT : varchar(50)
+		FIRST_COURT_DATE : datetime
+		* AGE_COMMITTED : int
+		* RESIDENTIAL_STATUS : int
+		APPROVED_PREMISES : varchar(50)
+		* SFO_OFFENCE : int
+		* SERIOUS_VIOLENT_OFFENCE_FLAG_1 bit
+		* SERIOUS_SEXUAL_OFFENCE_FLAG_1 bit
+		SUPERVISION_OFFENCE : varchar(100)
+		* PPO_FLAG : bit
+		* NO_OF_PREV_CONVICTIONS : int
+		* MAPPA_LEVEL_AT_SFO : int
+		* PREV_MAPPA_2_OR_3 int
+		STAGE_12_DOCN_RECEIVED_TARGET datetime
+		STAGE_12_DOCN_RECEIVED_ACTUAL datetime
+		* STAGE_12_DOCN_RECEIVED_EXCEPTION bit
+		STAGE_12_DOCN_ACKN_TARGET datetime
+		STAGE_12_DOCN_ACKN_ACTUAL datetime
+		* STAGE_12_DOCN_ACKN_EXCEPTION bit
+		STAGE_12_COMMENTS text
+		* STAGE_3_REQUIRED int
+		* PC_MURDER : bit
+		* PC_SEXUAL : bit
+		* PC_DRUGS : bit
+		* PC_FRAUD : bit
+		* PC_GBH : bit
+		* PC_ARSON : bit
+		* PC_BURGLARY : bit
+		* PC_OTHER_DISH : bit
+		* PC_OTHER_VIOL : bit
+		* PC_CRIM_DMG : bit
+		* PC_THEFT : bit
+		* PC_DRIVING : bit
+		STAGE_3_DOCN_RECEIVED_TARGET datetime
+		STAGE_3_DOCN_RECEIVED_ACTUAL datetime
+		* STAGE_3_DOCN_RECEIVED_EXCEPTION bit
+		STAGE_3_RESPONSE_TO_REC_TARGET datetime
+		STAGE_3_RESPONSE_TO_REC_ACTUAL datetime
+		* STAGE_3_RESPONSE_TO_REC_EXCEPTION bit
+		* STAGE_3_RESPONSE_TO_REC_CWORKER int
+		* NOM_TIER : int
+		* OM_GRADE : int
+		* DIV_PREV_ETHNICITY : bit
+		* DIV_PREV_SEXUALITY : bit
+		* DIV_PREV_GENDER : bit
+		* DIV_PREV_DISABILITY : bit
+		* DIV_PREV_RELIGIOUS : bit
+		* DIV_PREV_AGE : bit
+		* DIV_PREV_CLASS : bit
+		* DIV_SUPER_ETHNICITY : bit
+		* DIV_SUPER_SEXUALITY : bit
+		* DIV_SUPER_GENDER : bit
+		* DIV_SUPER_DISABILITY : bit
+		* DIV_SUPER_RELIGIOUS : bit
+		* DIV_SUPER_AGE : bit
+		* DIV_SUPER_CLASS : bit
+		* CRIM_FACTOR_ACCOM : bit
+		* CRIM_FACTOR_ETE : bit
+		* CRIM_FACTOR_FINMGT : bit
+		* CRIM_FACTOR_RELATION : bit
+		* CRIM_FACTOR_LIFESTYLE : bit
+		* CRIM_FACTOR_DRUGS : bit
+		* CRIM_FACTOR_ALCOHOL : bit
+		* CRIM_FACTOR_EMOWELL : bit
+		* CRIM_FACTOR_THINKING : bit
+		* CRIM_FACTOR_ATTITUDES : bit
+		* CRIM_FACTOR_HEALTH : bit
+		STAGE_45_REQUIRED int
+		STAGE_45_DOCN_RECEIVED_TARGET datetime
+		STAGE_45_DOCN_RECEIVED_ACTUAL datetime
+		* STAGE_45_DOCN_RECEIVED_EXCEPTION bit
+		STAGE_45_DOC_RESPONSE_TARGET datetime
+		STAGE_45_DOC_RESPONSE_ACTUAL datetime
+		* STAGE_45_DOC_RESPONSE_EXCEPTION bit
+		STAGE_5B_ACTION_PLAN_UPDATE_TARGET datetime
+		STAGE_5B_ACTION_PLAN_UPDATE_ACTUAL datetime
+		* STAGE_5B_ACTION_PLAN_UPDATE_EXCEPTION bit
+		* MAPPA3_ADEQUATE_FLAG int
+		* QUALITY_ASSURE_RATING : int
+		QUALITY_ASSESSOR : varchar(50)
+		* QA_5B_RATING int
+		QA_5B_ASSESSOR varchar(50)
+		LAST_ACTION_ID : int
+		STAGE6_DOCN_RECEIVED_TARGET datetime
+		STAGE6_DOCN_RECEIVED_ACTUAL datetime
+		OUTCOME_DATE : datetime
+		* OUTCOME : int
+		* CONVICTION_OFFENCE : int
+		* SERIOUS_VIOLENT_OFFENCE_FLAG_2 bit
+		* SERIOUS_SEXUAL_OFFENCE_FLAG_2 bit
+		* COURT_SENTENCE : int
+		STAGE6_COMMENTS text
+		SENTENCING_COURT : varchar(50)
+		CREATION_DATE : datetime
+		* VICTIM_COUNT : int
+		* PB_INVOLVED : bit
+		* OUT_AREA_REVIEW : bit
+		* OUT_AREA_STAGE : int
+		* OUT_AREA_PROBATION_AREA : int
+		* INDEPENDANT_REVIEW : bit
+		STAGE_12_DOCN_RECEIVED_EXCEPTION_DATE datetime
+		STAGE_12_DOCN_ACKN_EXCEPTION_DATE datetime
+		* ELECTRONIC_MON : bit
+		STAGE_3_DOCN_RECEIVED_EXCEPTION_DATE datetime
+		STAGE_3_RESPONSE_TO_REC_EXCEPTION_DATE datetime
+		STAGE_45_DOCN_RECEIVED_EXCEPTION_DATE datetime
+		STAGE_45_DOCN_RESPONSE_EXCEPTION_DATE datetime
+		STAGE_5B_ACTION_PLAN_UPDATE_EXCEPTION_DATE datetime
+		STAGE_5B_RESPONSE_UPDATE_TARGET datetime
+		STAGE_5B_RESPONSE_UPDATE_ACTUAL datetime
+		STAGE_5B_RESPONSE_UPDATE_EXCEPTION bit
+		STAGE_5B_RESPONSE_UPDATE_EXCEPTION_DATE datetime
+		DATE_OF_SFO : datetime
+		* ECL : bit
+		HIGHEST_RISK_OF_HARM : int
+		SUPERVISION_START_DATE : datetime
+		PROBATION_SUPERVISION_START_DATE : datetime
+		PRISON_SENTENCE_START_DATE : datetime
+		DISCHARGING_PRISON : int
+		DISCHARGING_PRISON_TYPE : int
+		CPPC : bit
+		LEGACY : bit
+		length_of_order : varchar(50)
+		FNP : bit
+		HDC : bit
+		NUMBER_OFFENCES : int
+		NUMBER_OFFENCE_TYPES : int
+		COMPLETED_BY : varchar(50)
+		OFFENDER_IN_SCOPE : int
+		* STAGE_1_ALLOC_CORRECTLY int
+		* STAGE_1_LT_12_MONTHS int
+		* STAGE_1_ASSOC_LEARN_REQ_ACT int
+		PC_MAPPA_COMPLETE : bit
+		PC_LCSB_COMPLETE : bit
+		PC_DHR_COMPLETE : bit
+		PC_IOM : bit
+		PC_ON_BAIL : bit
+		PC_BAAS : bit
+		* STAGE_3_SUBJECT_TO_VOO int
+		* STAGE_3_RECORD_RISK_AND_MAPPA int
+		-- Audit --
+		ARCHIVED : datetime
+		* CHANGED : timestamp
+		RECORD_CREATED_BY : int
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		DELETED : datetime
+	}
+
+	class SFO_ADDITIONAL_OFFENCE <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys
+		* SFO : int
+		* OFFENCE : int
+	}
+
+	class SFO_ANSWER <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class SFO_CRIM_FACTOR_RECONVICTION <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* SFO : int
+		* CRIM_FACTOR : int
+		---
+	}
+
+	class SFO_CRIM_FACTOR_SERIOUS_HARM <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* SFO : int
+		* CRIM_FACTOR : int
+		---
+	}
+
+	class SFO_MAPPA_CAT <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class SFO_PROBATION_AREA <<JoinTable>> {
+		* ID : int
+		* SFO : int
+		* PROBATION_AREA : int
+	}
+
+	class SFO_SHORT_STAGE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class SFO_STAGE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* Description : varchar(50)
+		* SHORT : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class SFO_STATUS <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class SFO_SUPERVISION_REQUIREMENT {
+		* ID : int
+		-- Foreign Keys --
+		---
+		SFO : int
+		SUPERVISION_REQUIREMENT : int
+	}
+
+	class SFO_SUPERVISION_SUPERTYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* Description : varchar(100)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class SFO_SUPERVISION_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class TYPE_OF_REVIEW <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		CAPABILITY_FLAGS : int
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class CRIM_FACTOR <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	SFO }o-u-|| offenders.OFFENDER
+
+	SFO }o-|| SFO_PROBATION_AREA
+	SFO }o-u-|{ moj.PROBATION_SERVICE
+	SFO }o--|| SFO_STATUS
+	SFO }o--|| SFO_STAGE
+	SFO }o--o| SFO_SUPERVISION_REQUIREMENT
+	SFO }o--o| TYPE_OF_REVIEW
+	SFO }o--|| SFO_SUPERVISION_TYPE
+	SFO }o--|| SFO_SUPERVISION_SUPERTYPE
+	SFO }o--|| SFO_MAPPA_CAT
+
+	SFO ||-o{ SFO_CRIM_FACTOR_SERIOUS_HARM
+	SFO ||-o{ SFO_CRIM_FACTOR_RECONVICTION
+
+	SFO_CRIM_FACTOR_RECONVICTION }o--|| CRIM_FACTOR
+	SFO_CRIM_FACTOR_SERIOUS_HARM }o--|| CRIM_FACTOR
+
+	SFO ||-o{ SFO_ADDITIONAL_OFFENCE
+	SFO_ADDITIONAL_OFFENCE }o-u-|| offenders.OFFENCE
+
+	SFO_PROBATION_AREA ||-u-o{ moj.PROBATION_SERVICE
+
+}
+
+@enduml

@@ -1,0 +1,203 @@
+@startuml
+!include style.puml
+
+namespace cppc $MinorPackage {
+	class CPPC_CASE {
+		* CPPC_CASE_ID : int
+		-- Foreign Keys --
+		* CASEWORKER : int
+		* OFFENDER_ID : int
+		* STATUS : int
+		* RESIDENTIAL_STATUS : int
+		* PROBATION_AREA : int
+		EXTREMISM_CATEGORY : int
+		* REFERRER_AGENCY : int
+		* MAPPA_CATEGORY : int
+		MAPPA_LEVEL : int
+		* TYPE_OF_FUNDING : int
+		* FUNDING_STATUS : int
+		---
+		DATE_MAPP_MINS_RECEIVED : datetime
+		DATE_NEXT_MAPP_MEETING : datetime
+		MAPP_MINS_CHASE_TARGET : datetime
+		OM_FEEDBACK_REPORT_RECEIVED : datetime
+		OM_NEXT_FEEDBACK_REPORT_DUE : datetime
+		OM_FEEBACK_CHASE_TARGET : datetime
+		REFERRER_NAME : varchar(150)
+		REFER_ADDRESS_1 varchar(256)
+		REFER_ADDRESS_2 varchar(256)
+		REFER_ADDRESS_3 varchar(256)
+		REFER_POSTCODE : varchar(30)
+		SENIOR_PROBN_OFFICER : varchar(50)
+		SENIOR_OPERNL_MGR : varchar(50)
+		CW_FILE_NUMBER : varchar(50)
+		DATE_OF_REFERRAL : datetime
+		* NO_OF_COURT_APPEAR : int
+		* NO_OF_VIOLENT : int
+		* NO_OF_SEXUAL : int
+		COMMENTS : text
+		* SOPO_ORDER : bit
+		SOPO_DETAILS : varchar(2048)
+		IF_NO_LIC_WHATS_THE_RMP : varchar(2048)
+		* WHO_IS_AT_RISK : int
+		* SEXUAL_RISK_FLAG : bit
+		* VIOLENT_RISK_FLAG : bit
+		* ON_SEX_OFFENDER_REG : bit
+		* ELEC_MONITOR : bit
+		* TREAT_PROGS_IN_PRISON : int
+		* TREAT_PROGS_ON_RELEASE : int
+		TREATMENT_COMMENTS : text
+		* VICTIM_VIEW_SOUGHT : int
+		VICTIM_VIEW_SOUGHT_COMMENTS : text
+		* VICTIM_VIEW_INFORMED : int
+		VICTIM_VIEW_INFORMED_COMMENTS : text
+		FUNDING_COMMENTS : text
+		* FUNDING_AGREED_TOTAL_COST : money
+		* FUNDING_ACTUAL_TOTAL_COST : money
+		FUNDING_DATE_COMMENCED : datetime
+		FUNDING_DATE_CEASED : datetime
+		FUNDING_DATE_WITHDRAWN : datetime
+		* CONTACT_MP_INFORMED_FLAG : bit
+		CONTACT_MP_NAME : varchar(50)
+		* SUBMITTED_TO_MINISTER : bit
+		SUBMISSION_DATE : datetime
+		SPO_CONTACT_DETAILS : varchar(255)
+		ACO_CONTACT_DETAILS : varchar(255)
+		OM_CONTACT_DETAILS : varchar(255)
+		OFFENDER_MANAGER : varchar(255)
+		NOTES : text
+		SUBMISSION_RESPONSE_TARGET : datetime
+		SUBMISSION_RESPONSE_ACTUAL : datetime
+		ROM_AREA : int
+		ROM_SPOC : varchar(255)
+		ROM_CONTACT_DETAILS : varchar(255)
+		ROM_SPOC_FAX : varchar(255)
+		OM_FAX : varchar(255)
+		SIGNED_CONFIDENTIALALITY : bit
+		MEDIA_INTREST : bit
+		LATEST_MEDIA_REPORT : datetime
+		MAPPA_MINUTES_LATEST : datetime
+		-- Audit --
+		ARCHIVED : datetime
+		* CHANGED : timestamp
+		CREATION_DATE : datetime
+		RECORD_CREATED_BY : int
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		DELETED : datetime
+	}
+
+	class CPPC_STATUS <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class EXTREMISM_CATEGORY <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class RESIDENTIAL_STATUS <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class REFER_AGENCY <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		ADDRESS_1 varchar(255)
+		ADDRESS_2 varchar(50)
+		ADDRESS_3 varchar(50)
+		ADDRESS_4 varchar(50)
+		POSTCODE : varchar(20)
+		PHONE : varchar(20)
+		FAX : varchar(20)
+		EMAIL : varchar(50)
+		OTHER : varchar(100)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+
+	class FUNDING_STATUS <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class FUNDING_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	CPPC_CASE }o-u-|| moj.caseworkers.CASEWORKER
+	CPPC_CASE }o-u-|| offenders.OFFENDER
+	CPPC_CASE }o--|| CPPC_STATUS
+	CPPC_CASE }o--o| EXTREMISM_CATEGORY
+	CPPC_CASE }o--|| RESIDENTIAL_STATUS
+	CPPC_CASE }o--|| REFER_AGENCY
+	CPPC_CASE }o--|| moj.MAPPA_CATEGORY
+	CPPC_CASE }o--o| moj.MAPPA_LEVEL
+	CPPC_CASE }o--|| FUNDING_TYPE
+	CPPC_CASE }o--|| FUNDING_STATUS
+}
+
+@enduml

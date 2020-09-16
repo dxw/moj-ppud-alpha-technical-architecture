@@ -1,0 +1,109 @@
+@startuml
+!include style.puml
+
+namespace wam_messages $MinorPackage {
+	class WAM_AUTOMATED_MESSAGE_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		EMAIL_TEMPLATE : int
+		---
+		* DESCRIPTION : varchar(50)
+		STORED_PROC : varchar(100)
+		SUBJECT : varchar(500)
+		CASEWORKER_TEAM : int
+		STORED_PROC_DATA : varchar(100)
+		* MILESTONE_INITIATED : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class WAM_MESSAGE {
+		* ID : int
+		-- Foreign Keys --
+		WAM_MESSAGE_TYPE : int
+		WAM_AUTOMATED_MESSAGE_TYPE : int
+		WAM_MESSAGE_PRIORITY : int
+		ASSOCIATED_ID : int
+		CASEWORKER_FROM : int
+		CASEWORKER_TO : int
+		TEAM_TO : int
+		---
+		SUBJECT : varchar(500)
+		CONTENT : text
+		DATE : datetime
+		DATA_MERGE_NEEDED : bit
+		ASSOCIATED_HASH : varbinary(8000)
+	}
+
+	class WAM_MESSAGE_CASEWORKER <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		WAM_MESSAGE : int
+		CASEWORKER : int
+		---
+		READ_DATE : datetime
+		ACTIONED_DATE : datetime
+		-- Audit --
+		CREATED_BY : int
+		CREATED_DATE : datetime
+		LAST_UPDATED_BY : int
+		LAST_UPDATED_DATE : datetime
+		DELETED_BY : int
+		DELETED_DATE : datetime
+	}
+
+	class WAM_MESSAGE_PRIORITY <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		SORT_ORDER : int
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class WAM_MESSAGE_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	WAM_MESSAGE_CASEWORKER }o--|| WAM_MESSAGE
+	WAM_MESSAGE_CASEWORKER }o--|| moj.caseworkers.CASEWORKER
+
+	WAM_MESSAGE }o--|| WAM_MESSAGE_TYPE
+	WAM_MESSAGE }o--|| WAM_AUTOMATED_MESSAGE_TYPE
+	WAM_MESSAGE }o--|| WAM_MESSAGE_PRIORITY
+	WAM_MESSAGE }o--|| unknown.ASSOCIATED
+	WAM_MESSAGE }o--o{ moj.caseworkers.CASEWORKER
+	WAM_MESSAGE }o--o{ moj.caseworkers.CASEWORKER_TEAM
+
+	WAM_AUTOMATED_MESSAGE_TYPE }o--|| unknown.EMAIL_TEMPLATE
+
+}
+
+@enduml

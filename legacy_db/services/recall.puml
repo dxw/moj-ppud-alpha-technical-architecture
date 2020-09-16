@@ -1,0 +1,54 @@
+@startuml
+!include ../style_minimal.puml
+
+!include ../common.puml
+!include ../moj/index.puml
+!include ../offenders/index.puml
+!include ../parole/index.puml
+
+' Hide some tables we probably don't need in this slice
+remove mhcs.detention_authorities
+remove organisations
+remove hearings
+remove panels.fees
+remove common
+remove application.wam
+remove wam_messages
+
+remove parole.milestones
+
+remove parole.reviews.MILESTONE_TEMPLATE
+remove parole.reviews.MILESTONE_TEMPLATE_EMAIL
+remove parole.reviews.REVIEW_MILESTONE_DATE
+remove parole.reviews.REVIEW_MILESTONE_DATE_EMAIL
+remove parole.reviews.REVIEW_TYPE_MILESTONE
+remove parole.reviews.REVIEW_ASSESSOR_HISTORY
+remove parole.reviews.REVIEW_ADHOC_PROCESS_LOG
+remove parole.reviews.LATE_REASON
+remove parole.reviews.REVIEW_COLOUR_HISTORY
+remove parole.reviews.SOLICITOR_STATUS
+
+remove parole.recalls.RECALL_MILESTONE_TEMPLATE
+remove parole.recalls.RECALL_MILESTONE_DATE
+remove parole.recalls.RTC_NOTIF_METHOD
+
+remove offenders.sentences.PPO_SENTENCE_TYPE
+remove offenders.sentences.TRANSCRIPT_WRITER
+remove offenders.OFFENDER_VLO
+
+remove moj.establishments.STAFF
+remove moj.establishments.STAFF_GRADE
+remove moj.establishments.STAFF_ESTABLISHMENT
+remove moj.establishments.ESTABLISHMENT_TEAM
+
+remove moj.caseworkers.CASEWORKER_TEAM_REPORT_CATEGORY
+remove moj.caseworkers.Report_Category
+remove moj.caseworkers.GRADE
+remove moj.caseworkers.CLIENT_SYSTEM
+remove moj.caseworkers.CASEWORKER_TEAM
+remove moj.caseworkers.UNIT
+
+remove moj.TRIBUNAL_OFFICE
+remove moj.CORONER_AREA
+
+@enduml

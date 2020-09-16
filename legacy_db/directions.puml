@@ -1,0 +1,286 @@
+@startuml
+!include style.puml
+
+namespace directions $MinorPackage {
+
+
+  class AUDIT_DIRECTION_RESULT <<AuditTable>> {
+    * ID : int
+    -- Foreign Keys --
+    * DIRECTION_RESULT_ID : int
+    ---
+    DESCRIPTION : varchar(50)
+    DIRECTION_TYPE : int
+    ALIAS : varchar(500)
+    HEARING_RESULT : int
+    HEARING_STATUS : int
+    REVIEW_RECOMMENDATION : int
+    CREATE_NEW_HEARING : bit
+    NEW_HEARING_TYPE : int
+    NEW_HEARING_STATUS : int
+    MEMBER_FEE_TYPE : int
+    -- Audit --
+    * CHANGE_BY : varchar(200)
+    * CHANGE_DATE : datetime
+  }
+
+  class AUDIT_DIRECTIONS_BOOKMARK <<AuditTable>> {
+    * ID : int
+    -- Foreign Keys --
+    BOOKMARK_ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    * STORED_PROC : varchar(128)
+    * ID_PARAM : varchar(64)
+    PARAMETERS : varchar(1024)
+    * BOOKMARK_TYPE : varchar(16)
+    -- Audit --
+    * CHANGE_BY : varchar(50)
+    * CHANGE_DATE : datetime
+  }
+
+  class DIRECTION {
+    * ID : int
+    -- Foreign Keys --
+    * DIRECTION_TYPE : int
+    * DIRECTION_REPORT_TYPE : int
+    * OWNING_CASEWORKER : int
+    * OWNING_TEAM : int
+    * OWNING_SUBTEAM : int
+    DIRECTION_STATUS : int
+    * REVIEW : int
+    DOCUMENT : int
+    REPORT_WRITER : int
+    REPORT_OWNER : int
+    REPORT_WRITER_ROLE : int
+    ORGANISATION_RESPONSIBLE : int
+    CASEWORKER_RESPONSIBLE : int
+    PROBATION_AREA_RESPONSIBLE : int
+    ---
+    * DATE_OF_DIRECTION : datetime
+    TARGET : datetime
+    ACTUAL : datetime
+    COST : money
+    OTHER : varchar(100)
+    PRE_LISTING : bit
+    TARGET_LOCKED : bit
+    -- Audit --
+    * CHANGED : timestamp
+    DELETED : datetime
+    DELETED_BY : int
+    UPDATED_BY : int
+    UPDATED_DATE : datetime
+    CREATED_BY : int
+    CREATED_DATE : datetime
+  }
+
+  class DIRECTION_CHASER {
+    * ID : int
+    -- Foreign Keys --
+    OWNING_CASEWORKER : int
+    * DIRECTION : int
+    ---
+    * TARGET : datetime
+    ACTUAL : datetime
+    NOTES : varchar(max)
+    OLD_TARGET : datetime
+    -- Audit --
+    * CHANGED : timestamp
+    DELETED : datetime
+    DELETED_BY : int
+    UPDATED_BY : int
+    UPDATED_DATE : datetime
+    CREATED_BY : int
+    CREATED_DATE : datetime
+  }
+
+  class DIRECTION_COMPLETED {
+    * ID : int
+    -- Foreign Keys --
+    * REVIEW : int
+    * DIRECTION_TYPE : int
+    COMPLETED_BY : int
+    DIRECTION_GROUP : int
+    ---
+    * DATE_OF_DIRECTION : datetime
+    PRE_LISTING : bit
+    COMPLETED_DATE : datetime
+    ALL_DIRECTIONS_COMPLETE : bit
+    -- Audit --
+    CREATED_DATE : datetime
+    CREATED_BY : int
+    DELETED : datetime
+  }
+
+  class DIRECTION_REPORT_TYPE <<LookupTable>> {
+    * ID : int
+    -- Foreign Keys --
+    * DEFAULT_RESPONSIBLE_ORGANISATION : int
+    ---
+    * Description : varchar(50)
+    ALIAS : varchar(255)
+    TARGET_DAYS_BEFORE_HEARING_DATE : int
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class DIRECTION_RESPONSIBILITY {
+    * ID : int
+    -- Foreign Keys --
+    * CASEWORKER : int
+    REPORT_OWNER : int
+    ---
+    * Description : varchar(50)
+    ALIAS : varchar(255)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class DIRECTION_RESULT {
+    * ID : int
+    -- Foreign Keys --
+    DIRECTION_TYPE : int
+    HEARING_RESULT : int
+    HEARING_STATUS : int
+    REVIEW_RECOMMENDATION : int
+    NEW_HEARING_STATUS : int
+    NEW_HEARING_TYPE : int
+    MEMBER_FEE_TYPE : int
+    ---
+    * DESCRIPTION : varchar(50)
+    ALIAS : varchar(500)
+    CREATE_NEW_HEARING : bit
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class DIRECTION_STATUS <<LookupTable>> {
+    * ID : int
+    ---
+    * Description : varchar(50)
+    ACTIVE : bit
+    ALLOW_PLACEHOLDER_DELETION : bit
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class DIRECTION_TYPE <<LookupTable>> {
+    * ID : int
+    -- Foreign Keys --
+    * DEFAULT_DIRECTION_UPLOAD_ACTION : int
+    MAIL_MERGE : int
+    MAIL_MERGE_ACCESS : int
+    ---
+    * Description : varchar(50)
+    MAIL_MERGE_CLASSIFICATION : varchar(100)
+    MAIL_MERGE_DESTINATIONS : varchar(max)
+    ALIAS : varchar(255)
+    PRE_LISTING : bit
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class DIRECTION_UPLOAD_ACTION <<LookupTable>> {
+    * ID : int
+    ---
+    * Description : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class DIRECTIONS_BOOKMARK <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(128)
+    * STORED_PROC : varchar(128)
+    * ID_PARAM : varchar(64)
+    PARAMETERS : varchar(1024)
+    * BOOKMARK_TYPE : varchar(16)
+    PRE_REQUESITE : varchar(128)
+    PRIMARY : bit
+    * SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    * LOV_CREATED_BY : int
+    * LOV_CREATED_DATE : datetime
+  }
+
+  DIRECTION }o--|| DIRECTION_TYPE
+  DIRECTION }o--o| DIRECTION_STATUS
+  DIRECTION }o--|| DIRECTION_REPORT_TYPE
+  DIRECTION }o-u-|{ moj.caseworkers.CASEWORKER
+  DIRECTION }o-u-|| moj.caseworkers.CASEWORKER_TEAM
+  DIRECTION }o-u-|| parole.reviews.REVIEW
+  DIRECTION }o-u-o| documents.DOCUMENT
+  DIRECTION }o-u-o| moj.PROBATION_AREA
+
+  DIRECTION_COMPLETED }o-u-|| parole.reviews.REVIEW
+  DIRECTION_COMPLETED }o--|| DIRECTION_TYPE
+
+  DIRECTION_CHASER }o-|| DIRECTION
+  DIRECTION_CHASER }o-u-o| moj.caseworkers.CASEWORKER
+
+  DIRECTION_RESPONSIBILITY }o-u-|| moj.caseworkers.CASEWORKER
+
+  DIRECTION_TYPE }o--|| DIRECTION_UPLOAD_ACTION
+  DIRECTION_TYPE }o--o| parole.milestones.MAIL_MERGE
+  DIRECTION_TYPE }o--o| parole.milestones.MAIL_MERGE_ACCESS
+
+  DIRECTION_RESULT }o--o| DIRECTION_TYPE
+  DIRECTION_RESULT }o-u-o| hearings.HEARING_RESULT
+  DIRECTION_RESULT }o-u-o{ hearings.HEARING_STATUS
+  DIRECTION_RESULT }o-u-o| parole.reviews.REVIEW_RECOMMENDATION
+  DIRECTION_RESULT }o-u-o| hearings.HEARING_TYPE
+  DIRECTION_RESULT }o-u-o| panels.fees.MEMBER_FEE_TYPE
+
+  AUDIT_DIRECTION_RESULT }o-u-|| DIRECTION_RESULT
+  AUDIT_DIRECTIONS_BOOKMARK }o-u-|| DIRECTIONS_BOOKMARK
+
+}
+
+@enduml

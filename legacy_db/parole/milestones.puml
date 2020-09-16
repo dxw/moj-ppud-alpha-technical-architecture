@@ -1,0 +1,240 @@
+@startuml
+!include ../style.puml
+
+namespace milestones $MinorPackage {
+
+	class TASK_STATUS {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		SP_TO_CALL : varchar(100)
+		LOV : varchar(50)
+		SP_TO_GET_CURRENT_VALUE : varchar(100)
+	}
+
+	class MILESTONE_TASK <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* MILESTONE : int
+		* TASK_STATUS : int
+		---
+		* VALUE : int
+	}
+
+	class MILESTONE_TEMPLATE {
+		* MILESTONE_TEMPLATE_ID : int
+		-- Foreign Keys --
+		PARENT_REVIEW_RECOMMENDATION_ID : int
+		PARENT_REVIEW_RESULT_ID : int
+		PARENT_REVIEW_TYPE_ID : int
+		OWNING_CASEWORKER : int
+		OWNING_TEAM : int
+		PRIORITY : int
+		---
+		MILESTONE_LONG_ID : varchar(10)
+		TITLE : varchar(255)
+		TARGET_CALCULATION_FIELD : varchar(100)
+		TARGET_CALCULATION_VALUE : int
+		PERIOD : varchar(10)
+		DETAILED_PROCESS_NOTES : text
+		MANUAL_EDITABLE : bit
+		LATE_REASON_REQUIRED : bit
+		PREREQUISITE : int
+		* NOT_TODO : bit
+		EMAIL_BODY_LETTER_ID : int
+		EMAIL_BODY_CLASSIFICATION : varchar(100)
+		EMAIL_BODY_ACCESS : int
+		PROCESS : int
+		ALLOW_UNRESTRICTED_EDIT : bit
+		* AUTO_ACTUALISE : int
+		-- Audit --
+		* LAST_UPDATED_BY : int
+		LAST_UPDATED_DATE : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class MILESTONE_TEMPLATE_EMAIL {
+		* ID : int
+		-- Foreign Keys --
+		* MILESTONE_TEMPLATE_ID : int
+		---
+		* DESCRIPTION : varchar(200)
+		DESTINATIONS : varchar(4000)
+		* SEND_IF_ACTUALISED : bit
+		* DAYS_TO_WAIT_FROM_TARGET : int
+		--
+		* CHANGED : timestamp
+		* CREATED_BY : int
+		* CREATED_DATE : datetime
+		LAST_UPDATED_BY : int
+		LAST_UPDATED_DATE : datetime
+		DELETED_DATE : datetime
+		DELETED_BY : int
+	}
+
+	class MILESTONE_TEMPLATE_WAM_NOTIFICATION {
+		* ID : int
+		-- Foreign Keys --
+		* MILESTONE_TEMPLATE : int
+		* WAM_AUTOMATED_MESSAGE_TYPE : int
+		---
+		* DAYS_AFTER_TARGET : int
+		-- Audit --
+		CHANGED : timestamp
+		* CREATED_DATE : datetime
+		* CREATED_BY : int
+		UPDATED_DATE : datetime
+		UPDATED_BY : int
+		DELETED_DATE : datetime
+		DELETED_BY : int
+	}
+
+	class MILESTONE_TEMPLATE_EMAIL_DOCUMENT {
+		* ID : int
+		-- Foreign Keys --
+		* MILESTONE_TEMPLATE_EMAIL_ID : int
+		* MAIL_MERGE_LOOKUP_ID : int
+		---
+		DESTINATIONS : varchar(4000)
+		CLASSIFICATION : varchar(100)
+		ACCESS : int
+		* BODY : bit
+		* SUBJECT : bit
+		-- Audit --
+		* CHANGED : timestamp
+		* CREATED_BY : int
+		* CREATED_DATE : datetime
+		LAST_UPDATED_BY : int
+		LAST_UPDATED_DATE : datetime
+		DELETED_DATE : datetime
+		DELETED_BY : int
+	}
+
+	class MILESTONE_TEMPLATE_LETTER {
+		* ID : int
+		-- Foreign Keys --
+		* MILESTONE_TEMPLATE_ID : int
+		* MAIL_MERGE_ID : int
+		---
+		DESTINATIONS : varchar(4000)
+		CLASSIFICATION : varchar(100)
+		ACCESS : int
+		-- Audit --
+		* CHANGED : timestamp
+		* CREATED_BY : int
+		* CREATED_DATE : datetime
+		* LAST_UPDATED_BY : int
+		* LAST_UPDATED_DATE : datetime
+		DELETED_DATE : datetime
+		DELETED_BY : int
+	}
+
+	class AUDIT_MILESTONE_TEMPLATE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* MILESTONE_TEMPLATE_ID : int
+		---
+		PARENT_REVIEW_RECOMMENDATION_ID : varchar(100)
+		PARENT_REVIEW_RESULT_ID : varchar(100)
+		PARENT_REVIEW_TYPE_ID : varchar(100)
+		MILESTONE_LONG_ID : varchar(10)
+		TITLE : varchar(255)
+		TARGET_CALCULATION_FIELD : varchar(100)
+		TARGET_CALCULATION_VALUE : int
+		PERIOD : varchar(10)
+		OWNING_CASEWORKER : varchar(100)
+		OWNING_TEAM : varchar(100)
+		DETAILED_PROCESS_NOTES : text
+		PRIORITY : varchar(50)
+		MANUAL_EDITABLE : bit
+		LATE_REASON_REQUIRED : bit
+		PREREQUISITE : int
+		NOT_TODO : bit
+		PROCESS : varchar(50)
+		ALLOW_UNRESTRICTED_EDIT : bit
+		AUTO_ACTUALISE : varchar(100)
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class MAIL_MERGE_LOOKUP {
+		* ID : int
+		-- Foreign Keys --
+		* TEAM : int
+		* UNIT : int
+		---
+		* FORM_NAME : varchar(50)
+		TEMPLATE_NAME : varchar(110)
+		DOC_NAME : varchar(100)
+		* STORED_PROC : varchar(100)
+		* ID_NAME : varchar(50)
+		* SFO : bit
+		* CPPC : bit
+		* MANAGER : bit
+		* MERGE_DOC_TYPE : int
+		* ATTACH : bit
+		-- Audit --
+		CHANGED : timestamp
+		DELETED : datetime
+	}
+
+	class AUDIT_MAIL_MERGE_LOOKUP <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* MAIL_MERGE_LOOKUP_ID : int
+		---
+		* FORM_NAME : varchar(50)
+		* TEMPLATE_NAME : varchar(50)
+		* DOC_NAME : varchar(50)
+		* STORED_PROC : varchar(100)
+		* ID_NAME : varchar(50)
+		* SFO : bit
+		* CPPC : bit
+		* MANAGER : bit
+		* TEAM : varchar(50)
+		* UNIT : varchar(50)
+		* MERGE_DOC_TYPE : varchar(50)
+		* ATTACH : bit
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class MAIL_MERGE_REF_DOC {
+		* STORED_PROC : varchar(255)
+		* REFERENCE_DOC : varchar(255)
+	}
+
+
+	' AUDIT_MILESTONE_TEMPLATE }o-u-|| MILESTONE_TEMPLATE
+	' AUDIT_MAIL_MERGE_LOOKUP }o-u-|| MAIL_MERGE_LOOKUP
+
+	' MILESTONE_TASK }o--|| unknown.MILESTONE
+	' MILESTONE_TASK }o--|| TASK_STATUS
+
+	' MILESTONE_TEMPLATE ||-o{ MILESTONE_TEMPLATE_LETTER
+	' MILESTONE_TEMPLATE_LETTER }o--|| unknown.MAIL_MERGE
+
+	' MILESTONE_TEMPLATE_EMAIL_DOCUMENT }o-|| MILESTONE_TEMPLATE_EMAIL
+	' MILESTONE_TEMPLATE_EMAIL_DOCUMENT }o--|| MAIL_MERGE_LOOKUP
+
+	' MILESTONE_TEMPLATE_EMAIL }o-|| MILESTONE_TEMPLATE
+
+	' MILESTONE_TEMPLATE_WAM_NOTIFICATION }o-|| MILESTONE_TEMPLATE
+	' MILESTONE_TEMPLATE_WAM_NOTIFICATION }o-|| wam_messages.WAM_AUTOMATED_MESSAGE_TYPE
+
+	' MAIL_MERGE_LOOKUP }|-u-|| moj.caseworkers.CASEWORKER_TEAM
+	' MAIL_MERGE_LOOKUP }|-u-|| moj.caseworkers.UNIT
+
+	' MILESTONE_TEMPLATE }|-u-o| parole.reviews.REVIEW_RECOMMENDATION
+	' MILESTONE_TEMPLATE }|-u-o| parole.reviews.REVIEW_RESULT
+	' MILESTONE_TEMPLATE }|-u-o| parole.reviews.REVIEW_TYPE
+	' MILESTONE_TEMPLATE }|-u-o| moj.caseworkers.CASEWORKER
+	' MILESTONE_TEMPLATE }|-u-o| moj.caseworkers.CASEWORKER_TEAM
+	' MILESTONE_TEMPLATE }o-u-o| common.PRIORITY
+
+}
+
+@enduml

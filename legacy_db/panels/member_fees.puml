@@ -1,0 +1,116 @@
+@startuml
+!include ../style.puml
+
+namespace fees $MinorPackage {
+
+  class MEMBER_FEE {
+    * ID : int
+    -- Foreign Keys --
+    HEARING : int
+    * PANEL_MEMBER : int
+    * MEMBER_FEE_TYPE : int
+    PANEL : int
+    PANEL_MEMBER_ROLE : int
+    PANEL_LOCATION : int
+    PANEL_TYPE : int
+    STAMPED_PANEL_ID : int
+    MEMBER_FEE_VALUE_ID : int
+    ---
+    FEE_DATE : datetime
+    HEARING_DATE : datetime
+    * FEE_VALUE : money
+    * DESCRIPTION : varchar(50)
+    -- Audit --
+    * CHANGED : timestamp
+    CREATED_DATE : datetime
+    CREATED_BY : int
+    UPDATED_DATE : datetime
+    UPDATED_BY : int
+    DELETED_DATE : datetime
+    DELETED_BY : int
+  }
+
+  class MEMBER_FEE_TYPE <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    ROLES : int
+    PER_PANEL : bit
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+    * LINKED_TO_REVIEW : bit
+  }
+
+  class MEMBER_FEE_TYPE_ROLE <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class MEMBER_FEE_VALUES {
+    * MEMBER_FEE_VALUE_ID : int
+    -- Foreign Keys --
+    * MEMBER_FEE_TYPE_ID : int
+    * HEARING_LISTING_STATUS_ID : int
+    * PANEL_MEMBER_ROLE_ID : int
+    ---
+    * DOUBLE_PREP_FLAG : bit
+    FEE_VALUE : float
+    * DESCRIPTION : varchar(50)
+    LIBERATA_CODE : varchar(50)
+    -- Audit --
+    RECORD_CREATION_DATE : datetime
+    RECORD_LAST_SAVED_DATE : datetime
+    RECORD_CREATED_BY : int
+    RECORD_LAST_SAVED_BY : int
+    DELETED : datetime
+    DELETED_BY : int
+  }
+
+  class AUDIT_MEMBER_FEE_VALUE <<AuditTable>> {
+    * ID : int
+    -- Foreign Keys --
+    * MEMBER_FEE_VALUE_ID : int
+    -- Audit --
+    * CHANGED_DATE : datetime
+    * CHANGED_BY : int
+    ORIGINAL_VALUE : varchar(50)
+    NEW_VALUE : varchar(50)
+    * CHANGED_COLUMN : varchar(50)
+  }
+
+  panels.members.PANEL_MEMBER ||--o{ MEMBER_FEE
+  hearings.HEARING |o--o{ MEMBER_FEE
+  panels.PANEL |o--o{ MEMBER_FEE
+  panels.members.PANEL_MEMBER_ROLE |o--o{ MEMBER_FEE
+  panels.members.PANEL_MEMBER_ROLE |o--o{ MEMBER_FEE_VALUES
+  moj.establishments.ESTABLISHMENT |o--o{ MEMBER_FEE
+  panels.PANEL_TYPE |o--o{ MEMBER_FEE
+
+  MEMBER_FEE }o-|| MEMBER_FEE_VALUES
+  MEMBER_FEE }o--|| MEMBER_FEE_TYPE
+
+  MEMBER_FEE_VALUES ||--o{ AUDIT_MEMBER_FEE_VALUE
+  MEMBER_FEE_VALUES }o--|| MEMBER_FEE_TYPE
+
+}
+
+
+
+@enduml

@@ -1,0 +1,206 @@
+@startuml
+!include ../style.puml
+
+namespace establishments $MinorPackage {
+
+	class ESTABLISHMENT {
+		* ID : int
+		-- Foreign Keys --
+		POLICE_FORCE : int
+		TRUST : int
+		TRIBUNAL_OFFICE : int
+		NOMS_REGION : int
+		CORONER_AREA : int
+		---
+		* DESCRIPTION : varchar(100)
+		ADDRESS : varchar(255)
+		TELEPHONE : varchar(50)
+		OTHER : varchar(100)
+		ADDRESS_2 varchar(50)
+		ADDRESS_3 varchar(50)
+		ADDRESS_4 varchar(50)
+		POSTCODE : varchar(50)
+		FAX_NO : varchar(50)
+		EMAIL_ADDRESS : varchar(50)
+		CONTACT : varchar(100)
+		DIRECTIONS : text
+		MULTIPLE_PANELS : bit
+		VIDEO_LINK_ONLY : bit
+		WEBSITE_ADDRESS : nvarchar(100)
+		HEALTHCARE_PROVIDER : nvarchar(100)
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class AUDIT_ESTABLISHMENT <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* ESTABLISHMENT_ID : int
+		---
+		* DESCRIPTION : varchar(100)
+		ADDRESS : varchar(255)
+		TELEPHONE : varchar(50)
+		OTHER : varchar(100)
+		ADDRESS_2 varchar(50)
+		ADDRESS_3 varchar(50)
+		ADDRESS_4 varchar(50)
+		POSTCODE : varchar(50)
+		FAX_NO : varchar(50)
+		EMAIL_ADDRESS : varchar(50)
+		POLICE_FORCE : varchar(50)
+		TRUST : varchar(50)
+		TRIBUNAL_OFFICE : varchar(50)
+		NOMS_REGION : varchar(50)
+		DIRECTIONS : text
+		MULTIPLE_PANELS : bit
+		VIDEO_LINK_ONLY : bit
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class ESTABLISHMENT_ESTABLISHMENT_TYPE <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		ESTABLISHMENT : int
+		ESTABLISHMENT_TYPE : int
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class ESTABLISHMENT_TEAM {
+		* ID : int
+		-- Foreign Keys --
+		* ESTABLISHMENT : int
+		* TEAM : int
+		* CASEWORKER : int
+		* UNIT : int
+		REVIEW_TYPE : int
+		---
+		ALPHA_START : varchar(5)
+		ALPHA_END : varchar(5)
+	}
+
+	' together {
+		class ESTABLISHMENT_TYPE <<LookupTable>> {
+			* ID : int
+			-- Foreign Keys --
+			---
+			DESCRIPTION : varchar(50)
+			-- Visibility --
+			SHOW_TO_UNIT : int
+			-- Audit --
+			DELETED : datetime
+			LOV_DELETED_BY : int
+			LOV_UPDATED_BY : int
+			LOV_UPDATED_DATE : datetime
+			LOV_CREATED_BY : int
+			LOV_CREATED_DATE : datetime
+		}
+		class ESTABLISHMENT_UNIT <<LookupTable>> {
+			* ID : int
+			-- Foreign Keys --
+			* ESTABLISHMENT : int
+			---
+			* DESCRIPTION : varchar(50)
+			-- Visibility --
+			SHOW_TO_UNIT : int
+			-- Audit --
+			DELETED : datetime
+			LOV_DELETED_BY : int
+			LOV_UPDATED_BY : int
+			LOV_UPDATED_DATE : datetime
+			LOV_CREATED_BY : int
+			LOV_CREATED_DATE : datetime
+		}
+	' }
+
+	class STAFF {
+		* ID : int
+		-- Foreign Keys --
+		* GRADE : int
+		---
+		TITLE : varchar(20)
+		* FIRST_NAME : varchar(50)
+		* FAMILY_NAME : varchar(50)
+		MOBILE_NO : varchar(50)
+		ADDRESS_1 varchar(150)
+		ADDRESS_2 varchar(50)
+		ADDRESS_3 varchar(50)
+		ADDRESS_4 varchar(50)
+		POSTCODE : varchar(10)
+		-- Foreign Keys --
+		---
+		* CHANGED : timestamp
+		DELETED : datetime
+	}
+
+	class STAFF_ESTABLISHMENT <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* STAFF : int
+		* ESTABLISHMENT : int
+		---
+		DESCRIPTION : varchar(50)
+		LINK_DATE : datetime
+		TEL_NO : varchar(50)
+		FAX_NO : varchar(50)
+		EMAIL_ADDRESS : varchar(100)
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class STAFF_GRADE <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class AUDIT_STAFF <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* STAFF : int
+		---
+		TITLE : varchar(20)
+		* FIRST_NAME : varchar(50)
+		* FAMILY_NAME : varchar(50)
+		MOBILE_NO : varchar(50)
+		* GRADE : int
+		ADDRESS_1 varchar(150)
+		ADDRESS_2 varchar(50)
+		ADDRESS_3 varchar(50)
+		ADDRESS_4 varchar(50)
+		POSTCODE : varchar(10)
+		-- Audit --
+		* CHANGED : timestamp
+		DELETED : datetime
+	}
+
+	ESTABLISHMENT_ESTABLISHMENT_TYPE }o-|| ESTABLISHMENT
+	ESTABLISHMENT_ESTABLISHMENT_TYPE }o--|| ESTABLISHMENT_TYPE
+
+	ESTABLISHMENT ||-o{ ESTABLISHMENT_TEAM
+	ESTABLISHMENT_TEAM }o--|| moj.caseworkers.CASEWORKER_TEAM
+	ESTABLISHMENT_TEAM }o--|| moj.caseworkers.CASEWORKER
+	ESTABLISHMENT_TEAM }o--|| moj.caseworkers.UNIT
+	ESTABLISHMENT }o-u-o| moj.POLICE_FORCE
+	ESTABLISHMENT }o-u-o| organisations.TRUST
+	ESTABLISHMENT }o-u-o| moj.TRIBUNAL_OFFICE
+	ESTABLISHMENT }o-u-o| moj.NOMS_REGION
+	ESTABLISHMENT }o-u-o| moj.CORONER_AREA
+
+	ESTABLISHMENT_UNIT }o--|| ESTABLISHMENT
+
+	AUDIT_ESTABLISHMENT }o-u-|| ESTABLISHMENT
+
+	ESTABLISHMENT ||-o{ STAFF_ESTABLISHMENT
+	STAFF_ESTABLISHMENT }o-|| STAFF
+	STAFF }o--|| STAFF_GRADE
+
+	AUDIT_STAFF }o-u-|| STAFF
+
+}
+
+@enduml

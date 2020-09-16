@@ -1,0 +1,137 @@
+@startuml
+!include style.puml
+
+namespace fno_transfers $MinorPackage {
+	class FNO_TRANSFER {
+		* ID : int
+		-- Foreign Keys --
+		* REVIEW : int
+		* FNO_TRANSFER_AGREEMENT : int
+		* FNO_TRANSFER_REJECTED_REASON : int
+		* FNO_TRANSFER_STATUS : int
+		* FNO_TRANSFER_REASON : int
+		* AIRLINE : int
+		* COUNTRY_FROM : int
+		* COUNTRY_TO : int
+		CBT_CASE_STATUS_ID : int
+		---
+		* DATE_RECEIVED : datetime
+		FLIGHT_NUMBER : varchar(100)
+		FLIGHT_DATE : datetime
+		REFERRED_TO_OTHER_JURISDICTION : datetime
+		RESPONSE_FROM_OTHER_JURISDICTION : datetime
+		RECEIVED_FROM_OTHER_JURISDICTION : datetime
+		REPLY_TO_OTHER_JURISDICTION : datetime
+		* DEPORTED_ERS : bit
+		DEPORTATION_ORDER_DATE : datetime
+		-- Audit --
+		* CHANGED : timestamp
+		CREATED : datetime
+		CREATED_BY : int
+		LAST_MODIFIED : datetime
+		LAST_MODIFIED_BY : int
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class CBT_CASE_STATUS <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class FNO_TRANSFER_AGREEMENT <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class FNO_TRANSFER_REASON <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class FNO_TRANSFER_REJECTED_REASON <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class FNO_TRANSFER_STATUS <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class AIRLINE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	FNO_TRANSFER }o-u-|| parole.reviews.REVIEW
+	FNO_TRANSFER }o--|| FNO_TRANSFER_AGREEMENT
+	FNO_TRANSFER }o--|| FNO_TRANSFER_REJECTED_REASON
+	FNO_TRANSFER }o--|| FNO_TRANSFER_STATUS
+	FNO_TRANSFER }o--|| FNO_TRANSFER_REASON
+	FNO_TRANSFER }o--|| AIRLINE
+	FNO_TRANSFER }o--o| CBT_CASE_STATUS
+	FNO_TRANSFER }o--|{ COUNTRY
+}
+
+@enduml

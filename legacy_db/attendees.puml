@@ -1,0 +1,224 @@
+@startuml
+!include style.puml
+
+namespace attendees $MinorPackage {
+	class ATTENDEE {
+		* ID : int
+		-- Foreign Keys --
+		HEARING : int
+		CASEWORKER : int
+		ADDRESS : int
+		ATTENDEE_TYPE : int
+		PROBATION_SERVICE : int
+		TITLE : int
+		ATTENDEE_ROLE : int
+		ATTENDEE_STATUS : int
+		ESTABLISHMENT : int
+		---
+		FIRST_NAMES : varchar(50)
+		FAMILY_NAME : varchar(50)
+		PHONE_NO : varchar(50)
+		MOBILE_NO : varchar(50)
+		MANDATORY : bit
+		EMAIL : varchar(100)
+		PARENT_RECORD : int
+		HISTORIC : bit
+		EXTRA_INFO : varchar(255)
+		FAX_NO : varchar(50)
+		AVAILABILITY_UPDATED : datetime
+		AVAILABILITY_UPDATED_BY : int
+		-- Audit --
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		CREATED_BY : int
+		CREATED_DATE : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class ATTENDEE_HEARING <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		ATTENDEE : int
+		ATTENDEE_ROLE : int
+		ATTENDEE_STATUS : int
+		HEARING : int
+		---
+		MANDATORY : bit
+		-- Audit --
+		CREATED_BY : int
+		CREATED_DATE : datetime
+		CHANGED_BY : int
+		CHANGED_DATE : datetime
+		DELETED_DATE : datetime
+		DELETED_BY : int
+	}
+
+	class ATTENDEE_ICM_AUTO {
+		* ID : int
+		-- Foreign Keys --
+		* HEARING : int
+		ATTENDEE_ROLE : int
+		---
+		FIRST_NAMES : varchar(50)
+		* FAMILY_NAME : varchar(50)
+		GIVEN_ROLE : varchar(50)
+		-- Audit --
+		CREATED_BY : int
+		CREATED_DATE : datetime
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+	}
+
+	class ATTENDEE_ROLE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		ROLE_TYPE : int
+		---
+		* DESCRIPTION : varchar(50)
+		ALIAS : varchar(255)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class ATTENDEE_ROLE_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		SORT_ORDER : int
+		TIMETABLE_BEFORE_ADVOCATE : bit
+		TIMETABLE_SHOW_ROLE_DESCRIPTION : bit
+		TIMETABLE_DESCRIPTION : varchar(255)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class ATTENDEE_STATUS <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		ATTENDING : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class ATTENDEE_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		EMAIL_MANDATORY : bit
+		SOLICITOR : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class ATTENDEE_UNAVAILABILTY {
+		* ID : int
+		-- Foreign Keys --
+		* ATTENDEE : int
+		ESTABLISHMENT : int
+		---
+		* UNAVAILABLE_DATE : datetime
+	}
+
+
+	class AUDIT_ATTENDEE_ROLE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* ATTENDEE_ROLE_ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		ROLE_TYPE : int
+		ALIAS : varchar(255)
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class AUDIT_ATTENDEE_TYPE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* ATTENDEE_TYPE_ID : int
+		---
+		DESCRIPTION : varchar(50)
+		EMAIL_MANDATORY : bit
+		SOLICITOR : bit
+		-- Audit --
+		CHANGE_BY : int
+		CHANGE_DATE : datetime
+	}
+
+	class ADDRESS {
+		* ID : int
+		---
+		DX : varchar(20)
+		ORGANISATION : varchar(50)
+		COMMENTS : varchar(255)
+		SIGNATORY : varchar(50)
+		IGNORE_TITLE : bit
+		ADDRESS_1 varchar(75)
+		ADDRESS_2 varchar(50)
+		ADDRESS_3 varchar(50)
+		POSTCODE : varchar(20)
+		ADDRESS_4 varchar(250)
+	}
+
+	ATTENDEE }o-u-o| hearings.HEARING
+	ATTENDEE }o-u-o| moj.caseworkers.CASEWORKER
+	ATTENDEE }o-u-o| moj.PROBATION_SERVICE
+	ATTENDEE }o--o| ADDRESS
+	ATTENDEE }o--o| ATTENDEE_TYPE
+	ATTENDEE }o--o| ATTENDEE_ROLE
+	ATTENDEE }o--o| ATTENDEE_STATUS
+	ATTENDEE }o--o| common.TITLE
+
+	ATTENDEE_HEARING }o-|| ATTENDEE
+	ATTENDEE_HEARING }o-u-|| hearings.HEARING
+	ATTENDEE_HEARING }o--|| ATTENDEE_ROLE
+	ATTENDEE_HEARING }o--|| ATTENDEE_STATUS
+
+	AUDIT_ATTENDEE_TYPE }o-u-|| ATTENDEE_TYPE
+	AUDIT_ATTENDEE_ROLE }o-u-|| ATTENDEE_ROLE
+
+	ATTENDEE_ICM_AUTO }o-u-|| hearings.HEARING
+	ATTENDEE_ICM_AUTO }o--o| ATTENDEE_ROLE
+
+	ATTENDEE ||-o{ ATTENDEE_UNAVAILABILTY
+	moj.establishments.ESTABLISHMENT |o--o{ ATTENDEE_UNAVAILABILTY
+
+	ATTENDEE_ROLE }o--|| ATTENDEE_ROLE_TYPE
+
+}
+
+@enduml

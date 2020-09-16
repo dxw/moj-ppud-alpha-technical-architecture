@@ -1,0 +1,148 @@
+@startuml
+!include ../style.puml
+
+namespace moj $MajorPackage {
+
+  class PROBATION_SERVICE {
+    * ID : int
+    -- Foreign Keys --
+    NOM_REGION : int
+    CASEWORKER_TEAM : int
+    OWNING_CASEWORKER : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    UPDATED_BY : int
+    UPDATED_DATE : datetime
+    CREATED_BY : int
+    CREATED_DATE : datetime
+    DELETED : datetime
+    DELETED_BY : int
+  }
+  class POLICE_FORCE <<LookupTable>> {
+    * ID : int
+    ---
+    * Description : varchar(50)
+    ADDRESS_1 varchar(50)
+    ADDRESS_2 varchar(50)
+    ADDRESS_3 varchar(50)
+    ADDRESS_4 varchar(50)
+    POSTCODE : varchar(20)
+    PHONE : varchar(20)
+    FAX : varchar(20)
+    EMAIL : varchar(50)
+    OTHER : varchar(100)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+  class NOMS_REGION <<LookupTable>> {
+    * ID : int
+    ---
+    DESCRIPTION : varchar(50)
+    ADDRESS_1 varchar(255)
+    ADDRESS_2 varchar(50)
+    ADDRESS_3 varchar(50)
+    ADDRESS_4 varchar(50)
+    POSTCODE : varchar(20)
+    PHONE : varchar(20)
+    FAX : varchar(20)
+    EMAIL : varchar(50)
+    OTHER : varchar(100)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+  class TRIBUNAL_OFFICE <<LookupTable>> {
+    * ID : int
+    ---
+    DESCRIPTION : varchar(50)
+    ADDRESS_1 varchar(50)
+    ADDRESS_2 varchar(50)
+    ADDRESS_3 varchar(50)
+    ADDRESS_4 varchar(50)
+    POSTCODE : varchar(50)
+    PHONE_NUMBER : varchar(20)
+    FAX : varchar(20)
+    EMAIL : varchar(50)
+    OTHER : varchar(100)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+  class CORONER_AREA <<LookupTable>> {
+    * ID : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  class MAPPA_LEVEL <<LookupTable>> {
+    * ID : int
+    ---
+    * Description : varchar(50)
+    MESSAGE : varchar(100)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+  class MAPPA_CATEGORY <<LookupTable>> {
+    * ID : int
+    ---
+    * Description : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+  !include caseworkers.puml
+  !include establishments.puml
+
+  PROBATION_SERVICE }o-u-o| moj.caseworkers.CASEWORKER
+  PROBATION_SERVICE }o-u-o| moj.caseworkers.CASEWORKER_TEAM
+  PROBATION_SERVICE }o-u-o| NOMS_REGION
+
+}
+
+
+@enduml

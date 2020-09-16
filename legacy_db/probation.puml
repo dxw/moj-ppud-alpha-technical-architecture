@@ -1,0 +1,38 @@
+@startuml
+!include style.puml
+
+namespace probation_reports $MinorPackage {
+
+  class PROBATION_REPORT {
+    * PROBATION_REPORT_ID : int
+    -- Foreign Keys --
+    * OFFENDER_ID : int
+    * CASEWORKER_ID : int
+    ACTION_TYPE : int
+    REPORT_TYPE : int
+    OWNING_TEAM : int
+    PRIORITY : int
+    ---
+    DELIVERY_TARGET : datetime
+    DELIVERY_ACTUAL : datetime
+    REPLY_TARGET : datetime
+    REPLY_ACTUAL : datetime
+    COMMENTS : varchar(255)
+    ACTION_TARGET : datetime
+    ACTION_ACTUAL : datetime
+    DOCUMENT_TITLE : varchar(255)
+    DOCUMENT_LOCATION : varchar(512)
+    DOCUMENT_SIZE : int
+    POST_RELEASE : int
+    -- Audit --
+    * CHANGED : timestamp
+    DELETED : datetime
+  }
+
+  PROBATION_REPORT }o-u-|| offenders.OFFENDER
+  PROBATION_REPORT }o-u-|| moj.caseworkers.CASEWORKER
+  PROBATION_REPORT }o-u-o| common.PRIORITY
+  PROBATION_REPORT }o-u-o| moj.caseworkers.CASEWORKER_TEAM
+}
+
+@enduml

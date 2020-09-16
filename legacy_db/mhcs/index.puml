@@ -1,0 +1,11 @@
+@startuml
+!include ../style.puml
+
+namespace mhcs $MajorPackage {
+
+  !include detention_authority.puml
+  !include leave_requests.puml
+
+}
+
+@enduml

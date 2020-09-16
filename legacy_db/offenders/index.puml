@@ -1,0 +1,263 @@
+@startuml
+!include ../style.puml
+
+namespace offenders $MajorPackage {
+	class OFFENDER <<ExternalData>> {
+		* OFFENDER_ID : int
+		-- Foreign Keys --
+		IMMIGRATION_STATUS : int
+		UKBA_INTEREST : int
+		SECURITY_CATEGORY : int
+		PROBATION_SERVICE : int
+		* PRISONER_CATEGORY : int
+		* OWNING_TEAM : int
+		* OWNING_CASEWORKER : int
+		CURRENT_STAFF : int
+		CURRENT_SOCIAL_SUPERVISOR : int
+		PRISON_CASEWORKER : int
+		PAROLE_CASEWORKER : int
+		VLO : int
+		---
+		FILE_REFERENCE : varchar(20)
+		* NOTEWORTHY_FLAG : bit
+		* SEXUAL_OFFENCE_FLAG : bit
+		* SCHEDULE_1_FLAG bit
+		* SUBJECT_TO_DEPORTATION_FLAG : bit
+		* UAL_FLAG : bit
+		* SUPERVISION_CANCELLED_FLAG : bit
+		* CURRENT_JUDICIAL_REVEIW : bit
+		* MENTAL_HEALTH_CASE : bit
+		GENERAL_COMMENTS : text
+		' LEGACY_TRIAL_JUDGE_1 int
+		' LEGACY_TRIAL_JUDGE_2 int
+		' LEGACY_LCJ_1 int
+		' LEGACY_LCJ_2 int
+		' LEGACY_TARIFF_HIST_1 int
+		' LEGACY_TARIFF_HIST_2 int
+		' LEGACY_TARIFF_HIST_3 int
+		' LEGACY_TARIFF_CURR : int
+		' LEGACY_DEEMED_EXPIRED : varchar(20)
+		RECEIPT_OF_NOTIFICATION_OF_APPLICN : datetime
+		TARIFF_DISCLOSURE_TARGET : datetime
+		TARIFF_DISCLOSURE_ACTUAL : datetime
+		* FURTHER_CONV_SINCE_LAST_RELEASE : bit
+		TX_TO_ADULT_STATUS : datetime
+		DPA_FOI_REQUEST_DATE : datetime
+		DPA_FOI_REPLY_TARGET : datetime
+		DPA_FOI_REPLY_ACTUAL : datetime
+		DPA_FOI_COMMENTS : text
+		* VIOLENT_OFFENCE_FLAG : bit
+		LICENCE_CONDITIONS : varchar(2048)
+		OFF_CREATION_DATE : datetime
+		INITIATION_PAPERS_RECEIVED : datetime
+		CSTT_REVIEW_TARGET : datetime
+		' tempid : int
+		OLD_PRISON_NUMBER : varchar(255)
+		SENTENCING_REMARK_ACTUAL : datetime
+		STAFF_START_DATE : datetime
+		ALT_FILE_REFERENCE : varchar(50)
+		TECHNICAL_LIFER : bit
+		VICTIM_ISSUES : bit
+		* PPO : bit
+		* FURTHER_OFFENCES : bit
+		EXTREMIST_FLAG : bit
+		EXCLUDED_FROM_OPEN : bit
+		PSYCHOLOGIST_FLAG : bit
+		* OVERRIDE_DEFAULT_WAM_REVIEW : bit
+		TRANSFORMING_CARE_FLAG : bit
+		-- Prison API /offenders --
+		PRISON_NUMBER : varchar(50)
+		CRO_PNC : varchar(50)
+		* TITLE : varchar(20)
+		FIRST_NAMES : varchar(50)
+		FAMILY_NAME : varchar(50)
+		DOB : datetime
+		GENDER : varchar(50)
+		* YOUNG_OFFENDER : int
+		* NATIONALITY : int
+		* ETHNICITY : int
+		* STATUS : int
+		* CURRENT_ESTABLISHMENT : int
+		FIRST_RELEASE_DATE : datetime
+		LATEST_RELEASE_DATE : datetime
+		CURRENT_ESTABLISHMENT_TYPE : int
+		CURRENT_ESTABLISHMENT_UNIT : int
+		LATEST_ADDRESS_ID : int
+		ALT_DOB : varchar(50)
+		ALIAS : varchar(450)
+		NOMS_ID : varchar(20)
+		DOR : datetime
+		DOS : datetime
+		-- Audit --
+		CHANGED : timestamp
+		RECORD_CREATION_DATE : datetime
+		RECORD_CREATED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		RECORD_LAST_SAVED_BY : int
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class OFFENDER_ADDRESS <<ExternalData>> {
+		* ADDRESS_ID : int
+		---
+		* OFFENDER_ID : int
+		PREMISES_NAME : varchar(50)
+		LINE_1 varchar(50)
+		LINE_2 varchar(50)
+		POSTCODE : varchar(10)
+		TELEPHONE : varchar(30)
+		EXPIRY : datetime
+	}
+
+	class OFFENDER_STATUS <<ExternalData>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		START : bit
+		* IS_MHU_ONLY : bit
+		MENTAL_HEALTH_CASE : bit
+		* IN_PRISON : bit
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class AUDIT_OFFENDER_STATUS <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		OFFENDER_STATUS_ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		START : bit
+		* IS_MHU_ONLY : bit
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class OFFENDER_VLO <<JoinTable>> {
+		* OFFENDER_VLO_ID : int
+		-- Foreign Keys --
+		* OFFENDER_ID : int
+		* VLO_ID : int
+		-- Audit --
+		* CREATED_BY : int
+		* DATE_CREATED : datetime
+		* DELETED : bit
+		DELETED_BY : int
+	}
+
+	class ETHNICITY <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+	class NATIONALITY <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+	class IMMIGRATION_STATUS <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class SECURITY_CATEGORY <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+	class YOUNG_OFFENDER <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+	class UKBA_INTEREST <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		INTEREST : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	!include sentences.puml
+	!include offences.puml
+
+	OFFENDER ||-o{ OFFENDER_VLO
+	OFFENDER_VLO }o-u-|| moj.establishments.STAFF
+
+	OFFENDER }o-u-|| moj.PROBATION_SERVICE
+	OFFENDER }o-u-|| moj.establishments.ESTABLISHMENT
+	OFFENDER }o-u-|{ moj.caseworkers.CASEWORKER
+	OFFENDER }o-u-o| moj.establishments.ESTABLISHMENT_TYPE
+	OFFENDER }o-u-o| moj.establishments.ESTABLISHMENT_UNIT
+	OFFENDER }o-u-o{ moj.establishments.STAFF
+	OFFENDER }o-o| OFFENDER_ADDRESS
+	OFFENDER }o-|| OFFENDER_STATUS
+	OFFENDER }o--|| YOUNG_OFFENDER
+	OFFENDER }o--o| NATIONALITY
+	OFFENDER }o--o| ETHNICITY
+	OFFENDER }o--o| IMMIGRATION_STATUS
+	OFFENDER }o--o| UKBA_INTEREST
+	OFFENDER }o--o| SECURITY_CATEGORY
+
+	OFFENDER_STATUS ||--o{ AUDIT_OFFENDER_STATUS
+
+}
+
+
+@enduml

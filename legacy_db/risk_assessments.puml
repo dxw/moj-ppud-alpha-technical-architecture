@@ -1,0 +1,88 @@
+@startuml
+!include style.puml
+
+namespace risk_assessments $MinorPackage {
+
+	class RISK_ASSESSMENT {
+		* RISK_ASSESSMENT_ID : int
+		-- Foreign Keys --
+		OFFENDER_ID : int
+		SFO_ID : int
+		CPPC_CASE_ID : int
+		---
+		OGRS_RISK_OF_RECONVICT_PCT : int
+		LATEST_RISK_ASSESS : datetime
+		* OASYS_RISK_PRE_SFO : int
+		RMP_RECEIVED : datetime
+		* RA_SENTENCE_OASYS_SCREEN : bit
+		* RA_SENTENCE_OASYS_FULL : bit
+		* RA_SENTENCE_OASYS_REVIEW : bit
+		* RA_SENTENCE_ASSET : bit
+		* RA_SENTENCE_NONE : bit
+		* RA_CUSTODY_OASYS_SCREEN : bit
+		* RA_CUSTODY_OASYS_FULL : bit
+		* RA_CUSTODY_OASYS_REVIEW : bit
+		* RA_CUSTODY_ASSET : bit
+		* RA_CUSTODY_NONE : bit
+		* RA_COMMUNITY_OASYS_SCREEN : bit
+		* RA_COMMUNITY_OASYS_FULL : bit
+		* RA_COMMUNITY_OASYS_REVIEW : bit
+		* RA_COMMUNITY_ASSET : bit
+		* RA_COMMUNITY_NONE : bit
+		* RM_CHILDREN_COMM : int
+		* RM_CHILDREN_CUSTODY : int
+		* RM_PUBLIC_COMM : int
+		* RM_PUBLIC_CUSTODY : int
+		* RM_ADULT_COMM : int
+		* RM_ADULT_CUSTODY : int
+		* RM_STAFF_COMM : int
+		* RM_STAFF_CUSTODY : int
+		* RM_PRISONER_CUSTODY : int
+		* RM_SELF_COMM : int
+		* RM_SELF_CUSTODY : int
+		OGRS_24 int
+		OGP_12 int
+		OGP_24 int
+		OVP_12 int
+		OVP_24 int
+		DIVERSITY_ETHNICITY_FLAG : bit
+		DIVERSITY_SEXUALITY_FLAG : bit
+		DIVERSITY_GENDER_FLAG : bit
+		DIVERSITY_DISABILITY_FLAG : bit
+		DIVERSITY_RELIGION_FLAG : bit
+		DIVERSITY_AGE_FLAG : bit
+		DIVERSITY_CLASS_FLAG : bit
+		DIVERSITY_ETHNICITY_DETAIL : varchar(200)
+		DIVERSITY_SEXUALITY_DETAIL : varchar(200)
+		DIVERSITY_GENDER_DETAIL : varchar(200)
+		DIVERSITY_DISABILITY_DETAIL : varchar(200)
+		DIVERSITY_RELIGION_DETAIL : varchar(200)
+		DIVERSITY_AGE_DETAIL : varchar(200)
+		DIVERSITY_CLASS_DETAIL : varchar(200)
+		* OASYS_OR_ROSH : int
+		-- Audit --
+		CHANGED : timestamp
+	}
+
+
+	class RISK_LEVEL <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	RISK_ASSESSMENT }o--o| offenders.OFFENDER
+	RISK_ASSESSMENT }o--o| sfo.SFO
+	RISK_ASSESSMENT }o--o| cppc.CPPC_CASE
+}
+
+@enduml

@@ -1,0 +1,89 @@
+@startuml New PPUD Services System Context Diagram
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Component.puml
+
+Person(caseworker, "PPCS Caseworker")
+Person(mhcs_caseworker, "MHCS Caseworker")
+Person(ppo_caseworker, "PPO Caseworker")
+Person(offender, "Offender", "An offender or authorised agent, such as a solicitor")
+
+System_Boundary(authSys, "Authentication and Authorisation") {
+
+  System_Ext(IAM, "HMPPS Auth", "Allows users to login to digital services")
+  System(extAuth, "Third Party Auth", "Allows non-HMPPS users to login. Probably a COTS solution such as Auth0. Replaces WAM users.")
+  Rel(caseworker, IAM, "Logs in with", "OAuth/SAML")
+  Rel(mhcs_caseworker, IAM, "Logs in with", "OAuth/SAML")
+  Rel(ppo_caseworker, IAM, "Logs in with", "OAuth/SAML")
+  Rel(offender, extAuth, "Logs in with", "OAuth/SAML")
+
+}
+
+System_Ext(notify, "GOV.UK Notify")
+
+System_Boundary(moj, "Existing MoJ Web Services") {
+  System_Ext(PrisonAPI, "Prison API", "REST API for accessing offender data in NOMIS")
+  System_Ext(CommunityAPI, "Community API", "Community Offender REST API which exposes nDelius offender data in a canonical form")
+  System_Ext(OASysAPI, "Offender Assessment API", "REST API for accessing offender assessments data in the OASys system")
+  System_Ext(libra, "Libra API", "Magistrates Court data")
+  System_Ext(xhibit, "Xhibit API", "Crown Court data")
+}
+
+System_Boundary(ppud, "New Public Protection Data Service") {
+
+  Container(ppudAPI, "Public Protection API", "C# or node.js", "API which exposes all PPUD-specific data. Built either by extending the WAM SOAP API built in C#, or by building a new REST API in node.js")
+  ContainerDb(legacyDB, "Legacy PPUD", "MSSQL")
+  ContainerDb(ppudDB, "New PPUD", "TBD")
+  ContainerDb(docStorage, "Document Store", "Azure Files")
+  Rel(ppudAPI, legacyDB, "Fetches legacy data on demand from")
+  Rel(ppudAPI, ppudDB, "Writes data to and fetches data from")
+  Rel(ppudAPI, docStorage, "Manages files in")
+
+}
+
+System_Boundary(consumers, "Data Consumers") {
+
+  System_Ext(ppudClients, "API clients", "Other MoJ services can easily use PPUD data if they need it")
+  System_Ext(ppudReporting, "Reporting tools", "PowerBI or other MoJ reporting tools")
+  Rel(ppudClients, ppudAPI, "fetches canonical data from", "HTTPS")
+  Rel(ppudReporting, ppudAPI, "fetches statistical data from", "HTTPS")
+}
+
+System_Boundary(services, "New PPUD Frontend Services") {
+
+  Container(review, "Manage a Review", "node.js")
+  Rel(caseworker, review, "Uses", "HTTPS")
+  Rel(offender, review, "Views data in", "HTTPS")
+  Rel(review, ppudAPI, "Fetches data from", "HTTPS")
+  Rel(review, PrisonAPI, "Fetches offender data from", "HTTPS")
+  Rel(review, CommunityAPI, "Fetches offender data from", "HTTPS")
+  Rel(review, OASysAPI, "Fetches offender assessments from", "HTTPS")
+  Rel(review, notify, "Notifies stakeholders with", "HTTPS")
+
+  ' Container(recall, "Manage a Recall", "node.js")
+  ' Rel(caseworker, recall, "Uses", "HTTPS")
+  ' Rel(recall, ppudAPI, "Fetches data from", "HTTPS")
+  ' Rel(recall, PrisonAPI, "Fetches offender data from", "HTTPS")
+  ' Rel(recall, CommunityAPI, "Fetches offender data from", "HTTPS")
+  ' Rel(recall, OASysAPI, "Fetches offender assessments from", "HTTPS")
+  ' Rel(recall, notify, "Notifies stakeholders with", "HTTPS")
+
+  ' Container(movements, "Move to or from Hospital", "node.js")
+  ' Rel(mhcs_caseworker, movements, "Uses", "HTTPS")
+  ' Rel(movements, ppudAPI, "Fetches data from", "HTTPS")
+  ' Rel(movements, PrisonAPI, "Fetches offender data from", "HTTPS")
+  ' Rel(movements, notify, "Notifies stakeholders with", "HTTPS")
+
+  ' Container(complaints, "Investigate Complaints", "node.js")
+  ' Rel(ppo_caseworker, complaints, "Uses", "HTTPS")
+  ' Rel(complaints, ppudAPI, "Fetches data from", "HTTPS")
+  ' Rel(complaints, PrisonAPI, "Fetches offender data from", "HTTPS")
+  ' Rel(complaints, notify, "Notifies stakeholders with", "HTTPS")
+
+  ' Container(deaths, "Investigate Deaths", "node.js")
+  ' Rel(ppo_caseworker, deaths, "Uses", "HTTPS")
+  ' Rel(deaths, ppudAPI, "Fetches data from", "HTTPS")
+  ' Rel(deaths, PrisonAPI, "Fetches offender data from", "HTTPS")
+  ' Rel(deaths, notify, "Notifies stakeholders with", "HTTPS")
+
+}
+
+@enduml

@@ -1,0 +1,263 @@
+@startuml
+!include ../style.puml
+
+namespace caseworkers $MinorPackage {
+	class CASEWORKER {
+		* CASEWORKER_ID : int
+		-- Foreign Keys --
+		* TEAM_ID : int
+		SUBTEAM_ID : int
+		* MANAGER_ID : int
+		* TEAM_MANAGER_ID : int
+		* ROLE : int
+		CLIENT_SYSTEM : int
+		GRADE : int
+		PANEL_MEMBER : int
+		SOLICITOR : int
+		WAM_ROLE : int
+		---
+		LOGIN_NAME : varchar(100)
+		FULL_NAME : varchar(50)
+		PASSWORD : varchar(20)
+		LAST_LOGIN : datetime
+		* ADMIN_FLAG : bit
+		FAX_NO : varchar(50)
+		TEL_NO : varchar(50)
+		EMAIL : varchar(100)
+		* MANAGER : bit
+		SCREENWIDTH : int
+		SCREENHEIGHT : int
+		special : varchar(50)
+		* DOC_ADMIN : bit
+		AGREE_SYSOPS_ON_DATE : datetime
+		AGREE_DPA_ON_DATE : datetime
+		TREE_WIDTH : int
+		STAFF : bit
+		UNIT_DOSSIERS : int
+		LOGIN_SUB_TOKEN : varchar(100)
+		LOGIN_SUB_DATE : datetime
+		* CASE_LIMIT : int
+		LAST_CASE_ALLOCATION : datetime
+		WAM_SHOW_ALERTS : bit
+		-- Audit --
+		* CHANGED : timestamp
+		CREATED_BY : int
+		CREATED_DATE : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class CLIENT_SYSTEM <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class CASEWORKER_ROLE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class CASEWORKER_SUBTEAM <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		CASEWORKER_TEAM : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+		ABV_NAME : varchar(10)
+	}
+
+	class CASEWORKER_TEAM {
+		* TEAM_ID : int
+		-- Foreign Keys --
+		DEFAULT_CASEWORKER : int
+		UNIT : int
+		---
+		TEAM_NAME : varchar(255)
+		TEAM_NOTES : text
+		PRE_FILTER_CONDITION : varchar(1024)
+		SFO_ONLY_FLAG : bit
+		CPPC_ONLY_FLAG : bit
+		CST_ONLY_FLAG : bit
+		ALLOW_NEW_REPORT : bit
+		ALLOW_SAVE_REPORT : bit
+		AVAILABLETABS : bigint
+		ALLOW_NEW_PANEL : bit
+		ALLOW_TRACKER_VIEW : bit
+		ALLOW_PANEL_MEMBER_EDIT : bit
+		PROBATION : int
+		ALLOW_PANEL_MEMBER_ADDINFO : bit
+		CREATE_OFFENDER : bit
+		PRISONER_CASEWORK : bit
+		ABV_NAME : varchar(10)
+		RA_ACCESS : bit
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class CASEWORKER_TEAM_REPORT_CATEGORY <<JoinTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* CASEWORKER_TEAM : int
+		* CATEGORY : int
+	}
+
+	class Report_Category <<LookupTable>> {
+		* category_id : int
+		-- Foreign Keys --
+		parent_category_id : int
+		---
+		description : varchar(50)
+		SFO_ONLY : bit
+		CPPC_ONLY : bit
+		ADMIN_ONLY : bit
+	}
+
+	class CASEWORKER_TOKEN {
+		* CASEWORKER_TOKEN_ID : int
+		-- Foreign Keys --
+		---
+		USERID : varchar(50)
+		TOKEN : varchar(50)
+		EXPIRY : datetime
+	}
+
+	class AUDIT_CASEWORKER <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* CASEWORKER_ID : int
+		---
+		LOGIN_NAME : varchar(20)
+		FULL_NAME : varchar(50)
+		TEAM_ID : varchar(50)
+		MANAGER_ID : varchar(50)
+		TEAM_MANAGER_ID : varchar(50)
+		FAX_NO : varchar(50)
+		TEL_NO : varchar(50)
+		EMAIL : varchar(100)
+		* MANAGER : bit
+		GRADE : varchar(50)
+		special : varchar(50)
+		* DOC_ADMIN : bit
+		ROLE : varchar(50)
+		AGREE_SYSOPS_ON_DATE : datetime
+		AGREE_DPA_ON_DATE : datetime
+		CLIENT_SYSTEM : varchar(50)
+		UNIT_DOSSIERS : int
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class AUDIT_CASEWORKER_TEAM <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* TEAM_ID : int
+		---
+		TEAM_NAME : varchar(255)
+		TEAM_NOTES : text
+		PRE_FILTER_CONDITION : varchar(1024)
+		SFO_ONLY_FLAG : bit
+		CPPC_ONLY_FLAG : bit
+		CST_ONLY_FLAG : bit
+		UNIT : int
+		DEFAULT_CASEWORKER : varchar(50)
+		ALLOW_NEW_REPORT : bit
+		ALLOW_SAVE_REPORT : bit
+		AVAILABLETABS : bigint
+		ALLOW_NEW_PANEL : bit
+		ALLOW_TRACKER_VIEW : bit
+		ALLOW_PANEL_MEMBER_EDIT : bit
+		ALLOW_PANEL_MEMBER_ADDINFO : bit
+		PROBATION : bit
+		CREATE_OFFENDER : bit
+		PRISONER_CASEWORK : bit
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+		DELETED : datetime
+	}
+
+  class UNIT <<LookupTable>> {
+    * ID : int
+    ---
+    DESCRIPTION : varchar(50)
+    CORE : bit
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    DELETED : datetime
+    LOV_DELETED_BY : int
+    LOV_UPDATED_BY : int
+    LOV_UPDATED_DATE : datetime
+    LOV_CREATED_BY : int
+    LOV_CREATED_DATE : datetime
+  }
+
+	class GRADE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	AUDIT_CASEWORKER }o-u-|| CASEWORKER
+	AUDIT_CASEWORKER_TEAM }o-u-|| CASEWORKER_TEAM
+
+	CASEWORKER }o--|{ CASEWORKER
+	CASEWORKER }o-|| CASEWORKER_TEAM
+	CASEWORKER }o--o| CASEWORKER_SUBTEAM
+	CASEWORKER }o--|| CASEWORKER_ROLE
+	CASEWORKER }o--o| CLIENT_SYSTEM
+	CASEWORKER }o--o| GRADE
+	CASEWORKER }o--o| application.wam.WAM_ROLE
+
+	CASEWORKER_TEAM }o--o| CASEWORKER_SUBTEAM
+	CASEWORKER_TEAM }o--o| UNIT
+
+	CASEWORKER_TEAM_REPORT_CATEGORY }o--|| CASEWORKER_TEAM
+	CASEWORKER_TEAM_REPORT_CATEGORY }o--|| Report_Category
+
+	Report_Category }o--|| Report_Category
+}
+
+
+@enduml

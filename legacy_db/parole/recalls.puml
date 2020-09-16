@@ -1,0 +1,254 @@
+@startuml
+!include ../style.puml
+
+namespace recalls $MinorPackage {
+
+	class RECALL {
+		* RECALL_ID : int
+		-- Foreign Keys --
+		* RECALL_TYPE : int
+		* RECALL_PRISONER_CHOICE : int
+		RELEASE : int
+		PRIOR_RELEASE_ID : int
+		* HEARING_RESULT : int
+		* PROBATION_AREA : int
+		* MAPPA_LEVEL : int
+		* RTC_NOTIF_METHOD : int
+		* REVOCATION_ISSUED_BY : int
+		* CONSIDERED_BY_EO_CWORKER : int
+		* RECOMMEND_TO_EO_CWORKER : int
+		* REPS_REVIEW_TYPE : int
+		* REPS_CASEWORKER : int
+		* REPS_FURTHER_REVIEW_REASON : int
+		* CUSTODY_TYPE_AT_TIME_OF_RECALL : int
+		* STOPPED_REASON : int
+		* POLICE_FORCE : int
+		* OWNING_TEAM : int
+		* REVIEW_STATUS : int
+		REVIEW_ID : int
+		PAPER_DECISION_RA : int
+		PAPER_DECISION_RESULT : int
+		PAPER_DECISION_ESTABLISHMENT : int
+		ORAL_HEARING_RA : int
+		ORAL_HEARING_RESULT : int
+		ORAL_HEARING_ESTABLISHMENT : int
+		---
+		* MAND_DOCS_RECEIVED : int
+		LICENCE_REVOKE_DATE : datetime
+		RERELEASE_DATE : datetime
+		RTC_DATE : datetime
+		RTC_NOTIFICATION_ACTUAL : datetime
+		FIRST_NOTIF_AFTER_RTC_ACTUAL : datetime
+		DOSSIER_TARGET : datetime
+		DOSSIER_ACTUAL : datetime
+		RECALL_COMMENTS : text
+		PRISONER_CHOICE_RECEIVED : datetime
+		REVIEW_COMMENTS : text
+		RECALL_DOSSIER_TO_PB_TARGET : datetime
+		RECALL_DOSSIER_TO_PB_ACTUAL : datetime
+		* OUT_OF_HOURS : bit
+		PB_DECISION_AFTER_BREACH_ACTUAL : datetime
+		REPORT_RECD_BY_UNIT_TARGET : datetime
+		REPORT_RECD_BY_UNIT_ACTUAL : datetime
+		FOLLOW_ON_DOCN_RECD : datetime
+		RECOMMEND_TO_EO_ACTUAL : datetime
+		CONSIDERED_BY_EO_ACTUAL : datetime
+		ISSUE_REVOCATION_TARGET : datetime
+		RTC_TARGET : datetime
+		NOTIONAL_LED : datetime
+		SLED : datetime
+		REPS_FURTHER_REVIEW_DATE : datetime
+		* RESCIND_FLAG : bit
+		TEMPID : int
+		ESP : bit
+		EWS_NUMBER : varchar(50)
+		PAT_NOTE : bit
+		UAL_CHECK : datetime
+		IN_CUSTODY_AT_TIME_OF_RECALL : bit
+		MAND_DOC_PART_A : bit
+		MAND_DOC_OASYS : bit
+		MAND_DOC_PRE_SENTENCE_REP : bit
+		MAND_DOC_PREV_CONV : bit
+		MAND_DOC_LICENCE : bit
+		MAND_DOC_CHARGE_SHEET : bit
+		PAPER_DECISION_ACTUAL : datetime
+		ORAL_HEARING_DECISION_ACTUAL : datetime
+		LICENCE_NUMBER : varchar(50)
+		-- Audit --
+		ARCHIVED : datetime
+		* CHANGED : : timestamp
+		RECORD_CREATION_DATE : datetime
+		RECORD_CREATED_BY : int
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class RECALL_ADJUDICATION_RESULT <<LookupTable>> {
+		* ID : : int
+		---
+		* DESCRIPTION : : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class RECALL_MILESTONE_DATE {
+		* RECALL_MILESTONE_DATE_ID : : int
+		-- Foreign Keys --
+		RECALL_ID : int
+		OFFENDER_ID : int
+		RECALL_MILESTONE_TEMPLATE_ID : int
+		---
+		TARGET : datetime
+		ACTUAL : datetime
+		COMMENT : varchar(255)
+		TITLE : varchar(255)
+		PERFORMANCE_DASHBOARD_EXCEPTION : int
+		-- Audit --
+		CHANGED : timestamp
+	}
+
+	class RECALL_MILESTONE_TEMPLATE {
+		* RECALL_MILESTONE_TEMPLATE_ID : int
+		-- Foreign Keys --
+		PARENT_REVIEW_TYPE_ID : int
+		---
+		RECALL_MILESTONE_LONG_ID : varchar(10)
+		TITLE : varchar(255)
+		TARGET_CALCULATION_FIELD : varchar(100)
+		TARGET_CALCULATION_VALUE : int
+		PERIOD : char(1)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		UPDATED_BY : int
+		UPDATED_DATE : datetime
+		CREATED_BY : int
+		CREATED_DATE : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class RECALL_PRISONER_CHOICE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class RECALL_REASON <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class RECALL_TO_REASON <<JoinTable>> {
+		-- Foreign Keys --
+		* RECALL : int
+		* RECALL_REASON : int
+		---
+		OTHER_TEXT : varchar(200)
+	}
+
+	class RECALL_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		* EMERGENCY_FLAG : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class STOPPED_REASON <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class RTC_NOTIF_METHOD <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	RECALL }o--|| RECALL_TYPE
+	RECALL }o--|| RECALL_PRISONER_CHOICE
+	RECALL }o--|| STOPPED_REASON
+	RECALL }o--|| RTC_NOTIF_METHOD
+
+	RECALL_MILESTONE_DATE  }o-|| RECALL
+	RECALL_MILESTONE_TEMPLATE ||-o{ RECALL_MILESTONE_DATE
+
+	RECALL ||-o{ RECALL_TO_REASON
+	RECALL_TO_REASON }o-|| RECALL_REASON
+
+	RECALL }o-u-o{ parole.releases.RELEASE
+	RECALL }o-u-|{ hearings.HEARING_RESULT
+	RECALL }o-u-|| moj.PROBATION_SERVICE
+	RECALL }o-u-|| moj.MAPPA_LEVEL
+	RECALL }o-u-|{ moj.caseworkers.CASEWORKER
+	RECALL }o-u-|| parole.reviews.REVIEW_TYPE
+	RECALL }o-u-|| parole.reviews.FURTHER_REVIEW_REASON
+	RECALL }o-u-|| offenders.sentences.CUSTODY_TYPE
+	RECALL }o-u-|| moj.POLICE_FORCE
+	RECALL }o-u-|| moj.caseworkers.CASEWORKER_TEAM
+	RECALL }o-u-|| parole.reviews.REVIEW_STATUS
+	RECALL }o-u-o| parole.reviews.REVIEW
+	RECALL }o-u-o{ unknown.RISK_ASSESSMENT
+	RECALL }o-u-|{ moj.establishments.ESTABLISHMENT
+
+	RECALL_MILESTONE_DATE  }o-u-|| offenders.OFFENDER
+}
+
+
+@enduml

@@ -1,0 +1,110 @@
+@startuml
+!include ../style.puml
+
+namespace detention_authorities $MinorPackage {
+
+	class DETENTION_AUTHORITY {
+		* ID : int
+		-- Foreign Keys --
+		OFFENDER : int
+		DA_STATUS : int
+		AUTHORITY_FOR_DETENTION : int
+		LEGAL_CATEGORY : int
+		MENTAL_DISORDER : int
+		DETAINING_HOSPITAL : int
+		DETAINING_UNIT : int
+		CUSTODY_TYPE : int
+		PRISONER_CATEGORY : int
+		FROM_ESTABLISHMENT_TYPE : int
+		---
+		DATE_OF_HOSPITAL_ORDER : datetime
+		DATE_RECEIVED_IN_MHU : datetime
+		RESTRICTED_FLAG : bit
+		WITHOUT_LIMITS_FLAG : bit
+		EXPIRY_DATE : datetime
+		END_DATE : datetime
+		SENTENCE_YEARS : int
+		SENTENCE_MONTHS : int
+		SENTENCE_DAYS : int
+		WHOLE_LIFE_TARIFF : bit
+		COMMENTS : varchar(2000)
+		TARIFF_EXPIRY_DATE : datetime
+		TEMPID : int
+		-- Audit --
+		ARCHIVED : datetime
+		* CHANGED : timestamp
+		RECORD_CREATION_DATE : datetime
+		RECORD_CREATED_BY : int
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class AUTHORITY_FOR_DETENTION {
+		* ID : int
+		-- Foreign Keys --
+		* REVIEW_TYPE : int
+		---
+		* DESCRIPTION : varchar(50)
+		* REVIEW_DATE_SOURCE : varchar(25)
+		ALLOW_RESTRICTION_EXPIRY_DATE : bit
+		* DEFAULT_COURT_RESULT : int
+		* DATE_OF_ORDER_NULL : bit
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class AUDIT_AUTHORITY_FOR_DETENTION <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* AUTHORITY_FOR_DETENTION_ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		* REVIEW_TYPE : varchar(50)
+		* REVIEW_DATE_SOURCE : varchar(25)
+		ALLOW_RESTRICTION_EXPIRY_DATE : bit
+		* DEFAULT_COURT_RESULT : varchar(50)
+		* DATE_OF_ORDER_NULL : bit
+		-- Audit --
+		CHANGE_BY : varchar(50)
+		CHANGE_DATE : datetime
+	}
+
+	class LEGAL_CATEGORY <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* AUTHORITY_FOR_DETENTION : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+
+	class MENTAL_DISORDER <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(70)
+		START : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+}
+
+@enduml
