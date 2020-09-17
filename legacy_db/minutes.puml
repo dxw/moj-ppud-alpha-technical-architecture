@@ -1,0 +1,49 @@
+@startuml
+!include style.puml
+
+namespace minutes $MinorPackage {
+
+	class MINUTES {
+		* ID : int
+		-- Foreign Keys --
+		---
+		OFFENDER : int
+		DETENTION_AUTHORITY : int
+		* PERSONAL_DETAILS : bit
+		* OFFENCE_DETAILS : bit
+		* SENTENCE_DETAILS : bit
+		COURT_APPEARANCE : int
+		RELEASE : int
+		REVIEW : int
+		MOVEMENT : int
+		LEAVE_REQUEST : int
+		FAILURE_IN_OPEN : int
+		CPPC : int
+		SFO : int
+		RECALL : int
+		MINUTES : text
+		CONTACT_LOG : int
+		DIRECTION : int
+		SENTENCE : int
+		-- Foreign Keys --
+		---
+		* CHANGED : timestamp
+	}
+
+	class MINUTES_BACKUP {
+		* ID : int
+		-- Foreign Keys --
+		---
+		MINUTES : text
+	}
+
+	class MINUTES_XSLT {
+		-- Foreign Keys --
+		---
+	*	TRANSFORM_XML : xml
+	}
+
+
+}
+
+@enduml

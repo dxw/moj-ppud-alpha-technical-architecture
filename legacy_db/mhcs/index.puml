@@ -3,6 +3,23 @@
 
 namespace mhcs $MajorPackage {
 
+
+	class MHU_STATUS <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		active : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
   !include detention_authority.puml
   !include leave_requests.puml
 

@@ -15,6 +15,8 @@ namespace sfo $MinorPackage {
 		* SUPERVISION_SUPERTYPE : int
 		* STAGE_1_MAPPA_CAT int
 		TYPE_OF_REVIEW : int
+		* NOM_TIER : int
+		* OM_GRADE : int
 		---
 		* HIGH_PROFILE : bit
 		CONTACT_NAME : varchar(50)
@@ -69,8 +71,6 @@ namespace sfo $MinorPackage {
 		STAGE_3_RESPONSE_TO_REC_ACTUAL datetime
 		* STAGE_3_RESPONSE_TO_REC_EXCEPTION bit
 		* STAGE_3_RESPONSE_TO_REC_CWORKER int
-		* NOM_TIER : int
-		* OM_GRADE : int
 		* DIV_PREV_ETHNICITY : bit
 		* DIV_PREV_SEXUALITY : bit
 		* DIV_PREV_GENDER : bit
@@ -176,6 +176,22 @@ namespace sfo $MinorPackage {
 		RECORD_LAST_SAVED_BY : int
 		RECORD_LAST_SAVED_DATE : datetime
 		DELETED : datetime
+	}
+
+	class OM_GRADE <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		DOCTOR : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
 	}
 
 	class SFO_ADDITIONAL_OFFENCE <<JoinTable>> {
@@ -374,6 +390,21 @@ namespace sfo $MinorPackage {
 		LOV_CREATED_DATE : datetime
 	}
 
+	class NOM_TIER <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
 	SFO }o-u-|| offenders.OFFENDER
 
 	SFO }o-|| SFO_PROBATION_AREA
@@ -382,6 +413,8 @@ namespace sfo $MinorPackage {
 	SFO }o--|| SFO_STAGE
 	SFO }o--o| SFO_SUPERVISION_REQUIREMENT
 	SFO }o--o| TYPE_OF_REVIEW
+	SFO }o--o| OM_GRADE
+	SFO }o--o| NOM_TIER
 	SFO }o--|| SFO_SUPERVISION_TYPE
 	SFO }o--|| SFO_SUPERVISION_SUPERTYPE
 	SFO }o--|| SFO_MAPPA_CAT

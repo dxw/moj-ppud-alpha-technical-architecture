@@ -1,0 +1,66 @@
+@startuml
+!include style.puml
+
+namespace performance $MinorPackage {
+
+	class PERFORMANCE_DASHBOARD_DATA_TILE {
+		* ID : int
+		-- Foreign Keys --
+		---
+		CASEWORKER : int
+		POSITION : int
+		STORE_PERFORMANCE_DASHBOARD : int
+		* DASHBOARD_ID : int
+	}
+
+	class PERFORMANCE_DASHBOARD_EXCEPTION <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(255)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_DATE : datetime
+		LOV_CREATED_BY : int
+	}
+
+	class PERFORMANCE_DASHBOARD_GROUP {
+		* ID : int
+		-- Foreign Keys --
+		---
+		CASEWORKER : int
+		DASHBOARD_ID : int
+		TITLE : varchar(100)
+	}
+
+	class STORE_PERFORMANCE_DASHBOARD {
+		* ID : int
+		-- Foreign Keys --
+		---
+		REVIEW_TYPE : int
+		TITLE : varchar(255)
+		TEAM : int
+		CASEWORKER : int
+		SUB_TEAM : int
+		UNIT : int
+		MILESTONE : int
+		LEVEL : varchar(25)
+		LEVELVALUE : int
+		EXCEPTION : bit
+		DATERANGE : varchar(25)
+		SHOW_RESULT : bit
+		SHARE : bit
+		SHOW_PIE : bit
+		TILE_TYPE : varchar(25)
+		TILE_STATUS : varchar(25)
+		FAIL_THRESHOLD : decimal(18, 0)
+	}
+
+
+}
+
+@enduml

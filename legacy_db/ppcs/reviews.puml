@@ -34,6 +34,7 @@ namespace reviews $MinorPackage {
 		DOSSIER_ESTABLISHMENT : int
 		SENTENCE : int
 		ASSESSOR : int
+		FAILURE_IN_OPEN_CONDITION : int
 		---
 		REVIEW_DATE : datetime
 		RECOMMENDATION_TARGET : datetime
@@ -97,7 +98,6 @@ namespace reviews $MinorPackage {
 		RE_REFERRAL : bit
 		RE_REFERRAL_DATE : datetime
 		ACTIVE_HEARING : bit
-		FAILURE_IN_OPEN_CONDITION : int
 		* VISIBLE_ON_WAM : bit
 		* CURRENT_WAM_REVIEW : bit
 		* MAND_DOCS_RECEIVED : int
@@ -116,6 +116,64 @@ namespace reviews $MinorPackage {
 		RECORD_LAST_SAVED_DATE : datetime
 		DELETED : datetime
 		DELETED_BY : int
+	}
+
+	class FAILURE_IN_OPEN {
+		* FAILURE_IN_OPEN_ID : int
+		-- Foreign Keys --
+		---
+		* OFFENDER_ID : int
+		DATE_OF_FAILURE : datetime
+		DATE_OF_LSP4D_RECEIPT datetime
+		REASON_FOR_FAILURE : int
+		RECOMMENDED_OUTCOME : int
+		ESTABLISHMENT : int
+		REPS_TARGET : datetime
+		REPS_ACTUAL : datetime
+		DOSSIER_TARGET : datetime
+		DOSSIER_ACTUAL : datetime
+		COMMENTS : text
+		ESTABLISHMENT_TYPE : int
+		REVIEW : int
+		-- Audit --
+		ARCHIVED : datetime
+		* CHANGED : timestamp
+		RECORD_CREATION_DATE : datetime
+		RECORD_CREATED_BY : int
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class OPEN_CONDS_FAIL_OUTCOME <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class OPEN_CONDS_FAIL_REASON <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
 	}
 
 	class SOLICITOR_STATUS <<LookupTable>> {
@@ -497,6 +555,7 @@ namespace reviews $MinorPackage {
 	REVIEW }o--o| REVIEW_RECOMMENDATION
 	REVIEW }o--o| REVIEW_RESULT
 	REVIEW }o--o| REVIEW_STATUS
+	REVIEW }o--o| FAILURE_IN_OPEN
 	REVIEW ||-o{ REVIEW_MILESTONE_DATE
 	REVIEW }o--o| LATE_REFERRAL_REASON
 
