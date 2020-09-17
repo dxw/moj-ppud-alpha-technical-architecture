@@ -236,6 +236,9 @@ namespace offenders $MajorPackage {
 
 	!include sentences.puml
 	!include offences.puml
+	!include cppc_cases.puml
+	!include serious_further_offences.puml
+	!include risk_assessments.puml
 
 	OFFENDER ||-o{ OFFENDER_VLO
 	OFFENDER_VLO }o-u-|| moj.establishments.STAFF

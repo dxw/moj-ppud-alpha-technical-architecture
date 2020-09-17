@@ -50,6 +50,10 @@ namespace templates $MinorPackage {
 		CREATED_DATE : datetime
 	}
 
+	class NUMBERS {
+		* N : int
+	}
+
 	class TEMPLATE_TASK_ACTIONS {
 		* TEMPLATE_TASK_ID : int
 		-- Foreign Keys --

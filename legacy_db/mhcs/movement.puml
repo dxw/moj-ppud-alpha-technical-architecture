@@ -1,5 +1,5 @@
 @startuml
-!include style.puml
+!include ../style.puml
 
 namespace movements $MinorPackage {
 	class MOVE_SUB_SUB_TYPE <<LookupTable>> {

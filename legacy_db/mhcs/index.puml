@@ -21,6 +21,7 @@ namespace mhcs $MajorPackage {
 	}
 
   !include detention_authority.puml
+  !include movement.puml
   !include leave_requests.puml
 
 }

@@ -1,5 +1,5 @@
 @startuml
-!include style.puml
+!include ../style.puml
 
 ' Serious Further Offences
 namespace sfo $MinorPackage {
@@ -404,6 +404,46 @@ namespace sfo $MinorPackage {
 		LOV_CREATED_BY : int
 		LOV_CREATED_DATE : datetime
 	}
+
+	class ACTION {
+		* ACTION_ID : int
+		-- Foreign Keys --
+		* PARENT_SFO_ID : int
+		---
+		ACTION_NO : int
+		RECOMMENDED_ACTION : varchar(5000)
+		ROLE_RESPONSIBLE : varchar(255)
+		ACTION_TARGET : datetime
+		ACTION_ACTUAL : datetime
+		OTHER_FIELD : varchar(50)
+		EFFECTIVENESS_MEASURE : varchar(512)
+		COMMENTS : varchar(255)
+		LEARNING_POINT : varchar(255)
+	}
+
+	class VICTIM {
+		* VICTIM_ID : int
+		-- Foreign Keys --
+		* PARENT_SFO_ID : int
+		---
+		* GENDER : varchar(50)
+		* AGE : int
+		* KNOWN_TO_OFFENDER_FLAG : bit
+		* REVICTIMISATION_FLAG : bit
+		* TGT_ETHNICITY_FLAG : bit
+		* TGT_SEXUALITY_FLAG : bit
+		* TGT_GENDER_FLAG : bit
+		* TGT_DISABILITY_FLAG : bit
+		* TGT_BELIEF_FLAG : bit
+		* TGT_AGE_FLAG : bit
+		* TGT_CLASS_FLAG : bit
+		* TGT_SPEC_VULN_FLAG : bit
+		* TGT_OTHER_FLAG : bit
+		COMMENTS : varchar(255)
+		-- Audit --
+		CHANGED : timestamp
+	}
+
 
 	SFO }o-u-|| offenders.OFFENDER
 

@@ -3,10 +3,6 @@
 
 namespace unknown $MinorPackage {
 
-	class NUMBERS {
-		* N : int
-	}
-
 	class YES_NO <<LookupTable>> {
 		* ID : int
 		---
