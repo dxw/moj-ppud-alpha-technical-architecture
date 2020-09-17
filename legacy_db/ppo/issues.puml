@@ -1,0 +1,80 @@
+@startuml
+!include ../style.puml
+
+namespace issues $MinorPackage {
+
+	class ISSUE_QUESTION_1 <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		ISSUE_TYPE_ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class ISSUE_QUESTION_2 <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		ISSUE_TYPE_ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class ISSUE_TYPE <<LookupTable>> {
+		* ISSUE_TYPE_ID : int
+		---
+		* DESCRIPTION : varchar(100)
+		QUESTION_1 varchar(100)
+		QUESTION_2 varchar(100)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class ISSUES {
+		* ISSUE_ID : int
+		-- Foreign Keys --
+		COMPLAINT_ID : int
+		FII_ID : int
+		* ISSUE_TYPE_ID : int
+		ISSUE_Q1_ID int
+		ISSUE_Q2_ID int
+		* ISSUE_CREATED_BY : int
+		---
+		ISSUE_DATE : datetime
+		ISSUE_NOTES : text
+	}
+
+  ISSUES }o-u-o| ppo.complaints.COMPLAINTS
+  ISSUES }o-u-o| ppo.fii.FII
+
+  ISSUES }o--|| ISSUE_TYPE
+  ISSUES }o--o| ISSUE_QUESTION_1
+  ISSUES }o--o| ISSUE_QUESTION_2
+
+}
+
+@enduml

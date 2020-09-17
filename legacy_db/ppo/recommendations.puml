@@ -1,0 +1,104 @@
+@startuml
+!include ../style.puml
+
+namespace recommendations $MinorPackage {
+
+	class RECOMMENDATION_LEVEL <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class RECOMMENDATION_STATUS <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : : int
+		LOV_CREATED_DATE : : datetime
+	}
+
+	class RECOMMENDATION_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		RECOMMENDATION_LEVEL_ID : : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : : int
+		-- Audit --
+		DELETED : : datetime
+		LOV_DELETED_BY : : int
+		LOV_UPDATED_BY : : int
+		LOV_UPDATED_DATE : : datetime
+		LOV_CREATED_BY : : int
+		LOV_CREATED_DATE : : datetime
+	}
+
+	class RECOMMENDATION_WHO <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : : int
+		-- Audit --
+		DELETED : : datetime
+		LOV_DELETED_BY : : int
+		LOV_UPDATED_BY : : int
+		LOV_UPDATED_DATE : : datetime
+		LOV_CREATED_BY : : int
+		LOV_CREATED_DATE : : datetime
+	}
+
+	class RECOMMENDATIONS {
+		* RECOMMEDATION_ID : int
+		-- Foreign Keys --
+		COMPLAINT_ID : : int
+		FII_ID : : int
+		ESTABLISHMENT_ID : : int
+		* REC_STATUS_ID : int
+		* REC_LEVEL_ID : int
+		* REC_TYPE_ID : int
+		* REC_WHO_ID : int
+		* REC_ISSUE_TYPE_ID : int
+		---
+		* ISSUE_DATE : datetime
+		ACCEPTANCE_DATE : : datetime
+		IMPL_DATE : : datetime
+		REC_DETAIL : : text
+		DESCRIPTION : : varchar(100)
+		COMP_AMOUNT : : money
+		EST_RESPONSE : : text
+		* RPT_AND_ESCALATE : bit
+	}
+
+  RECOMMENDATIONS }o-u-o| ppo.complaints.COMPLAINTS
+  RECOMMENDATIONS }o-u-o| ppo.fii.FII
+  RECOMMENDATIONS }o-u-o| moj.ESTABLISHMENT
+
+  RECOMMENDATIONS }o--|| RECOMMENDATION_STATUS
+  RECOMMENDATIONS }o--|| RECOMMENDATION_LEVEL
+  RECOMMENDATIONS }o--|| RECOMMENDATION_TYPE
+  RECOMMENDATIONS }o--|| RECOMMENDATION_WHO
+  RECOMMENDATIONS }o--|| ppo.issues.ISSUE_TYPE
+
+  RECOMMENDATION_TYPE }o--o| RECOMMENDATION_LEVEL
+
+}
+
+@enduml

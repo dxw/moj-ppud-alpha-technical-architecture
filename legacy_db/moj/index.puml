@@ -1,8 +1,6 @@
 @startuml
 !include ../style.puml
 
-!include ../registers.puml
-
 namespace moj $MajorPackage {
 
   class PROBATION_SERVICE {
