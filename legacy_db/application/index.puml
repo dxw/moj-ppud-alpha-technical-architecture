@@ -2,6 +2,43 @@
 !include ../style.puml
 
 namespace application $MajorPackage {
+
+	class LOGIN_LOG {
+		* LOGIN_LOG_ID : int
+		-- Foreign Keys --
+		CASEWORKER_ID : int
+		Application : int
+		LOGIN_ACTION : int
+		---
+		LOGIN_NAME : varchar(100)
+		* LOGIN_DATE : datetime
+		* SUCCESS : bit
+		IPAddress : varchar(50)
+		browser : varchar(1000)
+	}
+
+	class GLOBAL_SETTINGS {
+		* VARIABLE_NAME : varchar(50)
+		-- Foreign Keys --
+		APPLICATIONS : int
+		---
+		VARIABLE_VALUE : varchar(200)
+		DESCRIPTION : varchar(2000)
+		CATEGORY : varchar(100)
+		-- Audit --
+		LAST_UPDATED : datetime
+		---
+	}
+
+	class UserSettings {
+		* iUserSettingID : int
+		-- Foreign Keys --
+		* iUserID : int
+		---
+		* sDesc : varchar(255)
+		* sValue : text
+	}
+
   !include aspnet.puml
   !include wam_users.puml
 }

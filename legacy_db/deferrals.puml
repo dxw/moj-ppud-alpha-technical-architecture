@@ -1,0 +1,129 @@
+@startuml
+!include style.puml
+
+namespace deferrals $MinorPackage {
+
+
+	class DEFERRAL_REQUEST {
+		* ID : int
+		-- Foreign Keys --
+		REVIEW : int
+		REQUESTER : int
+		TYPE : int
+		REASON : int
+		APPROVED_BY : int
+		PANEL_MEMBER : int
+		LENGTH_OF_DEFERRAL : int
+		HEARING : int
+		PANEL : int
+		---
+		REQUEST_DATE : datetime
+		ORGINAL_TARGET : datetime
+		CURRENT_TARGET : datetime
+		NEW_CURRENT_TARGET : datetime
+		RECALC_DATE : bit
+		RELIST : bit
+		COMMENTS : text
+		COMPLETED : bit
+		SCHEDULED_HEARING_DATE : datetime
+		VIDEOLINK_HEARING_RELATED : bit
+		-- Audit --
+		* CHANGED : timestamp
+		CREATED_BY : int
+		CREATED_ON : datetime
+		LAST_CHANGED : datetime
+		LAST_CHANGED_BY : int
+		LAST_CHANGED_ON : datetime
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class DEFERRAL_REQUESTER <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class DEFERRAL_TO_REASON {
+		-- Foreign Keys --
+		* DEFERRAL : int
+		* REASON : int
+		---
+		OTHER_TEXT : varchar(200)
+	}
+
+	class DEFERRAL_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		RECALCULATE_DATES : bit
+		RELIST : bit
+		NEW_HEARING : bit
+		COMPLETE : bit
+		HEARING_RESULT : int
+		ENABLE : bit
+		-- Audit --
+		DELETED : datetime
+	}
+
+
+
+	class DEFERRAL_APPROVER <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class DEFERRAL_REASON <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+
+	class AUDIT_DEFERRAL_TYPE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* AUDIT_DEFERRAL_TYPE : int
+		---
+		* DESCRIPTION : varchar(50)
+		RECALCULATE_DATES : bit
+		RELIST : bit
+		NEW_HEARING : bit
+		COMPLETE : bit
+		HEARING_RESULT : varchar(50)
+		-- Audit --
+		CHANGE_BY : int
+		CHANGE_DATE : datetime
+	}
+
+}
+
+@enduml

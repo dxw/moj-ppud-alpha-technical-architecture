@@ -4,12 +4,13 @@
 !include common.puml
 !include application/index.puml
 !include moj/index.puml
+!include registers.puml
 !include offenders/index.puml
 !include mhcs/index.puml
-' !include ppcs/index.puml
-!include panels/index.puml
+!include ppcs/index.puml
 !include ppo/index.puml
 
+!include panels/index.puml
 !include organisations.puml
 !include probation.puml
 !include courts.puml
@@ -20,6 +21,10 @@
 !include wam_messages.puml
 !include attendees.puml
 !include hearings.puml
+!include actions.puml
+!include contacts.puml
+!include deferrals.puml
+!include victims.puml
 
 !include unknown.puml
 @enduml

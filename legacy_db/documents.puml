@@ -262,6 +262,65 @@ namespace documents $MinorPackage {
 		CHANGE_DATE : datetime
 	}
 
+	class ALLOWABLE_FILE_EXTENSIONS <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(5)
+		CONVERTTOPDF : bit
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class MERGE_DOC_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class TEMP_DOC_STORE {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* EXPIRE_DATE : datetime
+		* Filename : varchar(100)
+		ASSOCIATED_ID : int
+		TEMP_DOC_TYPE : int
+	}
+
+	class TEMP_DOC_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class CASEWORKER_DOCUMENT_DOWNLOADS {
+		* ID : int
+		-- Foreign Keys --
+		CASEWORKER : int
+		---
+		DATE_CREATED : datetime
+		CASEWORKER_IS_BATCH : bit
+		DISCLOSURE : int
+	}
+
 	common.PRIORITY |o--o{ DOCUMENTS
 	mhcs.detention_authorities.DETENTION_AUTHORITY |o--o{ DOCUMENTS
 

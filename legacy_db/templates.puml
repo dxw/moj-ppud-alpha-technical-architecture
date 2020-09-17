@@ -1,0 +1,75 @@
+@startuml
+!include style.puml
+
+namespace templates $MinorPackage {
+
+
+	class TEMPLATE_DOSSIER {
+		* TEMPLATE_ID : int
+		-- Foreign Keys --
+		---
+		DOSSIER_TYPE_ID : int
+		TEMPLATE_NAME : varchar(255)
+		* INITIAL_STATUS : int
+		* PERSON_TYPE : int
+		* REVIEW_TYPE : int
+		* CREATED_BY : int
+		* DATE_CREATED : datetime
+		* DEFAULT_DOCUMENT_TYPE : int
+		PB_ACCESS : bit
+		-- Audit --
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class TEMPLATE_DOSSIER_CONTACTS {
+		* TEMPLATE_CONTACT_ID : int
+		* TEMPLATE_ID : int
+			DOSSIER_CONTACT_TYPE_ID : int
+		* DOSSIER_ACTION_ID : int
+			EMAIL_ADDRESS : varchar(255)
+		* ATTENDEE_TYPE_ID : int
+	}
+
+	class TEMPLATE_QUESTION {
+		* TEMPLATE_QUESTION_ID : int
+		-- Foreign Keys --
+		---
+		* QUESTION_GROUP : int
+		NUMBER : int
+		QUESTION_TEXT : varchar(255)
+		* QUESTION_TYPE : int
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		DELETED_BY : int
+		UPDATED_BY : int
+		UPDATED_DATE : datetime
+		CREATED_BY : int
+		CREATED_DATE : datetime
+	}
+
+	class TEMPLATE_TASK_ACTIONS {
+		* TEMPLATE_TASK_ID : int
+		-- Foreign Keys --
+		---
+		* TEMPLATE_ID : int
+		* DOSSIER_ACTION_ID : int
+		* TEMPLATE_MILESTONE_TASK_ID : int
+	}
+
+	class EMAIL_TEMPLATES {
+		* ID : int
+		-- Foreign Keys --
+		---
+		DESCRIPTION : varchar(50)
+		TEMPLATE : text
+	}
+
+
+
+
+}
+
+@enduml

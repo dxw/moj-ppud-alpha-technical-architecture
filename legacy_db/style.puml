@@ -8,12 +8,9 @@ skinparam class {
   BackgroundColor<<AuditTable>> #LightGrey
   BackgroundColor<<JoinTable>> #LightPink
   BackgroundColor<<LookupTable>> #LightSteelBlue
+  BackgroundColor<<TempTable>> #HotPink
 }
 
 !$MajorPackage = "#eee"
 !$MinorPackage = "#ddd"
-
-hide <<LookupTable>> members
-hide <<AuditTable>>
-
 @enduml

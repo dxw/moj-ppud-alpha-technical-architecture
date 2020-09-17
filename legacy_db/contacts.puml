@@ -1,0 +1,152 @@
+@startuml
+!include style.puml
+
+namespace contacts $MinorPackage {
+
+	class CONTACT {
+		* CONTACT_ID : int
+		-- Foreign Keys --
+		OFFENDER_ID : int
+		CPPC_CASE_ID : int
+		* CONTACT_TYPE : int
+		CASEWORKER : int
+		* TEAM_ID : int
+		PRIORITY : int
+		CONTACT_LOG_LATE_REASON : int
+		DOCUMENT_ACCESS : int
+		CONTACT_OUTCOME : int
+		PANEL_MEMBER : int
+		OWNING_TEAM : int
+		OWNING_SUB_TEAM : int
+		CONTACT_SUBTYPE : int
+		ISSUE_ESTABLISHMENT : int
+		---
+		CONTACT_DATE : datetime
+		COMMENTS : text
+		REPLY_TARGET : datetime
+		REPLY_ACTUAL : datetime
+		INTERIM_REPLY_ACTUAL : datetime
+		LATE_REASON_COMMENT : varchar(255)
+		REPRESENTATIVE : varchar(255)
+		ORIGIN : varchar(255)
+		-- Audit --
+		ARCHIVED : bit
+		* CHANGED : timestamp
+		RECORD_LAST_SAVED_DATE : datetime
+		RECORD_LAST_SAVED_BY : int
+		RECORD_CREATION_DATE : datetime
+		RECORD_CREATED_BY : int
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class CONTACT_LINK {
+		* CONTACTLINK_ID : int
+		-- Foreign Keys --
+		* CONTACT_ID : int
+		ESTABLISHMENT_ID : int
+		COMPLAINT_ID : int
+		FII_ID : int
+		HEALTHCARE_SPEC_ID : int
+		ROLE_IN_CASE_ID : int
+		OP_ROLE_ID : int
+		-- Audit --
+		CREATED_BY : int
+		DATE_CREATED : datetime
+	}
+
+	class CONTACT_LOG_LATE_REASON <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class CONTACT_LOG_OWNER_CHANGE {
+		* ID : int
+		-- Foreign Keys --
+		FROM_CASEWORKER : int
+		TO_CASEWORKER : int
+		CONTACT_LOG : int
+		-- Audit --
+		DATE_CHANGE : datetime
+	}
+
+	class CONTACT_OUTCOME <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		COLOUR : varchar(100)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+		PRISON_CASEWORK_ONLY : bit
+	}
+
+
+	class CONTACT_SUBTYPE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		PRISONER_CASEWORK_ONLY : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class CONTACT_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		* REPLY_TARGET : int
+		PRISONER_CASEWORK : bit
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class AUDIT_LOV_CONTACT_TYPE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* Description : varchar(50)
+		* REPLY_TARGET : int
+		PRISONER_CASEWORK : bit
+		PARENT_ID : int
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		--Audit --
+		LOV_UPDATED_BY : varchar(100)
+		LOV_UPDATED_DATE : datetime
+	}
+
+
+}
+
+@enduml

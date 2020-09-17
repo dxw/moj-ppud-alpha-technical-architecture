@@ -24,6 +24,24 @@ namespace wam_messages $MinorPackage {
 		LOV_CREATED_DATE : datetime
 	}
 
+	class AUDIT_WAM_AUTOMATED_MESSAGE_TYPE <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		* WAM_AUTOMATED_MESSAGE_TYPE_ID : int
+		---
+		DESCRIPTION : varchar(100)
+		STORED_PROC : varchar(100)
+		EMAIL_TEMPLATE : int
+		SUBJECT : varchar(500)
+		CASEWORKER_TEAM : int
+		STORED_PROC_DATA : varchar(100)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		* CHANGE_BY : varchar(50)
+		* CHANGE_DATE : datetime
+	}
+
 	class WAM_MESSAGE {
 		* ID : int
 		-- Foreign Keys --
