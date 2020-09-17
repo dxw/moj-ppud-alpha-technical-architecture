@@ -55,6 +55,32 @@ namespace contacts $MinorPackage {
 		DATE_CREATED : datetime
 	}
 
+
+	class PPO_CONTACTS {
+		* CONTACT_ID : int
+		-- Foreign Keys --
+		---
+		FIRST_NAME : varchar(50)
+		FAMILY_NAME : varchar(50)
+		TITLE : varchar(20)
+		ADDRESS_1 varchar(100)
+		ADDRESS_2 varchar(100)
+		ADDRESS_3 varchar(100)
+		ADDRESS_4 varchar(100)
+		POSTCODE : varchar(10)
+		EMAIL : varchar(100)
+		MOBILE : varchar(20)
+		PHONE : varchar(20)
+		SECOND_EMAIL : varchar(100)
+		NOK_NOTES : varchar(max)
+		* ESTABLISHMENT_ID : int
+		HEALTHCARE_SPEC_ID : int
+		OP_ROLE_ID : int
+		-- Audit --
+		CREATED_BY : int
+		DATE_CREATED : datetime
+	}
+
 	class CONTACT_LOG_LATE_REASON <<LookupTable>> {
 		* ID : int
 		---
@@ -146,6 +172,20 @@ namespace contacts $MinorPackage {
 		LOV_UPDATED_DATE : datetime
 	}
 
+	class HEALTHCARE_SPEC <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
 
 }
 

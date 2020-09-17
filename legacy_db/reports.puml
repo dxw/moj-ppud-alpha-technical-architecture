@@ -1,0 +1,46 @@
+@startuml
+!include style.puml
+
+namespace reports $MinorPackage {
+
+
+	class REPORT {
+		* ID : int
+		-- Foreign Keys --
+		---
+		DESCRIPTION : varchar(150)
+		SP : varchar(5000)
+		PARAMETER1 varchar(20)
+		PARAMETER2 varchar(20)
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class REPORT_TEMPLATE {
+		* REPORT_ID : int
+		* DESCRIPTION : varchar(50)
+		* SQL_FROM : varchar(1000)
+		SQL_WHERE : varchar(500)
+		FILTER_FLAG : int
+		REPORT_FILENAME : varchar(100)
+		report_category_id : int
+		EXCEL_TEMPLATE : varchar(200)
+		DEPENDANT_TABLES : varchar(200)
+		CONCAT_FIELD : varchar(50)
+		CONCAT_INDEX : varchar(50)
+	}
+
+	class REPORTS {
+		* REPORT_ID : int
+		-- Foreign Keys --
+		---
+		DESCRIPTION : varchar(50)
+		SP : varchar(5000)
+		PARAMETER1 varchar(20)
+		PARAMETER2 varchar(20)
+	}
+
+
+}
+
+@enduml

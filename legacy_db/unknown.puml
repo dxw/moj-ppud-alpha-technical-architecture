@@ -84,6 +84,31 @@ namespace unknown $MinorPackage {
 		TIMES : int
 	}
 
+
+	class TASK_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class TEST_RECORDER {
+		* ID : int
+		-- Foreign Keys --
+		---
+		TITLE : varchar(1000)
+		STATUS : varchar(100)
+		TESTDATE : datetime
+	}
+
 }
 
 @enduml
