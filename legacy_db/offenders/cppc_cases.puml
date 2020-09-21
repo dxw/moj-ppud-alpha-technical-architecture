@@ -198,6 +198,7 @@ namespace cppc $MinorPackage {
 	CPPC_CASE }o--o| moj.MAPPA_LEVEL
 	CPPC_CASE }o--|| FUNDING_TYPE
 	CPPC_CASE }o--|| FUNDING_STATUS
+	CPPC_CASE }o-u-|| unknown.PROBATION_AREA
 }
 
 @enduml

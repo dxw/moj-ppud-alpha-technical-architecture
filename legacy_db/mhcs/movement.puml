@@ -161,6 +161,7 @@ namespace movements $MinorPackage {
 	MOVEMENT }o-u-o{ registers.POLICE_FORCE
 	MOVEMENT }o-u-o{ mhcs.courts.COURT
 	MOVEMENT }o--o{ unknown.COUNTRY
+	MOVEMENT }o-u-o| unknown.PROBATION_AREA
 	MOVEMENT }o--o{ moj.establishments.ESTABLISHMENT_UNIT
 	MOVEMENT }o-|| MOVE_TYPE
 	MOVEMENT }o-o| MOVE_SUB_TYPE
