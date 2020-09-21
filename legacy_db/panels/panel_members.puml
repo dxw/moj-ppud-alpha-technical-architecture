@@ -253,21 +253,6 @@ namespace members $MinorPackage {
 
 	PANEL_MEMBER_PAPER_AVAILABILITY }o--|| PANEL_MEMBER_PAPER_PERIOD
 
-	PANEL_MEMBER ||--o{ unknown.PANEL_MEMBER_DOWNLOAD
-	hearings.HEARING ||--o{ unknown.PANEL_MEMBER_DOWNLOAD
-
 }
-
-class unknown.PANEL_MEMBER_DOWNLOAD {
-	* ID : int
-	-- Foreign Keys --
-	* PANEL_MEMBER : int
-	* HEARING : int
-	---
-	DOSSIER_DOWNLOAD_DATE : datetime
-	DOSSIER_DOWNLOAD_VERSION : int
-	TIMETABLE_DOWNLOAD_DATE : datetime
-}
-
 
 @enduml
