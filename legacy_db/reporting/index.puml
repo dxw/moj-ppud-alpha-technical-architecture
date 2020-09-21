@@ -1,0 +1,87 @@
+@startuml
+!include ../style.puml
+
+namespace reporting $MajorPackage {
+
+	class REPORT {
+		* ID : int
+		-- Foreign Keys --
+		---
+		DESCRIPTION : varchar(150)
+		SP : varchar(5000)
+		PARAMETER1 varchar(20)
+		PARAMETER2 varchar(20)
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class REPORT_TEMPLATE {
+		* REPORT_ID : int
+		* DESCRIPTION : varchar(50)
+		* SQL_FROM : varchar(1000)
+		SQL_WHERE : varchar(500)
+		FILTER_FLAG : int
+		REPORT_FILENAME : varchar(100)
+		report_category_id : int
+		EXCEL_TEMPLATE : varchar(200)
+		DEPENDANT_TABLES : varchar(200)
+		CONCAT_FIELD : varchar(50)
+		CONCAT_INDEX : varchar(50)
+	}
+
+	class REPORTS {
+		* REPORT_ID : int
+		-- Foreign Keys --
+		---
+		DESCRIPTION : varchar(50)
+		SP : varchar(5000)
+		PARAMETER1 varchar(20)
+		PARAMETER2 varchar(20)
+	}
+
+	class COLUMN_NAME {
+		* REPORT_TEMPLATE_ID : int
+		* COLUMN_NAME : varchar(50)
+		---
+		DESCRIPTION : varchar(50)
+	}
+
+	class STORED_REPORTS {
+		* STORED_REPORT_ID : int
+		REPORT_ID : int
+		Description : varchar(100)
+		FilterXML : text
+		USER_ID : int
+		COLUMNS_TO_RETURN : varchar(1000)
+		-- Audit --
+		DATE_CHANGED : datetime
+	}
+
+
+	class FILTER {
+		* FILTER_KEY : int
+		-- Foreign Keys --
+		---
+		* FILTER_ID : int
+		* FLAG_ID : int
+		DATATYPE : varchar(50)
+		LUT : varchar(50)
+		FIELD_NAME : varchar(50)
+		DISPLAY_NAME : varchar(50)
+		SELECT_COLUMN : varchar(75)
+		MULTI_ID_COLUMN : varchar(75)
+	}
+
+	class FILTER_FLAG {
+		* FILTER_FLAG_ID : int
+		---
+		* DESCRIPTION : varchar(100)
+	}
+
+	FILTER }o--|| FILTER_FLAG
+
+	!include performance.puml
+
+}
+
+@enduml
