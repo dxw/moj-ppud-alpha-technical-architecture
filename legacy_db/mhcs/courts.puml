@@ -1,5 +1,5 @@
 @startuml
-!include style.puml
+!include ../style.puml
 
 namespace courts $MinorPackage {
 	class CPS <<LookupTable>> {
