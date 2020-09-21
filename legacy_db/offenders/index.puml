@@ -234,6 +234,36 @@ namespace offenders $MajorPackage {
 		LOV_CREATED_DATE : datetime
 	}
 
+	class UAL_REASON <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class UAL_LOG_ENTRY {
+		* UAL_LOG_ID : int
+		-- Foreign Keys --
+		---
+		* OFFENDER_ID : int
+		UAL_START : datetime
+		UAL_END : datetime
+		COMMENTS : text
+		UAL_REASON : int
+		-- Foreign Keys --
+		---
+		* CHANGED : timestamp
+	}
+
+
 	!include sentences.puml
 	!include offences.puml
 	!include cppc_cases.puml
