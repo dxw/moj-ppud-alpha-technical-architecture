@@ -225,6 +225,22 @@ namespace milestones $MinorPackage {
 		LOV_CREATED_DATE : datetime
 	}
 
+	class AUTO_ACTUALISING_ACTION <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+
 	' AUDIT_MILESTONE_TEMPLATE }o-u-|| MILESTONE_TEMPLATE
 	' AUDIT_MAIL_MERGE_LOOKUP }o-u-|| MAIL_MERGE_LOOKUP
 

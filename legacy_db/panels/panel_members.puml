@@ -228,6 +228,23 @@ namespace members $MinorPackage {
 		ROLE : int
 	}
 
+
+	class SPECIALIST_MEMBER_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+
 	PANEL_MEMBER_PREFERRED_LOCATION }o-u-|| moj.establishments.ESTABLISHMENT
 	PANEL_MEMBER_PREFERRED_LOCATION }o-|| PANEL_MEMBER
 	panels.PANEL_TYPE |o--o{ PANEL_MEMBER_AVAILIBLE_DATE

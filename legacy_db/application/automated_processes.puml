@@ -1,0 +1,40 @@
+@startuml
+!include ../style.puml
+
+namespace automation $MinorPackage {
+
+	class AUTOMATED_PROCESS {
+		* Id : int
+		---
+		* ExePath : varchar(200)
+		* Description : varchar(200)
+		LastRunStarted : datetime
+		LastRunCompleted : datetime
+		StartOfRunWindow : datetime
+		EndOfRunWindow : datetime
+		* ProcessMinimumIntervalHours : int
+		PreRequesites : varchar(100)
+		ServerIsolation : bit
+		-- Audit --
+		CHANGED : timestamp
+		* CreatedBy : int
+		* CreatedDate : datetime
+		LastUpdatedBy : int
+		LastUpdatedDate : datetime
+		DeletedBy : int
+		DeletedDate : datetime
+	}
+
+	class AUTOMATED_PROCESS_SERVER {
+		* Id : int
+		-- Foreign Keys --
+		* AutomatedProcess : int
+		---
+		* Server : varchar(50)
+		LastRunStarted : datetime
+		LastRunCompleted : datetime
+	}
+
+}
+
+@enduml

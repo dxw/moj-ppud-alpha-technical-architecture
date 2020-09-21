@@ -63,6 +63,18 @@ namespace common $MinorPackage {
 		LOV_CREATED_DATE : datetime
 	}
 
+	class Language <<LookupTable>> {
+		* Id : int
+		---
+		Description : nvarchar(255)
+		-- Audit --
+		DELETED : datetime
+		CreatedBy : int
+		LastUpdatedBy : int
+		DeletedBy : int
+		Created : datetime
+		LastUpdated : datetime
+	}
 }
 
 @enduml

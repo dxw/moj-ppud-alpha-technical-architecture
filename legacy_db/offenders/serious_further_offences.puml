@@ -178,6 +178,23 @@ namespace sfo $MinorPackage {
 		DELETED : datetime
 	}
 
+
+	class QUALITY_ASSURE_RATING <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+
 	class OM_GRADE <<LookupTable>> {
 		* ID : int
 		---
@@ -455,6 +472,7 @@ namespace sfo $MinorPackage {
 	SFO }o--o| TYPE_OF_REVIEW
 	SFO }o--o| OM_GRADE
 	SFO }o--o| NOM_TIER
+	SFO }o--|| QUALITY_ASSURE_RATING
 	SFO }o--|| SFO_SUPERVISION_TYPE
 	SFO }o--|| SFO_SUPERVISION_SUPERTYPE
 	SFO }o--|| SFO_MAPPA_CAT
@@ -468,7 +486,7 @@ namespace sfo $MinorPackage {
 	SFO ||-o{ SFO_ADDITIONAL_OFFENCE
 	SFO_ADDITIONAL_OFFENCE }o-u-|| offenders.OFFENCE
 
-	SFO_PROBATION_AREA ||-u-o{ moj.PROBATION_SERVICE
+	SFO_PROBATION_AREA ||-u-o{ unknown.PROBATION_AREA
 
 }
 

@@ -105,6 +105,298 @@ namespace unknown $MinorPackage {
 		TESTDATE : datetime
 	}
 
+	class QUESTION_ANSWER <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class QUESTION_ANSWER_STATE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class REF_DATE {
+		REF_DATE : datetime
+	}
+
+	class LEARNING_ACTION <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class Results <<TempTable>> {
+		PRISON : nvarchar(255)
+		ADDRESS : nvarchar(255)
+		TELEPHONE : nvarchar(255)
+		FAX : & EMAIL nvarchar(255)
+	}
+
+	class DATE_DIFF {
+		* DD_ID : int
+		---
+		DIFF_DESC : varchar(100)
+		DIFF_CODE : varchar(10)
+		VALUE : int
+		PERIOD : varchar(10)
+	}
+
+	class batches {
+		batch_id : int
+		---
+		batch_Date : datetime
+	}
+
+	namespace audit {
+
+		class AUDIT_ADDRESS_LOV <<AuditTable>> {
+			* ID : int
+			-- Foreign Keys --
+			* LOV_ID : int
+			---
+			* CODE_NAME : varchar(50)
+			* Description : varchar(50)
+			PHONE_NUMBER : varchar(255)
+			ADDRESS_1 varchar(55)
+			ADDRESS_2 varchar(50)
+			ADDRESS_3 varchar(50)
+			ADDRESS_4 varchar(50)
+			POSTCODE : varchar(20)
+			FAX : varchar(20)
+			EMAIL : varchar(50)
+			OTHER : varchar(100)
+			-- Audit --
+			CHANGE_BY : varchar(50)
+			CHANGE_DATE : datetime
+		}
+
+		class AUDIT_LOG <<AuditTable>> {
+			* ID : int
+			-- Foreign Keys --
+			* CASEWORKER : int
+			* RECORD_TYPE : int
+			* RECORD_ID : int
+			OFFENDER : int
+			---
+			* LOG_DATE : datetime
+			ORGINAL_VALUE : varchar(2000)
+			NEW_VALUE : varchar(2000)
+			FIELD : varchar(100)
+			DESCRIPTION : varchar(2000)
+		}
+
+		class AUDIT_LOG_ARCHIVED <<AuditTable>> {
+			* ID : int
+			-- Foreign Keys --
+			* CASEWORKER : int
+			* RECORD_TYPE : int
+			* RECORD_ID : int
+			OFFENDER : int
+			---
+			* LOG_DATE : datetime
+			ORGINAL_VALUE : varchar(2000)
+			NEW_VALUE : varchar(2000)
+			FIELD : varchar(100)
+			DESCRIPTION : varchar(2000)
+		}
+
+		class AUDIT_LOV <<AuditTable>> {
+			* ID : int
+			-- Foreign Keys --
+			LOV_ID : int
+			---
+			CODE_NAME : varchar(50)
+			DESCRIPTION : varchar(255)
+			-- Audit --
+			CHANGE_BY : varchar(50)
+			CHANGE_DATE : datetime
+		}
+
+
+		class AUDIT_LOV_EXTRA_BIT <<AuditTable>> {
+			* ID : int
+			-- Foreign Keys --
+			LOV_ID : int
+			---
+			CODE_NAME : varchar(50)
+			DESCRIPTION : varchar(255)
+			EXTRA_BIT : bit
+			-- Audit --
+			CHANGE_BY : varchar(50)
+			CHANGE_DATE : datetime
+		}
+
+		class AUDIT_LOV_EXTRA_INT <<AuditTable>> {
+			* ID : int
+			-- Foreign Keys --
+			LOV_ID : int
+			---
+			CODE_NAME : varchar(50)
+			DESCRIPTION : varchar(255)
+			EXTRA_INT : int
+			-- Audit --
+			CHANGE_BY : varchar(50)
+			CHANGE_DATE : datetime
+		}
+
+		class AUDIT_LOV_EXTRA_LOV <<AuditTable>> {
+			* ID : int
+			-- Foreign Keys --
+			LOV_ID : int
+			---
+			CODE_NAME : varchar(50)
+			DESCRIPTION : varchar(255)
+			EXTRA_LOV : varchar(255)
+			-- Audit --
+			CHANGE_BY : varchar(50)
+			CHANGE_DATE : datetime
+		}
+
+		class AUDIT_LOV_EXTRA_STRING <<AuditTable>> {
+			* ID : int
+			-- Foreign Keys --
+			LOV_ID : int
+			---
+			CODE_NAME : varchar(50)
+			DESCRIPTION : varchar(255)
+			EXTRA_STRING : varchar(100)
+			-- Audit --
+			CHANGE_BY : varchar(50)
+			CHANGE_DATE : datetime
+		}
+	}
+
+	class PORTAL_SEARCH {
+		* Id : int
+		---
+		SURNAME : varchar(50)
+		DATE_OF_BIRTH : datetime
+		NOMS_ID : varchar(20)
+		PRISON_NUMBER : varchar(20)
+		USERNAME : varchar(50)
+		SEARCH_DATE : datetime
+	}
+
+	class RECENT_ACTIVITY {
+		* RECENT_ACTIVITY_ID : int
+		-- Foreign Keys --
+		OFFENDER_ID : int
+		CASEWORKER_ID : int
+		-- Audit --
+		DATE_LAST_UPDATED : datetime
+	}
+
+	class SECTION_REVOKED_BY {
+		* ID : int
+		DESCRIPTION : varchar(50)
+		DELETED : datetime
+	}
+
+	class TREE_COLOUR {
+		* ID : int
+		UNIT : int
+		NODE : int
+		LOV : varchar(50)
+		VALUE : int
+		FORECOLOUR : int
+		BACKCOLOUR : int
+		BOLD : bit
+	}
+
+	class TREE_COLOUR_FORM_LOV {
+		* ID : int
+		-- Foreign Keys --
+		FORM : int
+		--
+		LOV : varchar(50)
+	}
+
+	class FORM <<LookupTable>> {
+		* ID : bigint
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class NEXT_STAGE_REQUIRED <<LookupTable>> {
+		* ID : int
+		---
+		* Description : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class POINT_OF_CONTACT {
+		* ID : int
+		-- Foreign Keys --
+		* ROLE : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class ROLE <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	POINT_OF_CONTACT }o--|| ROLE
+
 }
 
 @enduml

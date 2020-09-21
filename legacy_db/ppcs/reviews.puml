@@ -592,6 +592,45 @@ namespace reviews $MinorPackage {
 	REVIEW_MILESTONE_DATE_EMAIL }o--|| ppcs.milestones.MILESTONE_TEMPLATE_EMAIL
 	REVIEW_MILESTONE_DATE_EMAIL }o--|| unknown.OUTBOUND_EMAIL
 
+	class UNUSUAL_EVENT {
+		* EVENT_ID : int
+		-- Foreign Keys --
+		* OFFENDER_ID : int
+		* EVENT_TYPE : int
+		REVIEW : int
+		---
+		DATE_OF_EVENT : datetime
+		COMMENTS : text
+		-- Audit --
+		* CHANGED : timestamp
+		RECORD_CREATED_BY : int
+		RECORD_CREATION_DATE : datetime
+		RECORD_LAST_SAVED_BY : int
+		RECORD_LAST_SAVED_DATE : datetime
+		DELETED : datetime
+	}
+
+	class EVENT_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	UNUSUAL_EVENT }o--|| EVENT_TYPE
+	UNUSUAL_EVENT }o--o| REVIEW
+	UNUSUAL_EVENT }o--|| offenders.OFFENDER
+
+
 }
 
 @enduml

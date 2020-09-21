@@ -3,6 +3,14 @@
 
 namespace application $MajorPackage {
 
+	class APPLICATION <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Audit --
+		DELETED : datetime
+	}
+
 	class LOGIN_LOG {
 		* LOGIN_LOG_ID : int
 		-- Foreign Keys --
@@ -71,9 +79,60 @@ namespace application $MajorPackage {
 		EXPIRED : datetime
 	}
 
+	class HELP_PAGE_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(100)
+	}
+
+	class SETTINGS {
+		* LOOKUP_NAME : varchar(50)
+		* CODE_NAME : varchar(50)
+		STORED_PROC_TO_CALL : varchar(150)
+		COLUMN_NAME : varchar(50)
+		LOV_TYPE : varchar(50)
+		DISPLAY_NAME : varchar(50)
+		CPPC : bit
+		SFO : bit
+		UPDATE_PROC : varchar(75)
+		DELETE_PROC : varchar(75)
+		INSERT_PROC : varchar(75)
+		NOT_LOV_EDITABLE : bit
+		EXTRA_LOV_CODE_NAME : varchar(50)
+		GET_ITEM_PROC : varchar(50)
+		unit : int
+		-- Foreign Keys --
+		---
+		* LOOKUPS_LAST_UPDATED : datetime
+	}
+
+	class ResourceStrings {
+		Id : int
+		Description : varchar(255)
+		Language : int
+		Display : nvarchar(255)
+		CreatedBy : int
+		LastUpdatedBy : int
+		DeletedBy : int
+		Created : datetime
+		LastUpdated : datetime
+		-- Audit --
+		DELETED : datetime
+	}
+
+
+	class TRACKER_STORED_QUERY {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		* QUERY : text
+		TEAM : int
+	}
 
   !include aspnet.puml
   !include wam_users.puml
+	!include automated_processes.puml
 }
 
 @enduml

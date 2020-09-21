@@ -77,11 +77,11 @@ namespace panels $MajorPackage {
 		* ID : int
 		-- Foreign Keys --
 		* PANEL : int
-		---
 		* CASEWORKER : int
+		* RECORD_FIELD : int
+		---
 		ORIGINAL_VALUE : varchar(500)
 		NEW_VALUE : varchar(500)
-		* RECORD_FIELD : int
 		-- Audit --
 		* CHANGE_DATE : datetime
 	}
@@ -99,12 +99,55 @@ namespace panels $MajorPackage {
 		CHANGE_DATE : datetime
 	}
 
+
+	class RECORD_FIELD <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(100)
+		FIELD_NAME : : varchar(100)
+		DETAIL : : varchar(2000)
+		-- Visibility --
+		SHOW_TO_UNIT : : int
+		-- Audit --
+		DELETED : : datetime
+		LOV_DELETED_BY : : int
+		LOV_UPDATED_BY : : int
+		LOV_UPDATED_DATE : : datetime
+		LOV_CREATED_BY : : int
+		LOV_CREATED_DATE : : datetime
+	}
+
+	class RECORD_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	RECORD_FIELD }o--o| RECORD_TYPE
+
+
+	class visit {
+		panel : int
+	}
+
 	PANEL }o--|| PANEL_TYPE
 	PANEL }o--|| PANEL_STATUS
 	PANEL }o-u-o| moj.establishments.ESTABLISHMENT
-
+	PANEL }o--o| visit
 	PANEL }o--o| AUDIT_PANEL
 	PANEL_PERIOD }o--o| AUDIT_PANEL_PERIOD
+
+	AUDIT_PANEL }o--|| RECORD_FIELD
+	AUDIT_PANEL }o-u-|| moj.caseworkers.CASEWORKER
 
 	!include panel_members.puml
 	!include member_fees.puml
