@@ -10,6 +10,8 @@ namespace ppcs $MajorPackage {
   !include deferrals.puml
   !include directions.puml
   !include fno_transfers.puml
+  !include hearings.puml
+  !include minutes.puml
 
 }
 
