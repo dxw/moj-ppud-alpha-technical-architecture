@@ -50,6 +50,13 @@ namespace notifications $MajorPackage {
 		ENABLED : bit
 	}
 
+	class EMAIL_TEMPLATES {
+		* ID : int
+		-- Foreign Keys --
+		---
+		DESCRIPTION : varchar(50)
+		TEMPLATE : text
+	}
 
 	class FUNC_MBOX {
 		* ID : int

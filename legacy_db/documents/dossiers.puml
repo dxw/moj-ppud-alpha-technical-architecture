@@ -142,6 +142,14 @@ namespace dossiers $MinorPackage {
 			EMAIL_ADDRESS : varchar(255)
 	}
 
+	class TEMPLATE_TASK_ACTIONS <<JoinTable>> {
+		* TEMPLATE_TASK_ID : int
+		-- Foreign Keys --
+		* TEMPLATE_ID : int
+		* DOSSIER_ACTION_ID : int
+		---
+		* TEMPLATE_MILESTONE_TASK_ID : int
+	}
 
 	DOSSIER }o-u-o| ppcs.reviews.REVIEW
 	DOSSIER }o-u-o| offenders.OFFENDER
@@ -160,6 +168,9 @@ namespace dossiers $MinorPackage {
 	DOSSIER_ACTION_TASK_UPDATE }o-l-|| DOSSIER_ACTION_TYPE
 	DOSSIER_ACTION_TASK_UPDATE }o--o| unknown.TEMPLATE_TASK
 	DOSSIER_ACTION_TASK_UPDATE }o--|| unknown.TEMPLATE_MILESTONE_TASK
+
+	TEMPLATE_TASK_ACTIONS }o--|| DOSSIER_ACTION_TYPE
+	TEMPLATE_TASK_ACTIONS }o--|| unknown.TEMPLATE
 
 }
 @enduml

@@ -397,6 +397,10 @@ namespace unknown $MinorPackage {
 
 	POINT_OF_CONTACT }o--|| ROLE
 
+	class NUMBERS {
+		* N : int
+	}
+
 }
 
 @enduml
