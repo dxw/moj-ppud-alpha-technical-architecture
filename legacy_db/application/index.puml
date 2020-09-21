@@ -39,6 +39,39 @@ namespace application $MajorPackage {
 		* sValue : text
 	}
 
+	class ERROR_LOG {
+		* ERROR_ID : int
+		* CASEWORKER_ID : int
+		ERROR_DATE : datetime
+		MESSAGE : text
+		SOURCE : varchar(255)
+		FORM : varchar(255)
+		QUERYSTRING : varchar(255)
+		TARGETSITE : varchar(255)
+		STACKTRACE : text
+		DEALT_WITH : bit
+	}
+
+
+	class CONTEXT_SENSITIVE_HELP {
+		* ID : int
+		-- Foreign Keys --
+		* HELP_PAGE_TYPE : int
+		---
+		* FORM_NAME : varchar(50)
+		* TITLE : varchar(255)
+		* HELP_TEXT : text
+		* MAIN : bit
+		* CHILD : bit
+		* DPA : bit
+		* SYSOPS : bit
+		* LOGIN_TOP : bit
+		* LOGIN_BOTTOM : bit
+		* RECONFIRM : bit
+		EXPIRED : datetime
+	}
+
+
   !include aspnet.puml
   !include wam_users.puml
 }

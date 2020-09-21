@@ -220,39 +220,6 @@ namespace unallocated $MinorPackage {
 		DESCRIPTION : varchar(50)
 	}
 
-	class CONTEXT_SENSITIVE_HELP {
-		* ID : int
-		-- Foreign Keys --
-		* HELP_PAGE_TYPE : int
-		---
-		* FORM_NAME : varchar(50)
-		* TITLE : varchar(255)
-		* HELP_TEXT : text
-		* MAIN : bit
-		* CHILD : bit
-		* DPA : bit
-		* SYSOPS : bit
-		* LOGIN_TOP : bit
-		* LOGIN_BOTTOM : bit
-		* RECONFIRM : bit
-		EXPIRED : datetime
-	}
-
-
-
-	class ERROR_LOG {
-		* ERROR_ID : int
-		* CASEWORKER_ID : int
-		ERROR_DATE : datetime
-		MESSAGE : text
-		SOURCE : varchar(255)
-		FORM : varchar(255)
-		QUERYSTRING : varchar(255)
-		TARGETSITE : varchar(255)
-		STACKTRACE : text
-		DEALT_WITH : bit
-	}
-
 	class EVENT_TYPE <<LookupTable>> {
 		* ID : int
 		-- Foreign Keys --
