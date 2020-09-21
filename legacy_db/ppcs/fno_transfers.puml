@@ -131,7 +131,7 @@ namespace fno_transfers $MinorPackage {
 	FNO_TRANSFER }o--|| FNO_TRANSFER_REASON
 	FNO_TRANSFER }o--|| AIRLINE
 	FNO_TRANSFER }o--o| CBT_CASE_STATUS
-	FNO_TRANSFER }o--|{ COUNTRY
+	FNO_TRANSFER }o--|{ unknown.COUNTRY
 }
 
 @enduml
