@@ -7,6 +7,9 @@ namespace ppcs $MajorPackage {
   !include releases.puml
   !include recalls.puml
   !include milestones.puml
+  !include deferrals.puml
+  !include directions.puml
+  !include fno_transfers.puml
 
 }
 
