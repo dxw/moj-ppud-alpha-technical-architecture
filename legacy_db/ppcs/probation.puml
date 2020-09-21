@@ -1,5 +1,5 @@
 @startuml
-!include style.puml
+!include ../style.puml
 
 namespace probation_reports $MinorPackage {
 
@@ -29,10 +29,43 @@ namespace probation_reports $MinorPackage {
     DELETED : datetime
   }
 
+	class PROB_REPORT_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		* DELAY : int
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	class PR_ACTION_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
   PROBATION_REPORT }o-u-|| offenders.OFFENDER
   PROBATION_REPORT }o-u-|| moj.caseworkers.CASEWORKER
   PROBATION_REPORT }o-u-o| common.PRIORITY
   PROBATION_REPORT }o-u-o| moj.caseworkers.CASEWORKER_TEAM
+  PROBATION_REPORT }o--o| PROB_REPORT_TYPE
+  PROBATION_REPORT }o--o| PR_ACTION_TYPE
 }
 
 @enduml
