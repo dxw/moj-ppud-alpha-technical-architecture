@@ -1,0 +1,14 @@
+@startuml
+!include ../style.puml
+
+namespace documents $MajorPackage {
+
+  !include documents.puml
+  !include dossiers.puml
+  !include downloads.puml
+  !include files.puml
+  !include placeholders.puml
+
+}
+
+@enduml

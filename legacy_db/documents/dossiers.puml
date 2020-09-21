@@ -1,23 +1,22 @@
 @startuml
-!include style.puml
+!include ../style.puml
 
 namespace dossiers $MinorPackage {
 	class DOSSIER {
 		* DOSSIER_ID : int
 		-- Foreign Keys --
-		---
 		* DOSSIER_TYPE_ID : int
-		DOSSIER_TITLE : varchar(255)
 		* OWNING_CASEWORKER : int
 		* TEMPLATE_DOSSIER_ID : int
 		* DOSSIER_STATUS : int
 		REVIEW_ID : int
 		OFFENDER_ID : int
-		VERSION_NUMBER : int
+		---
+		DOSSIER_TITLE : varchar(255)
 		ACTION_STARTED : datetime
 		MOST_RECENT_CHANGE : datetime
-		-- Foreign Keys --
-		---
+		VERSION_NUMBER : int
+		-- Audit --
 		* CHANGED : timestamp
 		* CREATED_BY : int
 		* CREATED_ON : datetime
@@ -28,7 +27,6 @@ namespace dossiers $MinorPackage {
 	class DOSSIER_ACTION_TASK_UPDATE {
 		* DOSSIER_ACTION_TASK_UPDATE_ID : int
 		-- Foreign Keys --
-		---
 		* PARENT_DOSSIER_ID : int
 		* DOSSIER_ACTION_ID : int
 		* TEMPLATE_MILESTONE_TASK_ID : int
@@ -37,7 +35,6 @@ namespace dossiers $MinorPackage {
 
 	class DOSSIER_ACTION_TYPE <<LookupTable>> {
 		* ID : int
-		-- Foreign Keys --
 		---
 		* DESCRIPTION : varchar(50)
 		DISPLAY_MESSAGE : varchar(1000)
@@ -49,11 +46,11 @@ namespace dossiers $MinorPackage {
 	class DOSSIER_BASELINE {
 		* DOSSIER_BASELINE_ID : int
 		-- Foreign Keys --
-		---
 		* DOSSIER_ID : int
+		* CREATED_BY_CASEWORKER : int
+		---
 		DATE_CREATED : datetime
 		IS_CURRENT : bit
-		* CREATED_BY_CASEWORKER : int
 		DATE_COMPILED : datetime
 		* VERSION_NUMBER : int
 	}
@@ -61,17 +58,16 @@ namespace dossiers $MinorPackage {
 	class DOSSIER_CONTACT {
 		* DOSSIER_CONTACT_ID : int
 		-- Foreign Keys --
-		---
 		* PARENT_DOSSIER_ID : int
 		* DOSSIER_CONTACT_TYPE_ID : int
 		* DOSSIER_ACTION_ID : int
-		EMAIL_ADDRESS : varchar(255)
 		* ATTENDEE_TYPE_ID : int
+		---
+		EMAIL_ADDRESS : varchar(255)
 	}
 
 	class DOSSIER_CONTACT_TYPE <<LookupTable>> {
 		* ID : int
-		-- Foreign Keys --
 		---
 		* DESCRIPTION : varchar(50)
 		-- Visibility --
@@ -87,7 +83,6 @@ namespace dossiers $MinorPackage {
 
 	class DOSSIER_STATUS <<LookupTable>> {
 		* ID : int
-		-- Foreign Keys --
 		---
 		* DESCRIPTION : varchar(50)
 		-- Visibility --
@@ -103,7 +98,6 @@ namespace dossiers $MinorPackage {
 
 	class DOSSIER_TYPE <<LookupTable>> {
 		* ID : int
-		-- Foreign Keys --
 		---
 		* DESCRIPTION : varchar(50)
 		SECURITY_CLASSIFICATION : int
@@ -117,5 +111,55 @@ namespace dossiers $MinorPackage {
 		LOV_CREATED_BY : int
 		LOV_CREATED_DATE : datetime
 	}
+
+
+	class TEMPLATE_DOSSIER {
+		* TEMPLATE_ID : int
+		-- Foreign Keys --
+		DOSSIER_TYPE_ID : int
+		* INITIAL_STATUS : int
+		* PERSON_TYPE : int
+		* REVIEW_TYPE : int
+		* CREATED_BY : int
+		* DEFAULT_DOCUMENT_TYPE : int
+		---
+		TEMPLATE_NAME : varchar(255)
+		* DATE_CREATED : datetime
+		PB_ACCESS : bit
+		-- Audit --
+		DELETED : datetime
+		DELETED_BY : int
+	}
+
+	class TEMPLATE_DOSSIER_CONTACTS {
+		-- Foreign Keys --
+		* TEMPLATE_CONTACT_ID : int
+		* TEMPLATE_ID : int
+			DOSSIER_CONTACT_TYPE_ID : int
+		* DOSSIER_ACTION_ID : int
+		* ATTENDEE_TYPE_ID : int
+		---
+			EMAIL_ADDRESS : varchar(255)
+	}
+
+
+	DOSSIER }o-u-o| ppcs.reviews.REVIEW
+	DOSSIER }o-u-o| offenders.OFFENDER
+	DOSSIER }o-u-|| moj.CASEWORKER
+	DOSSIER }o--|| DOSSIER_TYPE
+	DOSSIER }o--|| DOSSIER_STATUS
+
+	DOSSIER ||-o{ DOSSIER_CONTACT
+	DOSSIER_CONTACT }o--|| DOSSIER_CONTACT_TYPE
+	DOSSIER_CONTACT }o--|| DOSSIER_ACTION_TYPE
+
+	DOSSIER_BASELINE }o-l-|| DOSSIER
+	DOSSIER_BASELINE }o-l-|| moj.CASEWORKER
+
+	DOSSIER ||-o{ DOSSIER_ACTION_TASK_UPDATE
+	DOSSIER_ACTION_TASK_UPDATE }o-l-|| DOSSIER_ACTION_TYPE
+	DOSSIER_ACTION_TASK_UPDATE }o--o| unknown.TEMPLATE_TASK
+	DOSSIER_ACTION_TASK_UPDATE }o--|| unknown.TEMPLATE_MILESTONE_TASK
+
 }
 @enduml

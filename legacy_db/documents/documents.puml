@@ -1,5 +1,5 @@
 @startuml
-!include style.puml
+!include ../style.puml
 
 namespace documents $MinorPackage {
 	class DOCUMENTS {
@@ -27,6 +27,10 @@ namespace documents $MinorPackage {
 		ACTION_TYPE : int
 		PRIORITY : int
 		REQUESTOR_TYPE : int
+		LINKED_DOSSIER_ID : int
+		PANEL : int
+		DIRECTION : int
+		PANEL_MEMBER : int
 		---
 		* PERSONAL_DETAILS : bit
 		DELIVERY_TARGET : datetime
@@ -45,7 +49,6 @@ namespace documents $MinorPackage {
 		REQUESTOR_NAME : varchar(50)
 		FAILURE_IN_OPEN_CONDITIONS : int
 		UNUSUAL_EVENTS : bit
-		PANEL_MEMBER : int
 		* ADDINFO : bit
 		DOWNLOAD_CASEWORKER : int
 		ACCESS : int
@@ -53,7 +56,6 @@ namespace documents $MinorPackage {
 		* NO_PAGES : int
 		PDF_CONVERSION_ATTEMPTS : smallint
 		* HAS_THUMBS : bit
-		LINKED_DOSSIER_ID : int
 		DOSSIER_DISCLOSURE : int
 		IMMEDIATE_CONVERT : bit
 		ICM_PROCESSING_DONE : int
@@ -65,12 +67,9 @@ namespace documents $MinorPackage {
 		COMPRESSED_PDF_BYTES : int
 		ORIGINAL_DPI : varchar(100)
 		ORIGINAL_COLOUR_DEPTH : varchar(100)
-		PANEL : int
-		DIRECTION : int
 		PDF_CONVERSION_REQUEUES : int
 		CONTENTS_PAGES : int
-		-- Foreign Keys --
-		---
+		-- Audit --
 		* CHANGED : timestamp
 		RECORD_CREATED_BY : int
 		RECORD_CREATION_DATE : datetime
@@ -80,13 +79,13 @@ namespace documents $MinorPackage {
 		DELETED_BY : int
 	}
 
-	class dodgydocs {
-		* docid : int
-		-- Foreign Keys --
-		destid : int
-		---
-		scandate : datetime
-	}
+	' class dodgydocs {
+	' 	* docid : int
+	' 	-- Foreign Keys --
+	' 	destid : int
+	' 	---
+	' 	scandate : datetime
+	' }
 
 	class REQUESTOR_TYPE <<LookupTable>> {
 		* ID : int
@@ -138,27 +137,18 @@ namespace documents $MinorPackage {
 	class DOCUMENT_ACCESS_LOG {
 		* ID : int
 		-- Foreign Keys --
-		---
 		DOCUMENT : int
 		CASEWORKER : int
 		DOCUMENT_ACCESS_TYPE : int
+		---
 		ACCESS_DATE : datetime
 		VALID : bit
 	}
 
-	class DOCUMENT_ACCESS_TYPE {
+	class DOCUMENT_ACCESS_TYPE <<LookupTable>> {
 		* ID : int
-		-- Foreign Keys --
 		---
 		DESCRIPTION : varchar(255)
-	}
-
-	class DOCUMENT_DOWNLOAD_BATCH {
-		* ID : int
-		-- Foreign Keys --
-		---
-		REQUEST_DATE : datetime
-		CASEWORKER : int
 	}
 
 	class DOCUMENT_SERVICE_LOG {
@@ -196,24 +186,12 @@ namespace documents $MinorPackage {
 		LOV_CREATED_DATE : datetime
 	}
 
-	class DOCUMENT_UNIT_DOWNLOAD {
-		* ID : int
-		-- Foreign Keys --
-		---
-		* UNIT : int
-		DOCUMENT : int
-		DATE_OF_REQUEST : datetime
-		UNIT_IS_BATCH : bit
-		DOSSIER : int
-	}
-
-
 	class DOC_CONVERSION_ERROR {
 		* ID : int
 		-- Foreign Keys --
-		---
 		* DOC_ID : int
 		* DOC_CONVERSION_ERROR_TYPE : int
+		---
 		* ERROR_DATE : datetime
 		ERROR_TEXT : text
 		STACK_TRACE : text
@@ -221,7 +199,6 @@ namespace documents $MinorPackage {
 
 	class DOC_CONVERSION_ERROR_TYPE <<LookupTable>> {
 		* ID : int
-		-- Foreign Keys --
 		---
 		* DESCRIPTION : varchar(50)
 		* LONG_DESC : varchar(300)
@@ -249,8 +226,8 @@ namespace documents $MinorPackage {
 	class AUDIT_DOCUMENT_TYPE <<AuditTable>> {
 		* ID : int
 		-- Foreign Keys --
-		---
 		DOCUMENT_ID : int
+		---
 		DESCRIPTION : varchar(200)
 		DELAY : int
 		URL_ACTION : varchar(50)
@@ -286,14 +263,14 @@ namespace documents $MinorPackage {
 		LOV_CREATED_DATE : datetime
 	}
 
-	class TEMP_DOC_STORE {
+	class TEMP_DOC_STORE <<TempTable>> {
 		* ID : int
 		-- Foreign Keys --
+		ASSOCIATED_ID : int
+		TEMP_DOC_TYPE : int
 		---
 		* EXPIRE_DATE : datetime
 		* Filename : varchar(100)
-		ASSOCIATED_ID : int
-		TEMP_DOC_TYPE : int
 	}
 
 	class TEMP_DOC_TYPE <<LookupTable>> {
@@ -311,15 +288,33 @@ namespace documents $MinorPackage {
 		LOV_CREATED_DATE : datetime
 	}
 
-	class CASEWORKER_DOCUMENT_DOWNLOADS {
+	class SECTION <<LookupTable>> {
 		* ID : int
-		-- Foreign Keys --
-		CASEWORKER : int
 		---
-		DATE_CREATED : datetime
-		CASEWORKER_IS_BATCH : bit
-		DISCLOSURE : int
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
 	}
+
+	DOCUMENTS }o--o| COMPLIANCE
+	DOCUMENTS }o-u-o| offenders.OFFENDER
+	DOCUMENTS }o-u-o| mhcs.DETENTION_AUTHORITY
+
+	DOCUMENT_ACCESS_LOG }o--o| DOCUMENT_ACCESS_TYPE
+	DOCUMENT_ACCESS_LOG }o-o| DOCUMENTS
+	DOCUMENT_ACCESS_LOG }o-u-o| moj.caseworkers.CASEWORKER
+
+	TEMP_DOC_STORE }o--o| TEMP_DOC_TYPE
+
+	DOC_CONVERSION_ERROR }o--o| DOC_CONVERSION_ERROR_TYPE
+	DOC_CONVERSION_ERROR }o-u-o| DOCUMENTS
 
 	common.PRIORITY |o--o{ DOCUMENTS
 	mhcs.detention_authorities.DETENTION_AUTHORITY |o--o{ DOCUMENTS

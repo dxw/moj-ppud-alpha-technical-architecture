@@ -1,0 +1,72 @@
+@startuml
+!include ../style.puml
+
+namespace files $MinorPackage {
+
+	class FILE_TRACKING {
+		* FILE_TRACKING_ID : int
+		-- Foreign Keys --
+		---
+		* OFFENDER_ID : int
+		* CASEWORKER_ID : int
+		FT_DATE : datetime
+		FILE_NOTES : varchar(255)
+		COMMENTS : varchar(8000)
+		* FILE_LOCATION_ID : int
+		FILE_TYPE : int
+		UPDATED_CASEWORKER : int
+		UPDATED_CASEWORKER_TEAM : int
+		-- Foreign Keys --
+		---
+		* CHANGED : timestamp
+		RECORD_CREATED_BY : int
+		RECORD_CREATION_DATE : datetime
+		UPDATED_DATE : datetime
+		DELETED : datetime
+	}
+
+	class FILE_TYPE <<LookupTable>> {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+
+	class BULK_ATTACH_FAILURE {
+		* ID : int
+		BULK_ATTACH_STATUS : int
+		NAME_OF_FILE : varchar(100)
+		REASON : varchar(200)
+	}
+
+	class BULK_ATTACH_STATUS {
+		* ID : int
+		-- Foreign Keys --
+		* CASEWORKER : int
+		---
+		HEARING_SUCCEEDED : int
+		HEARING_FAILED : int
+		REVIEW_SUCCEEDED : int
+		REVIEW_FAILED : int
+		UPLOAD_DATE : datetime
+		PROCESS_DATE : datetime
+		FILENAME : varchar(100)
+		DOC_TYPE : int
+	}
+
+	BULK_ATTACH_FAILURE }o--o| BULK_ATTACH_STATUS
+
+
+}
+
+@enduml

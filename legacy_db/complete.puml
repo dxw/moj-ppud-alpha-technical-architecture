@@ -2,10 +2,12 @@
 !include style_minimal.puml
 
 !include common.puml
+!include registers.puml
 !include application/index.puml
 !include moj/index.puml
-!include registers.puml
 !include offenders/index.puml
+
+!include documents/index.puml
 !include mhcs/index.puml
 !include ppcs/index.puml
 !include ppo/index.puml
