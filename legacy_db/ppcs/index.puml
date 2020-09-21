@@ -12,6 +12,7 @@ namespace ppcs $MajorPackage {
   !include fno_transfers.puml
   !include hearings.puml
   !include minutes.puml
+  !include contacts.puml
 
 }
 
