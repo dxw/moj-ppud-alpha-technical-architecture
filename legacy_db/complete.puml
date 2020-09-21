@@ -8,6 +8,8 @@
 !include offenders/index.puml
 
 !include documents/index.puml
+!include notifications/index.puml
+
 !include mhcs/index.puml
 !include ppcs/index.puml
 !include ppo/index.puml

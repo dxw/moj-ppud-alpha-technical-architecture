@@ -1,0 +1,89 @@
+@startuml
+!include ../style.puml
+
+namespace notifications $MajorPackage {
+
+	class OUTBOUND_EMAIL_ADMIN {
+		* ID : int
+		-- Foreign Keys --
+		---
+		DESCRIPTION : varchar(100)
+		LONG_DESCRIPTION : varchar(max)
+		* ENABLED_UNITS : int
+		CAN_ENABLE_PER_UNIT : bit
+		* ENABLED : bit
+		-- Audit --
+		CHANGED : timestamp
+		LAST_UPDATED : int
+		LAST_UPDATED_DATE : datetime
+	}
+
+	class OUTBOUNDEMAILS {
+		* ID : int
+		-- Foreign Keys --
+		---
+		* DestEmails : varchar(1024)
+		* Title : varchar(255)
+		* Body : text
+		Attachments : varchar(max)
+		* Status : int
+		Version : int
+		RetainAttachment : bit
+		-- Foreign Keys --
+		---
+		CreatedBy : int
+		Created : datetime
+		LastUpdatedBy : int
+		LastUpdated : datetime
+		Deleted : datetime
+		DeletedBy : int
+	}
+
+	class AUDIT_OUTBOUND_EMAIL_ADMIN <<AuditTable>> {
+		* ID : int
+		-- Foreign Keys --
+		RECORD_ID : int
+		---
+		ENABLED_UNITS : int
+		UPDATE_CASEWORKER : int
+		UPDATE_DATE : datetime
+		ENABLED : bit
+	}
+
+
+	class FUNC_MBOX {
+		* ID : int
+		-- Foreign Keys --
+		FUNC_MBOX_TYPE : int
+		* REFERENCE_ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		* EMAIL_ADDR : varchar(255)
+		-- Audit --
+		DELETED : datetime
+	}
+
+	class FUNC_MBOX_TYPE <<LookupTable>> {
+		* ID : int
+		---
+		* DESCRIPTION : varchar(50)
+		-- Visibility --
+		SHOW_TO_UNIT : int
+		-- Audit --
+		DELETED : datetime
+		LOV_DELETED_BY : int
+		LOV_UPDATED_BY : int
+		LOV_UPDATED_DATE : datetime
+		LOV_CREATED_BY : int
+		LOV_CREATED_DATE : datetime
+	}
+
+	FUNC_MBOX }o--o| FUNC_MBOX_TYPE
+	FUNC_MBOX }o--|| unknown.REFERENCE
+
+
+  !include wam_messages.puml
+
+}
+
+@enduml

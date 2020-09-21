@@ -1,5 +1,5 @@
 @startuml
-!include style.puml
+!include ../style.puml
 
 namespace wam_messages $MinorPackage {
 	class WAM_AUTOMATED_MESSAGE_TYPE <<LookupTable>> {
