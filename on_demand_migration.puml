@@ -1,5 +1,7 @@
 @startuml
 
+skinparam BackgroundColor #00000000
+
 actor Caseworker
 entity Service
 boundary API
