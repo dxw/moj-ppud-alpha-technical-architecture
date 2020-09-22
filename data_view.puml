@@ -1,0 +1,17 @@
+@startuml
+
+skinparam BackgroundColor #00000000
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Component.puml
+
+System(offender, "Offender", "Prison API / NOMIS")
+
+System(ppcs, "Parole", "Reviews, releases, recalls, panels")
+System(mhcs, "Mental Health", "Movements, leave, detention authorities")
+System(ppo, "Investigations", "Complaints, fatalities")
+
+Rel(ppcs, offender, "References", "NOMS number")
+Rel(mhcs, offender, "References", "NOMS number")
+Rel(ppo, offender, "References", "NOMS number")
+
+@enduml
