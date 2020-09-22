@@ -1,0 +1,48 @@
+@startuml
+
+actor Caseworker
+entity Service
+boundary API
+database NewDB
+database LegacyDB
+
+== Initial Query ==
+
+Caseworker -> Service : Use
+Service -> API : GET data
+API -> NewDB : Query data
+API <[#red]- NewDB : No results
+group Migrate Data
+  API -> LegacyDB : Query data
+  API <[#green]- LegacyDB : Return results
+  API -> NewDB : Store data for future use
+end
+Service <[#green]- API : Return data
+Caseworker <[#green]- Service : Display
+
+== Subsequent Queries ==
+
+Caseworker -> Service : Use
+Service -> API : GET data
+API -> NewDB : Query data
+API <[#green]- NewDB : Return results
+Service <[#green]- API : Return data
+Caseworker <[#green]- Service : Display
+
+== Writing Data ==
+
+Caseworker -> Service : Use
+Service -> API : PUT data
+API -> NewDB : Update data
+API <[#red]- NewDB : Data does not exist
+group Migrate Data
+  API -> LegacyDB : Query data
+  API <[#green]- LegacyDB : Return results
+  API -> NewDB : Store original data
+end
+API -> NewDB : Update data
+API <[#green]- NewDB : Success
+Service <[#green]- API : Success
+Caseworker <[#green]- Service : Confirm success
+
+@enduml
