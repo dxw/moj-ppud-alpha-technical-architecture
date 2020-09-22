@@ -13,6 +13,7 @@ namespace ppcs $MajorPackage {
   !include hearings.puml
   !include minutes.puml
   !include contacts.puml
+  !include panels/index.puml
 
 }
 
