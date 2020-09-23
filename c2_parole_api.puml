@@ -1,0 +1,31 @@
+@startuml Parole API
+!includeurl https://raw.githubusercontent.com/scott-wong/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+LAYOUT_LEFT_RIGHT()
+
+skinparam BackgroundColor #00000000
+
+System(review, "Manage a Review")
+System_Ext(analytics, "Analytical Platform")
+
+System_Boundary(paroleAPI, "Parole API") {
+  Container(apiServer, "API Server", "node.js, Java", "Exposes data concerned with parole via a RESTful API.")
+  Container(migrator, "Data Migrator", "node.js, Java", "Converts data from old database into new. Runs regularly as an idempotent operation and can add new fields/data as required.")
+  ContainerDb(paroleDB, "Parole DB", "RDS")
+  SystemDb_Ext(docStorage, "Document Store", "S3 Bucket")
+}
+
+SystemDb_Ext(legacyDB, "Legacy PPUD DB", "MSSQL")
+
+Rel(review, apiServer, "Reads and writes to")
+Rel(analytics, apiServer, "Reads Parole data from")
+
+
+Rel(migrator, legacyDB, "Reads legacy data and files from")
+Rel(migrator, apiServer, "Writes converted data and files to")
+Rel(apiServer, paroleDB, "Reads and writes data in")
+Rel(apiServer, docStorage, "Reads and writes files in")
+
+
+@enduml

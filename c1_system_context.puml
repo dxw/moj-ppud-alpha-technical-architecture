@@ -1,0 +1,44 @@
+@startuml System Context Diagram
+!includeurl https://raw.githubusercontent.com/scott-wong/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+LAYOUT_LEFT_RIGHT()
+
+skinparam BackgroundColor #00000000
+
+Person(caseworker, "PPCS Caseworker")
+Person_Ext(offender, "Offender", "An offender or authorised agent, such as a solicitor")
+
+Boundary(moj_apis, "MoJ Services") {
+  System_Ext(MojAPIs, "MoJ APIs", "Various REST APIs for accessing data held by other systems. NOMIS, nDelius, Libra, Xhibit, VCMS")
+}
+
+Boundary(legacy_ppud, "Legacy PPUD Systems") {
+  System(ppud, "Legacy PPUD", "Active while dual running")
+  SystemDb(legacyDB, "Legacy PPUD DB", "MSSQL")
+  Rel(ppud, legacyDB, "Fetches data from")
+  Rel(caseworker, ppud, "Uses", "HTTPS")
+}
+
+Boundary(new_services, "New Parole Systems") {
+  System(review, "Manage a Review", "Modern frontend web application")
+  System(ParoleAPI, "Parole API", "Exposes data concerned with parole.")
+}
+
+Boundary(moj_users, "MoJ Data Users (illustrative)") {
+  Person_Ext(moj, "MoJ Leadership")
+  Person_Ext(gdpr, "GDPR Team")
+  System_Ext(analytics, "Analytical Platform", "MoJ reporting system")
+  Rel(analytics, ParoleAPI, "fetches data from", "HTTPS")
+  Rel(gdpr, ParoleAPI, "fetches data from", "HTTPS")
+  Rel(moj, analytics, "monitors analytics information with")
+}
+
+Rel(ParoleAPI, legacyDB, "Fetches legacy data from")
+
+Rel(caseworker, review, "Uses", "HTTPS")
+Rel(offender, review, "Views data in", "HTTPS")
+Rel(review, ParoleAPI, "Fetches data from", "HTTPS")
+Rel(review, MojAPIs, "Fetches data from", "HTTPS")
+
+@enduml

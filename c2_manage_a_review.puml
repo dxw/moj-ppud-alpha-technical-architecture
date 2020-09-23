@@ -1,0 +1,46 @@
+@startuml Manage a Review
+!includeurl https://raw.githubusercontent.com/scott-wong/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+LAYOUT_LEFT_RIGHT()
+
+skinparam BackgroundColor #00000000
+
+Person(caseworker, "PPCS Caseworker")
+Person(offender, "Offender", "An offender or authorised agent, such as a solicitor")
+
+System_Boundary(access, "Access Control") {
+  Person_Ext(admin, "MoJ Administrator")
+  System_Ext(idp, "HMPPS Auth")
+  Rel(admin, idp, "Sets user permissions in")
+}
+
+System_Boundary(reviewService, "Manage a Review") {
+  Container(webApp, "Web Application", "node.js", "")
+  Container(jobQueue, "Job Queue", "SQS, Sidekiq, etc.", "")
+  Rel(webApp, jobQueue, "Offloads asynchronous tasks to")
+}
+
+System(paroleAPI, "ParoleAPI")
+
+System_Boundary(mojAPIs, "MoJ APIs") {
+  System_Ext(prisonAPI, "Prison API")
+  System_Ext(communityAPI, "Community API")
+  System_Ext(otherAPIs, "Other MoJ APIs")
+}
+
+System_Ext(notify, "GOV.UK Notify")
+
+Rel(webApp, idp, "Delegates login and permissions to")
+Rel(webApp, paroleAPI, "Reads and writes to")
+Rel(webApp, prisonAPI, "Reads from")
+Rel(webApp, communityAPI, "Reads from")
+Rel(webApp, otherAPIs, "Reads from")
+
+Rel(jobQueue, notify, "Sends notifications with")
+Rel(jobQueue, paroleAPI, "Reads and writes to")
+
+Rel(caseworker, webApp, "Uses", "HTTPS")
+Rel(offender, webApp, "Views information in", "HTTPS")
+
+@enduml
