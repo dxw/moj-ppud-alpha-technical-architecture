@@ -1,0 +1,14 @@
+@startuml
+
+skinparam BackgroundColor #00000000
+
+[*] --> MVP
+MVP: Development
+MVP --> Private : Enable UAT environment
+Private: Test with UAT data
+Private --> Public : Enable live environment\nand subset of Offenders
+Public: Dual run and test with\nsome real offenders
+Public --> Live : Enable all Offenders
+Live: PPUD frontend retired
+Live --> [*]
+@enduml
