@@ -15,13 +15,15 @@ System_Boundary(access, "Access Control") {
   Rel(admin, idp, "Sets user permissions in")
 }
 
-System_Boundary(reviewService, "Manage a Review") {
+System_Boundary(reviewService, "Manage a Recall") {
   Container(webApp, "Web Application", "node.js", "")
   Container(jobQueue, "Job Queue", "SQS, Sidekiq, etc.", "")
   Rel(webApp, jobQueue, "Offloads asynchronous tasks to")
 }
 
-System(paroleAPI, "ParoleAPI")
+System(paroleAPI, "Parole API")
+System(caseworkerAPI, "Caseworker API")
+System(establishmentAPI, "Establishment API")
 
 System_Boundary(mojAPIs, "MoJ APIs") {
   System_Ext(prisonAPI, "Prison API")
@@ -33,12 +35,16 @@ System_Ext(notify, "GOV.UK Notify")
 
 Rel(webApp, idp, "Delegates login and permissions to")
 Rel(webApp, paroleAPI, "Reads and writes to")
-Rel(webApp, prisonAPI, "Reads from")
+Rel(webApp, paroleAPI, "Reads from")
+Rel(webApp, caseworkerAPI, "Reads from")
+Rel(webApp, establishmentAPI, "Reads from")
 Rel(webApp, communityAPI, "Reads from")
 Rel(webApp, otherAPIs, "Reads from")
 
 Rel(jobQueue, notify, "Sends notifications with")
 Rel(jobQueue, paroleAPI, "Reads and writes to")
+Rel(jobQueue, caseworkerAPI, "Reads from")
+Rel(jobQueue, establishmentAPI, "Reads from")
 
 Rel(caseworker, webApp, "Uses", "HTTPS")
 Rel(offender, webApp, "Views information in", "HTTPS")

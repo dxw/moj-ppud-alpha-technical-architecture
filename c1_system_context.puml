@@ -21,8 +21,10 @@ Boundary(legacy_ppud, "Legacy PPUD Systems") {
 }
 
 Boundary(new_services, "New Parole Systems") {
-  System(review, "Manage a Review", "Modern frontend web application")
+  System(recall, "Manage a Recall", "Modern frontend web application")
   System(ParoleAPI, "Parole API", "Exposes data concerned with parole.")
+  System(CaseworkerAPI, "Caseworker API", "Exposes data on caseworkers, teams, etc.")
+  System(EstablishmentAPI, "Establishment API", "Exposes data concerned with establishments.")
 }
 
 Boundary(moj_users, "MoJ Data Users (illustrative)") {
@@ -35,10 +37,14 @@ Boundary(moj_users, "MoJ Data Users (illustrative)") {
 }
 
 Rel(ParoleAPI, legacyDB, "Fetches legacy data from")
+Rel(CaseworkerAPI, legacyDB, "Fetches legacy data from")
+Rel(EstablishmentAPI, legacyDB, "Fetches legacy data from")
 
-Rel(caseworker, review, "Uses", "HTTPS")
-Rel(offender, review, "Views data in", "HTTPS")
-Rel(review, ParoleAPI, "Fetches data from", "HTTPS")
-Rel(review, MojAPIs, "Fetches data from", "HTTPS")
+Rel(caseworker, recall, "Uses", "HTTPS")
+Rel(offender, recall, "Views data in", "HTTPS")
+Rel(recall, ParoleAPI, "Fetches data from", "HTTPS")
+Rel(recall, CaseworkerAPI, "Fetches data from", "HTTPS")
+Rel(recall, EstablishmentAPI, "Fetches data from", "HTTPS")
+Rel(recall, MojAPIs, "Fetches data from", "HTTPS")
 
 @enduml

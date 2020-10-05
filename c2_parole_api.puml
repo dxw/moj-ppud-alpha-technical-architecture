@@ -6,7 +6,7 @@ LAYOUT_LEFT_RIGHT()
 
 skinparam BackgroundColor #00000000
 
-System(review, "Manage a Review")
+System(recall, "Manage a Recall")
 System_Ext(analytics, "Analytical Platform")
 
 System_Boundary(paroleAPI, "Parole API") {
@@ -18,7 +18,7 @@ System_Boundary(paroleAPI, "Parole API") {
 
 SystemDb_Ext(legacyDB, "Legacy PPUD DB", "MSSQL")
 
-Rel(review, apiServer, "Reads and writes to")
+Rel(recall, apiServer, "Reads and writes to")
 Rel(analytics, apiServer, "Reads Parole data from")
 
 
