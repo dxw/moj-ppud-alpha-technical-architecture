@@ -1,0 +1,13 @@
+@startuml Core Data
+left to right direction
+!include ../style_minimal.puml
+
+!include ../common.puml
+!include ../registers.puml
+!include ../organisations.puml
+
+!include ../moj/index.puml
+!include ../offenders/index.puml
+
+remove application.wam
+@enduml
