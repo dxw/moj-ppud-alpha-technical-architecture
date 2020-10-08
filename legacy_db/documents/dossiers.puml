@@ -153,7 +153,7 @@ namespace dossiers $MinorPackage {
 
 	DOSSIER }o-u-o| ppcs.reviews.REVIEW
 	DOSSIER }o-u-o| offenders.OFFENDER
-	DOSSIER }o-u-|| moj.CASEWORKER
+	DOSSIER }o-u-|| moj.caseworkers.CASEWORKER
 	DOSSIER }o--|| DOSSIER_TYPE
 	DOSSIER }o--|| DOSSIER_STATUS
 
@@ -162,7 +162,7 @@ namespace dossiers $MinorPackage {
 	DOSSIER_CONTACT }o--|| DOSSIER_ACTION_TYPE
 
 	DOSSIER_BASELINE }o-l-|| DOSSIER
-	DOSSIER_BASELINE }o-l-|| moj.CASEWORKER
+	DOSSIER_BASELINE }o-l-|| moj.caseworkers.CASEWORKER
 
 	DOSSIER ||-o{ DOSSIER_ACTION_TASK_UPDATE
 	DOSSIER_ACTION_TASK_UPDATE }o-l-|| DOSSIER_ACTION_TYPE

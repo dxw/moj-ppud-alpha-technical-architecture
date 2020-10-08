@@ -242,7 +242,7 @@ namespace complaints $MinorPackage {
 
 	COMPLAINTS }o-u-|| offenders.OFFENDER
 	COMPLAINTS }o-u-o| offenders.sentences.SENTENCE
-	COMPLAINTS }o-u-|{ moj.ESTABLISHMENT
+	COMPLAINTS }o-u-|{ moj.establishments.ESTABLISHMENT
 	COMPLAINTS }o--|| COMPLAINT_CATEGORY
 	COMPLAINTS }o--|| COMPLAINT_SUB_CATEGORY
 	COMPLAINTS }o--o| COMPLAINT_OUTCOME

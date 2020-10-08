@@ -89,7 +89,7 @@ namespace recommendations $MinorPackage {
 
   RECOMMENDATIONS }o-u-o| ppo.complaints.COMPLAINTS
   RECOMMENDATIONS }o-u-o| ppo.fii.FII
-  RECOMMENDATIONS }o-u-o| moj.ESTABLISHMENT
+  RECOMMENDATIONS }o-u-o| moj.establishments.ESTABLISHMENT
 
   RECOMMENDATIONS }o--|| RECOMMENDATION_STATUS
   RECOMMENDATIONS }o--|| RECOMMENDATION_LEVEL

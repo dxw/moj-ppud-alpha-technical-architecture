@@ -233,8 +233,7 @@ namespace recalls $MinorPackage {
 	RECALL_TO_REASON }o-|| RECALL_REASON
 
 	RECALL }o-u-o{ ppcs.releases.RELEASE
-	RECALL }o-u-|{ hearings.HEARING_RESULT
-	RECALL }o-u-|| unknown.PROBATION_AREA
+	RECALL }o-u-|{ ppcs.hearings.HEARING_RESULT
 	RECALL }o-u-|| moj.MAPPA_LEVEL
 	RECALL }o-u-|{ moj.caseworkers.CASEWORKER
 	RECALL }o-u-|| ppcs.reviews.REVIEW_TYPE
@@ -244,7 +243,7 @@ namespace recalls $MinorPackage {
 	RECALL }o-u-|| moj.caseworkers.CASEWORKER_TEAM
 	RECALL }o-u-|| ppcs.reviews.REVIEW_STATUS
 	RECALL }o-u-o| ppcs.reviews.REVIEW
-	RECALL }o-u-o{ unknown.RISK_ASSESSMENT
+	RECALL }o-u-o{ offenders.risk_assessments.RISK_ASSESSMENT
 	RECALL }o-u-|{ moj.establishments.ESTABLISHMENT
 
 	RECALL_MILESTONE_DATE  }o-u-|| offenders.OFFENDER

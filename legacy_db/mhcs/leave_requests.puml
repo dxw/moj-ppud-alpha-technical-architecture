@@ -91,8 +91,8 @@ namespace leave $MinorPackage {
 
   LEAVE_REQUEST }o-u-|| offenders.OFFENDER
   LEAVE_REQUEST }o-u-|| mhcs.detention_authorities.DETENTION_AUTHORITY
-  LEAVE_REQUEST }o-u-|| moj.ESTABLISHMENT
-  LEAVE_REQUEST }o-u-|| moj.POLICE_AUTHORITY
+  LEAVE_REQUEST }o-u-|| moj.establishments.ESTABLISHMENT
+  LEAVE_REQUEST }o-u-|| registers.POLICE_FORCE
 
   LEAVE_REQUEST }o--|| LEAVE_TYPE
   LEAVE_REQUEST }o--|| DISCRETION_TYPE

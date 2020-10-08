@@ -44,8 +44,8 @@ namespace downloads $MinorPackage {
     TIMETABLE_DOWNLOAD_DATE : datetime
   }
 
-	panels.PANEL_MEMBER ||--o{ PANEL_MEMBER_DOWNLOAD
-	hearings.HEARING ||--o{ PANEL_MEMBER_DOWNLOAD
+	ppcs.panels.PANEL_MEMBER ||--o{ PANEL_MEMBER_DOWNLOAD
+	ppcs.hearings.HEARING ||--o{ PANEL_MEMBER_DOWNLOAD
 
   CASEWORKER_DOCUMENT_DOWNLOADS }o-u-o| moj.caseworkers.CASEWORKER
 

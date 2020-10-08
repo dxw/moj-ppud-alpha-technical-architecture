@@ -549,7 +549,7 @@ namespace sfo $MinorPackage {
 	SFO_CRIM_FACTOR_SERIOUS_HARM }o--|| CRIM_FACTOR
 
 	SFO ||-o{ SFO_ADDITIONAL_OFFENCE
-	SFO_ADDITIONAL_OFFENCE }o-u-|| offenders.OFFENCE
+	SFO_ADDITIONAL_OFFENCE }o-u-|| offenders.offences.OFFENCE
 
 	SFO_PROBATION_AREA ||-u-o{ unknown.PROBATION_AREA
 

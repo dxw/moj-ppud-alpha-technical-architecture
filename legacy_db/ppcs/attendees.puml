@@ -194,7 +194,7 @@ namespace attendees $MinorPackage {
 		ADDRESS_4 varchar(250)
 	}
 
-	ATTENDEE }o-u-o| hearings.HEARING
+	ATTENDEE }o-u-o| ppcs.hearings.HEARING
 	ATTENDEE }o-u-o| moj.caseworkers.CASEWORKER
 	ATTENDEE }o-u-o| moj.PROBATION_SERVICE
 	ATTENDEE }o--o| ADDRESS
@@ -204,14 +204,14 @@ namespace attendees $MinorPackage {
 	ATTENDEE }o--o| common.TITLE
 
 	ATTENDEE_HEARING }o-|| ATTENDEE
-	ATTENDEE_HEARING }o-u-|| hearings.HEARING
+	ATTENDEE_HEARING }o-u-|| ppcs.hearings.HEARING
 	ATTENDEE_HEARING }o--|| ATTENDEE_ROLE
 	ATTENDEE_HEARING }o--|| ATTENDEE_STATUS
 
 	AUDIT_ATTENDEE_TYPE }o-u-|| ATTENDEE_TYPE
 	AUDIT_ATTENDEE_ROLE }o-u-|| ATTENDEE_ROLE
 
-	ATTENDEE_ICM_AUTO }o-u-|| hearings.HEARING
+	ATTENDEE_ICM_AUTO }o-u-|| ppcs.hearings.HEARING
 	ATTENDEE_ICM_AUTO }o--o| ATTENDEE_ROLE
 
 	ATTENDEE ||-o{ ATTENDEE_UNAVAILABILTY
