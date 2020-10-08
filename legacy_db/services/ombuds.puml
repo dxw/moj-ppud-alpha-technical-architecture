@@ -1,0 +1,10 @@
+@startuml Ombuds
+left to right direction
+!include ../style_minimal.puml
+
+!include ../ppo/index.puml
+
+' hide references to core for clarity
+remove offenders.sentences
+remove ppcs.reviews
+@enduml
