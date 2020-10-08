@@ -7,6 +7,7 @@ namespace ppo $MajorPackage {
 	!include fatal_incident_investigations.puml
 	!include issues.puml
 	!include recommendations.puml
+  !include contacts.puml
 
 }
 

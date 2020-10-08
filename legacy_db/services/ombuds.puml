@@ -6,5 +6,7 @@ left to right direction
 
 ' hide references to core for clarity
 remove offenders.sentences
+remove offenders.cppc
 remove ppcs.reviews
+remove common
 @enduml

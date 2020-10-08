@@ -88,6 +88,9 @@ namespace contacts $MinorPackage {
 	class PPO_CONTACTS {
 		* CONTACT_ID : int
 		-- Foreign Keys --
+		* ESTABLISHMENT_ID : int
+		HEALTHCARE_SPEC_ID : int
+		OP_ROLE_ID : int
 		---
 		FIRST_NAME : varchar(50)
 		FAMILY_NAME : varchar(50)
@@ -102,9 +105,6 @@ namespace contacts $MinorPackage {
 		PHONE : varchar(20)
 		SECOND_EMAIL : varchar(100)
 		NOK_NOTES : varchar(max)
-		* ESTABLISHMENT_ID : int
-		HEALTHCARE_SPEC_ID : int
-		OP_ROLE_ID : int
 		-- Audit --
 		CREATED_BY : int
 		DATE_CREATED : datetime
@@ -215,6 +215,34 @@ namespace contacts $MinorPackage {
 		LOV_CREATED_BY : int
 		LOV_CREATED_DATE : datetime
 	}
+
+	CONTACT }o-u-o| offenders.OFFENDER
+	CONTACT }o-u-o| offenders.cppc.CPPC_CASE
+	CONTACT }o-u-o| moj.caseworkers.CASEWORKER
+	CONTACT }o-u-o| moj.caseworkers.CASEWORKER_TEAM
+	CONTACT }o--|| CONTACT_TYPE
+	CONTACT }o--o| CONTACT_SUBTYPE
+	CONTACT }o--o| CONTACT_LOG_LATE_REASON
+	CONTACT }o--o| CONTACT_OUTCOME
+	CONTACT }o-u-|| common.PRIORITY
+
+	CONTACT_LINK }o-|| CONTACT
+	CONTACT_LINK }o-u-o| moj.establishments.ESTABLISHMENT
+	CONTACT_LINK }o-u-o| ppo.complaints.COMPLAINTS
+	CONTACT_LINK }o-u-o| ppo.fii.FII
+	CONTACT_LINK }o--o| HEALTHCARE_SPEC
+	CONTACT_LINK }o--o| ROLE_IN_CASE
+	CONTACT_LINK }o--o| OP_ROLE
+
+	CONTACT_LOG_OWNER_CHANGE }o-u-|{ moj.caseworkers.CASEWORKER
+	CONTACT_LOG_OWNER_CHANGE }o-o| CONTACT
+
+	PPO_CONTACTS }o-u-|| moj.establishments.ESTABLISHMENT
+	PPO_CONTACTS }o--o| OP_ROLE
+	PPO_CONTACTS }o--o| HEALTHCARE_SPEC
+
+
+	AUDIT_LOV_CONTACT_TYPE |o-|| CONTACT_TYPE
 
 }
 
