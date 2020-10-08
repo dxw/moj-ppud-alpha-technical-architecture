@@ -273,7 +273,7 @@ namespace offenders $MajorPackage {
 	OFFENDER ||-o{ OFFENDER_VLO
 	OFFENDER_VLO }o-u-|| moj.establishments.STAFF
 
-	OFFENDER }o-u-|| moj.PROBATION_SERVICE
+	OFFENDER }o-u-|| registers.PROBATION_SERVICE
 	OFFENDER }o-u-|| moj.establishments.ESTABLISHMENT
 	OFFENDER }o-u-|{ moj.caseworkers.CASEWORKER
 	OFFENDER }o-u-o| moj.establishments.ESTABLISHMENT_TYPE
