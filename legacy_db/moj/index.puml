@@ -3,25 +3,6 @@
 
 namespace moj $MajorPackage {
 
-  class PROBATION_SERVICE {
-    * ID : int
-    -- Foreign Keys --
-    NOM_REGION : int
-    CASEWORKER_TEAM : int
-    OWNING_CASEWORKER : int
-    ---
-    * DESCRIPTION : varchar(50)
-    -- Visibility --
-    SHOW_TO_UNIT : int
-    -- Audit --
-    UPDATED_BY : int
-    UPDATED_DATE : datetime
-    CREATED_BY : int
-    CREATED_DATE : datetime
-    DELETED : datetime
-    DELETED_BY : int
-  }
-
   class MAPPA_LEVEL <<LookupTable>> {
     * ID : int
     ---
@@ -54,10 +35,6 @@ namespace moj $MajorPackage {
 
   !include caseworkers.puml
   !include establishments.puml
-
-  PROBATION_SERVICE }o-u-o| moj.caseworkers.CASEWORKER
-  PROBATION_SERVICE }o-u-o| moj.caseworkers.CASEWORKER_TEAM
-  PROBATION_SERVICE }o-u-o| registers.NOMS_REGION
 
 }
 

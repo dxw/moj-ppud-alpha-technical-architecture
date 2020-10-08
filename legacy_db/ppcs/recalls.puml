@@ -234,6 +234,7 @@ namespace recalls $MinorPackage {
 
 	RECALL }o-u-o{ ppcs.releases.RELEASE
 	RECALL }o-u-|{ ppcs.hearings.HEARING_RESULT
+	RECALL }o-u-|| registers.PROBATION_AREA
 	RECALL }o-u-|| moj.MAPPA_LEVEL
 	RECALL }o-u-|{ moj.caseworkers.CASEWORKER
 	RECALL }o-u-|| ppcs.reviews.REVIEW_TYPE

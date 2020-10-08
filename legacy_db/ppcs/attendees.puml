@@ -196,7 +196,7 @@ namespace attendees $MinorPackage {
 
 	ATTENDEE }o-u-o| ppcs.hearings.HEARING
 	ATTENDEE }o-u-o| moj.caseworkers.CASEWORKER
-	ATTENDEE }o-u-o| moj.PROBATION_SERVICE
+	ATTENDEE }o-u-o| registers.PROBATION_SERVICE
 	ATTENDEE }o--o| ADDRESS
 	ATTENDEE }o--o| ATTENDEE_TYPE
 	ATTENDEE }o--o| ATTENDEE_ROLE

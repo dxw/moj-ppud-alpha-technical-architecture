@@ -257,6 +257,11 @@ namespace caseworkers $MinorPackage {
 	CASEWORKER_TEAM_REPORT_CATEGORY }o--|| Report_Category
 
 	Report_Category }o--|| Report_Category
+
+  registers.PROBATION_SERVICE }o--o| CASEWORKER
+  registers.PROBATION_SERVICE }o--o| CASEWORKER_TEAM
+
+
 }
 
 

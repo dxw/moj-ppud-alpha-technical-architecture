@@ -530,7 +530,7 @@ namespace sfo $MinorPackage {
 	SFO }o-u-|| offenders.OFFENDER
 
 	SFO }o-|| SFO_PROBATION_AREA
-	SFO }o-u-|{ moj.PROBATION_SERVICE
+	SFO }o-u-|{ registers.PROBATION_SERVICE
 	SFO }o--|| SFO_STATUS
 	SFO }o--|| SFO_STAGE
 	SFO }o--o| SFO_SUPERVISION_REQUIREMENT
@@ -551,7 +551,7 @@ namespace sfo $MinorPackage {
 	SFO ||-o{ SFO_ADDITIONAL_OFFENCE
 	SFO_ADDITIONAL_OFFENCE }o-u-|| offenders.offences.OFFENCE
 
-	SFO_PROBATION_AREA ||-u-o{ unknown.PROBATION_AREA
+	SFO_PROBATION_AREA ||-u-o{ registers.PROBATION_AREA
 
 }
 

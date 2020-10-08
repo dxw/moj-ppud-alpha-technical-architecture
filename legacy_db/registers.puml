@@ -27,6 +27,25 @@ namespace registers $MajorPackage {
     LOV_CREATED_DATE : datetime
   }
 
+  class PROBATION_SERVICE {
+    * ID : int
+    -- Foreign Keys --
+    NOM_REGION : int
+    CASEWORKER_TEAM : int
+    OWNING_CASEWORKER : int
+    ---
+    * DESCRIPTION : varchar(50)
+    -- Visibility --
+    SHOW_TO_UNIT : int
+    -- Audit --
+    UPDATED_BY : int
+    UPDATED_DATE : datetime
+    CREATED_BY : int
+    CREATED_DATE : datetime
+    DELETED : datetime
+    DELETED_BY : int
+  }
+
   class NOMS_REGION <<LookupTable>> {
     * ID : int
     ---
@@ -89,6 +108,9 @@ namespace registers $MajorPackage {
     LOV_CREATED_BY : int
     LOV_CREATED_DATE : datetime
   }
+
+  PROBATION_SERVICE }o--o| NOMS_REGION
+
 }
 
 @enduml

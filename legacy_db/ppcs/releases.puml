@@ -149,7 +149,7 @@ namespace releases $MinorPackage {
 
 	RELEASE }o-u-|| offenders.sentences.SENTENCE
 
-	POST_RELEASE }o-u-|| moj.PROBATION_SERVICE
+	POST_RELEASE }o-u-|| registers.PROBATION_SERVICE
 
 }
 
