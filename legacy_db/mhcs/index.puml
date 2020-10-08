@@ -3,7 +3,6 @@
 
 namespace mhcs $MajorPackage {
 
-
 	class MHU_STATUS <<LookupTable>> {
 		* ID : int
 		---
@@ -21,9 +20,9 @@ namespace mhcs $MajorPackage {
 	}
 
   !include detention_authority.puml
+  !include courts.puml
   !include movement.puml
   !include leave_requests.puml
-  !include courts.puml
 
 }
 

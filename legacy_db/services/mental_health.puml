@@ -1,0 +1,9 @@
+@startuml Mental Health
+left to right direction
+!include ../style_minimal.puml
+
+!include ../mhcs/index.puml
+
+' hide references to core for clarity
+remove offenders.offences
+@enduml
