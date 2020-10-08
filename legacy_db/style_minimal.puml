@@ -5,6 +5,6 @@ hide members
 remove <<LookupTable>>
 remove <<AuditTable>>
 remove <<TempTable>>
-' remove @unlinked
+remove @unlinked
 
 @enduml
