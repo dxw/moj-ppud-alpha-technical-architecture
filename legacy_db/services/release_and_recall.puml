@@ -3,13 +3,13 @@ left to right direction
 !include ../style_minimal.puml
 
 !include ../ppcs/index.puml
-!include ../documents/index.puml
 
 ' panels and hearings are in another diagram
 remove ppcs.panels
 remove ppcs.panels.fees
 remove ppcs.hearings
 remove ppcs.milestones
+remove ppcs.attendees
 
 ' hide references to core for clarity
 remove offenders.risk_assessments
@@ -20,5 +20,6 @@ remove registers
 remove organisations
 remove mhcs.detention_authorities
 remove common
+remove wam_messages
 remove unknown
 @enduml
