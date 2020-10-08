@@ -1,324 +1,321 @@
 @startuml
 !include ../style.puml
 
-namespace documents $MinorPackage {
-	class DOCUMENTS {
-		* ID : int
-		-- Foreign Keys --
-		OFFENDER : int
-		DETENTION_AUTHORITY : int
-		DOCUMENT_TYPE : int
-		CPPC : int
-		SFO : int
-		HEARING : int
-		SECTION : int
-		COMPLIANCE : int
-		SENTENCE : int
-		POST_RELEASE : int
-		RECALL : int
-		OFFENCE : int
-		RELEASE : int
-		OWNING_CASEWORKER : int
-		OWNING_TEAM : int
-		COURT_APPEARANCE : int
-		REVIEW : int
-		MOVEMENT : int
-		LEAVE_REQUEST : int
-		ACTION_TYPE : int
-		PRIORITY : int
-		REQUESTOR_TYPE : int
-		LINKED_DOSSIER_ID : int
-		PANEL : int
-		DIRECTION : int
-		PANEL_MEMBER : int
-		---
-		* PERSONAL_DETAILS : bit
-		DELIVERY_TARGET : datetime
-		DELIVERY_ACTUAL : datetime
-		DOCUMENT_TITLE : varchar(100)
-		REPLY_TARGET : datetime
-		REPLY_ACTUAL : datetime
-		ACTION_TARGET : datetime
-		ACTION_ACTUAL : datetime
-		COMMENTS : varchar(2000)
-		FILE_EXTENSION : varchar(5)
-		MOVE_PERSON : int
-		MOVE_DATE : datetime
-		* DRAFT : bit
-		PRIVATE_DOCUMENT : int
-		REQUESTOR_NAME : varchar(50)
-		FAILURE_IN_OPEN_CONDITIONS : int
-		UNUSUAL_EVENTS : bit
-		* ADDINFO : bit
-		DOWNLOAD_CASEWORKER : int
-		ACCESS : int
-		* IS_PDF : bit
-		* NO_PAGES : int
-		PDF_CONVERSION_ATTEMPTS : smallint
-		* HAS_THUMBS : bit
-		DOSSIER_DISCLOSURE : int
-		IMMEDIATE_CONVERT : bit
-		ICM_PROCESSING_DONE : int
-		LAST_CONVERSION_ERROR : int
-		CONTACT_LOG : int
-		COMPRESS_PDF : bit
-		BYTES : int
-		UNCOMPRESSED_PDF_BYTES : int
-		COMPRESSED_PDF_BYTES : int
-		ORIGINAL_DPI : varchar(100)
-		ORIGINAL_COLOUR_DEPTH : varchar(100)
-		PDF_CONVERSION_REQUEUES : int
-		CONTENTS_PAGES : int
-		-- Audit --
-		* CHANGED : timestamp
-		RECORD_CREATED_BY : int
-		RECORD_CREATION_DATE : datetime
-		RECORD_LAST_SAVED_DATE : datetime
-		RECORD_LAST_SAVED_BY : int
-		DELETED : datetime
-		DELETED_BY : int
-	}
-
-	' class dodgydocs {
-	' 	* docid : int
-	' 	-- Foreign Keys --
-	' 	destid : int
-	' 	---
-	' 	scandate : datetime
-	' }
-
-	class REQUESTOR_TYPE <<LookupTable>> {
-		* ID : int
-		---
-		* DESCRIPTION : varchar(50)
-		-- Visibility --
-		SHOW_TO_UNIT : int
-		-- Audit --
-		DELETED : datetime
-		LOV_DELETED_BY : int
-		LOV_UPDATED_BY : int
-		LOV_UPDATED_DATE : datetime
-		LOV_CREATED_BY : int
-		LOV_CREATED_DATE : datetime
-	}
-
-	class COMPLIANCE <<LookupTable>> {
-		* ID : int
-		---
-		* DESCRIPTION : varchar(50)
-		-- Visibility --
-		SHOW_TO_UNIT : int
-		-- Audit --
-		DELETED : datetime
-		LOV_DELETED_BY : int
-		LOV_UPDATED_BY : int
-		LOV_UPDATED_DATE : datetime
-		LOV_CREATED_BY : int
-		LOV_CREATED_DATE : datetime
-	}
-
-	class DOCUMENT_ACCESS {
-		* ID : int
-		-- Foreign Keys --
-		---
-		* Description : varchar(50)
-		* TEAM_BASED : bit
-		-- Visibility --
-		SHOW_TO_UNIT : int
-		-- Audit --
-		DELETED : datetime
-		DELETED_BY : int
-		UPDATED_BY : int
-		UPDATED_DATE : datetime
-		CREATED_BY : int
-		CREATED_DATE : datetime
-	}
-
-	class DOCUMENT_ACCESS_LOG {
-		* ID : int
-		-- Foreign Keys --
-		DOCUMENT : int
-		CASEWORKER : int
-		DOCUMENT_ACCESS_TYPE : int
-		---
-		ACCESS_DATE : datetime
-		VALID : bit
-	}
-
-	class DOCUMENT_ACCESS_TYPE <<LookupTable>> {
-		* ID : int
-		---
-		DESCRIPTION : varchar(255)
-	}
-
-	class DOCUMENT_SERVICE_LOG {
-		* ID : int
-		-- Foreign Keys --
-		---
-		CALL_TIME : datetime
-		FunctionCalled : varchar(100)
-		ParametersUsed : varchar(1000)
-		EXIT_TIME : datetime
-	}
-
-	class DOCUMENT_TYPE {
-		* ID : int
-		-- Foreign Keys --
-		---
-		DESCRIPTION : varchar(200)
-		DELAY : int
-		URL_ACTION : varchar(50)
-		* UNIT : int
-		FORM_NAME : varchar(50)
-		UNOWNED_CASEWORKER : int
-		UNOWNED_TEAM : int
-		AUTO_BATCH_TO_UNIT : int
-		* IS_HEARING_DIRECTIONS : bit
-		ALWAYS_ASSIGN_TO_UNOWNED_CASEWORKER : bit
-		-- Visibility --
-		SHOW_TO_UNIT : int
-		-- Audit --
-		DELETED : datetime
-		LOV_DELETED_BY : int
-		LOV_UPDATED_BY : int
-		LOV_UPDATED_DATE : datetime
-		LOV_CREATED_BY : int
-		LOV_CREATED_DATE : datetime
-	}
-
-	class DOC_CONVERSION_ERROR {
-		* ID : int
-		-- Foreign Keys --
-		* DOC_ID : int
-		* DOC_CONVERSION_ERROR_TYPE : int
-		---
-		* ERROR_DATE : datetime
-		ERROR_TEXT : text
-		STACK_TRACE : text
-	}
-
-	class DOC_CONVERSION_ERROR_TYPE <<LookupTable>> {
-		* ID : int
-		---
-		* DESCRIPTION : varchar(50)
-		* LONG_DESC : varchar(300)
-		* ERROR_STRING_PART : varchar(200)
-		* RETRY : bit
-		-- Visibility --
-		SHOW_TO_UNIT : int
-		-- Audit --
-		DELETED : datetime
-		LOV_DELETED_BY : int
-		LOV_UPDATED_BY : int
-		LOV_UPDATED_DATE : datetime
-		LOV_CREATED_BY : int
-		LOV_CREATED_DATE : datetime
-	}
-
-	class PAGES {
-		* PAGE_ID : int
-		-- Foreign Keys --
-		* DOCUMENT_ID : int
-		---
-		* PAGE_NO : int
-	}
-
-	class AUDIT_DOCUMENT_TYPE <<AuditTable>> {
-		* ID : int
-		-- Foreign Keys --
-		DOCUMENT_ID : int
-		---
-		DESCRIPTION : varchar(200)
-		DELAY : int
-		URL_ACTION : varchar(50)
-		* UNIT : varchar(50)
-		FORM_NAME : varchar(50)
-		* IS_HEARING_DIRECTIONS : bit
-		-- Audit --
-		CHANGE_BY : varchar(50)
-		CHANGE_DATE : datetime
-	}
-
-	class ALLOWABLE_FILE_EXTENSIONS <<LookupTable>> {
-		* ID : int
-		---
-		DESCRIPTION : varchar(5)
-		CONVERTTOPDF : bit
-		-- Audit --
-		DELETED : datetime
-	}
-
-	class MERGE_DOC_TYPE <<LookupTable>> {
-		* ID : int
-		---
-		* Description : varchar(50)
-		-- Visibility --
-		SHOW_TO_UNIT : int
-		-- Audit --
-		DELETED : datetime
-		LOV_DELETED_BY : int
-		LOV_UPDATED_BY : int
-		LOV_UPDATED_DATE : datetime
-		LOV_CREATED_BY : int
-		LOV_CREATED_DATE : datetime
-	}
-
-	class TEMP_DOC_STORE <<TempTable>> {
-		* ID : int
-		-- Foreign Keys --
-		ASSOCIATED_ID : int
-		TEMP_DOC_TYPE : int
-		---
-		* EXPIRE_DATE : datetime
-		* Filename : varchar(100)
-	}
-
-	class TEMP_DOC_TYPE <<LookupTable>> {
-		* ID : int
-		---
-		* DESCRIPTION : varchar(50)
-		-- Visibility --
-		SHOW_TO_UNIT : int
-		-- Audit --
-		DELETED : datetime
-		LOV_DELETED_BY : int
-		LOV_UPDATED_BY : int
-		LOV_UPDATED_DATE : datetime
-		LOV_CREATED_BY : int
-		LOV_CREATED_DATE : datetime
-	}
-
-	class SECTION <<LookupTable>> {
-		* ID : int
-		---
-		* DESCRIPTION : varchar(50)
-		-- Visibility --
-		SHOW_TO_UNIT : int
-		-- Audit --
-		DELETED : datetime
-		LOV_DELETED_BY : int
-		LOV_UPDATED_BY : int
-		LOV_UPDATED_DATE : datetime
-		LOV_CREATED_BY : int
-		LOV_CREATED_DATE : datetime
-	}
-
-	DOCUMENTS }o--o| COMPLIANCE
-	DOCUMENTS }o-u-o| offenders.OFFENDER
-	DOCUMENTS }o-u-o| mhcs.DETENTION_AUTHORITY
-
-	DOCUMENT_ACCESS_LOG }o--o| DOCUMENT_ACCESS_TYPE
-	DOCUMENT_ACCESS_LOG }o-o| DOCUMENTS
-	DOCUMENT_ACCESS_LOG }o-u-o| moj.caseworkers.CASEWORKER
-
-	TEMP_DOC_STORE }o--o| TEMP_DOC_TYPE
-
-	DOC_CONVERSION_ERROR }o--o| DOC_CONVERSION_ERROR_TYPE
-	DOC_CONVERSION_ERROR }o-u-o| DOCUMENTS
-
-	common.PRIORITY |o--o{ DOCUMENTS
-	mhcs.detention_authorities.DETENTION_AUTHORITY |o--o{ DOCUMENTS
-
+class DOCUMENTS {
+	* ID : int
+	-- Foreign Keys --
+	OFFENDER : int
+	DETENTION_AUTHORITY : int
+	DOCUMENT_TYPE : int
+	CPPC : int
+	SFO : int
+	HEARING : int
+	SECTION : int
+	COMPLIANCE : int
+	SENTENCE : int
+	POST_RELEASE : int
+	RECALL : int
+	OFFENCE : int
+	RELEASE : int
+	OWNING_CASEWORKER : int
+	OWNING_TEAM : int
+	COURT_APPEARANCE : int
+	REVIEW : int
+	MOVEMENT : int
+	LEAVE_REQUEST : int
+	ACTION_TYPE : int
+	PRIORITY : int
+	REQUESTOR_TYPE : int
+	LINKED_DOSSIER_ID : int
+	PANEL : int
+	DIRECTION : int
+	PANEL_MEMBER : int
+	---
+	* PERSONAL_DETAILS : bit
+	DELIVERY_TARGET : datetime
+	DELIVERY_ACTUAL : datetime
+	DOCUMENT_TITLE : varchar(100)
+	REPLY_TARGET : datetime
+	REPLY_ACTUAL : datetime
+	ACTION_TARGET : datetime
+	ACTION_ACTUAL : datetime
+	COMMENTS : varchar(2000)
+	FILE_EXTENSION : varchar(5)
+	MOVE_PERSON : int
+	MOVE_DATE : datetime
+	* DRAFT : bit
+	PRIVATE_DOCUMENT : int
+	REQUESTOR_NAME : varchar(50)
+	FAILURE_IN_OPEN_CONDITIONS : int
+	UNUSUAL_EVENTS : bit
+	* ADDINFO : bit
+	DOWNLOAD_CASEWORKER : int
+	ACCESS : int
+	* IS_PDF : bit
+	* NO_PAGES : int
+	PDF_CONVERSION_ATTEMPTS : smallint
+	* HAS_THUMBS : bit
+	DOSSIER_DISCLOSURE : int
+	IMMEDIATE_CONVERT : bit
+	ICM_PROCESSING_DONE : int
+	LAST_CONVERSION_ERROR : int
+	CONTACT_LOG : int
+	COMPRESS_PDF : bit
+	BYTES : int
+	UNCOMPRESSED_PDF_BYTES : int
+	COMPRESSED_PDF_BYTES : int
+	ORIGINAL_DPI : varchar(100)
+	ORIGINAL_COLOUR_DEPTH : varchar(100)
+	PDF_CONVERSION_REQUEUES : int
+	CONTENTS_PAGES : int
+	-- Audit --
+	* CHANGED : timestamp
+	RECORD_CREATED_BY : int
+	RECORD_CREATION_DATE : datetime
+	RECORD_LAST_SAVED_DATE : datetime
+	RECORD_LAST_SAVED_BY : int
+	DELETED : datetime
+	DELETED_BY : int
 }
+
+' class dodgydocs {
+' 	* docid : int
+' 	-- Foreign Keys --
+' 	destid : int
+' 	---
+' 	scandate : datetime
+' }
+
+class REQUESTOR_TYPE <<LookupTable>> {
+	* ID : int
+	---
+	* DESCRIPTION : varchar(50)
+	-- Visibility --
+	SHOW_TO_UNIT : int
+	-- Audit --
+	DELETED : datetime
+	LOV_DELETED_BY : int
+	LOV_UPDATED_BY : int
+	LOV_UPDATED_DATE : datetime
+	LOV_CREATED_BY : int
+	LOV_CREATED_DATE : datetime
+}
+
+class COMPLIANCE <<LookupTable>> {
+	* ID : int
+	---
+	* DESCRIPTION : varchar(50)
+	-- Visibility --
+	SHOW_TO_UNIT : int
+	-- Audit --
+	DELETED : datetime
+	LOV_DELETED_BY : int
+	LOV_UPDATED_BY : int
+	LOV_UPDATED_DATE : datetime
+	LOV_CREATED_BY : int
+	LOV_CREATED_DATE : datetime
+}
+
+class DOCUMENT_ACCESS {
+	* ID : int
+	-- Foreign Keys --
+	---
+	* Description : varchar(50)
+	* TEAM_BASED : bit
+	-- Visibility --
+	SHOW_TO_UNIT : int
+	-- Audit --
+	DELETED : datetime
+	DELETED_BY : int
+	UPDATED_BY : int
+	UPDATED_DATE : datetime
+	CREATED_BY : int
+	CREATED_DATE : datetime
+}
+
+class DOCUMENT_ACCESS_LOG {
+	* ID : int
+	-- Foreign Keys --
+	DOCUMENT : int
+	CASEWORKER : int
+	DOCUMENT_ACCESS_TYPE : int
+	---
+	ACCESS_DATE : datetime
+	VALID : bit
+}
+
+class DOCUMENT_ACCESS_TYPE <<LookupTable>> {
+	* ID : int
+	---
+	DESCRIPTION : varchar(255)
+}
+
+class DOCUMENT_SERVICE_LOG {
+	* ID : int
+	-- Foreign Keys --
+	---
+	CALL_TIME : datetime
+	FunctionCalled : varchar(100)
+	ParametersUsed : varchar(1000)
+	EXIT_TIME : datetime
+}
+
+class DOCUMENT_TYPE {
+	* ID : int
+	-- Foreign Keys --
+	---
+	DESCRIPTION : varchar(200)
+	DELAY : int
+	URL_ACTION : varchar(50)
+	* UNIT : int
+	FORM_NAME : varchar(50)
+	UNOWNED_CASEWORKER : int
+	UNOWNED_TEAM : int
+	AUTO_BATCH_TO_UNIT : int
+	* IS_HEARING_DIRECTIONS : bit
+	ALWAYS_ASSIGN_TO_UNOWNED_CASEWORKER : bit
+	-- Visibility --
+	SHOW_TO_UNIT : int
+	-- Audit --
+	DELETED : datetime
+	LOV_DELETED_BY : int
+	LOV_UPDATED_BY : int
+	LOV_UPDATED_DATE : datetime
+	LOV_CREATED_BY : int
+	LOV_CREATED_DATE : datetime
+}
+
+class DOC_CONVERSION_ERROR {
+	* ID : int
+	-- Foreign Keys --
+	* DOC_ID : int
+	* DOC_CONVERSION_ERROR_TYPE : int
+	---
+	* ERROR_DATE : datetime
+	ERROR_TEXT : text
+	STACK_TRACE : text
+}
+
+class DOC_CONVERSION_ERROR_TYPE <<LookupTable>> {
+	* ID : int
+	---
+	* DESCRIPTION : varchar(50)
+	* LONG_DESC : varchar(300)
+	* ERROR_STRING_PART : varchar(200)
+	* RETRY : bit
+	-- Visibility --
+	SHOW_TO_UNIT : int
+	-- Audit --
+	DELETED : datetime
+	LOV_DELETED_BY : int
+	LOV_UPDATED_BY : int
+	LOV_UPDATED_DATE : datetime
+	LOV_CREATED_BY : int
+	LOV_CREATED_DATE : datetime
+}
+
+class PAGES {
+	* PAGE_ID : int
+	-- Foreign Keys --
+	* DOCUMENT_ID : int
+	---
+	* PAGE_NO : int
+}
+
+class AUDIT_DOCUMENT_TYPE <<AuditTable>> {
+	* ID : int
+	-- Foreign Keys --
+	DOCUMENT_ID : int
+	---
+	DESCRIPTION : varchar(200)
+	DELAY : int
+	URL_ACTION : varchar(50)
+	* UNIT : varchar(50)
+	FORM_NAME : varchar(50)
+	* IS_HEARING_DIRECTIONS : bit
+	-- Audit --
+	CHANGE_BY : varchar(50)
+	CHANGE_DATE : datetime
+}
+
+class ALLOWABLE_FILE_EXTENSIONS <<LookupTable>> {
+	* ID : int
+	---
+	DESCRIPTION : varchar(5)
+	CONVERTTOPDF : bit
+	-- Audit --
+	DELETED : datetime
+}
+
+class MERGE_DOC_TYPE <<LookupTable>> {
+	* ID : int
+	---
+	* Description : varchar(50)
+	-- Visibility --
+	SHOW_TO_UNIT : int
+	-- Audit --
+	DELETED : datetime
+	LOV_DELETED_BY : int
+	LOV_UPDATED_BY : int
+	LOV_UPDATED_DATE : datetime
+	LOV_CREATED_BY : int
+	LOV_CREATED_DATE : datetime
+}
+
+class TEMP_DOC_STORE <<TempTable>> {
+	* ID : int
+	-- Foreign Keys --
+	ASSOCIATED_ID : int
+	TEMP_DOC_TYPE : int
+	---
+	* EXPIRE_DATE : datetime
+	* Filename : varchar(100)
+}
+
+class TEMP_DOC_TYPE <<LookupTable>> {
+	* ID : int
+	---
+	* DESCRIPTION : varchar(50)
+	-- Visibility --
+	SHOW_TO_UNIT : int
+	-- Audit --
+	DELETED : datetime
+	LOV_DELETED_BY : int
+	LOV_UPDATED_BY : int
+	LOV_UPDATED_DATE : datetime
+	LOV_CREATED_BY : int
+	LOV_CREATED_DATE : datetime
+}
+
+class SECTION <<LookupTable>> {
+	* ID : int
+	---
+	* DESCRIPTION : varchar(50)
+	-- Visibility --
+	SHOW_TO_UNIT : int
+	-- Audit --
+	DELETED : datetime
+	LOV_DELETED_BY : int
+	LOV_UPDATED_BY : int
+	LOV_UPDATED_DATE : datetime
+	LOV_CREATED_BY : int
+	LOV_CREATED_DATE : datetime
+}
+
+DOCUMENTS }o--o| COMPLIANCE
+DOCUMENTS }o-u-o| offenders.OFFENDER
+DOCUMENTS }o-u-o| mhcs.detention_authorities.DETENTION_AUTHORITY
+
+DOCUMENT_ACCESS_LOG }o--o| DOCUMENT_ACCESS_TYPE
+DOCUMENT_ACCESS_LOG }o-o| DOCUMENTS
+DOCUMENT_ACCESS_LOG }o-u-o| moj.caseworkers.CASEWORKER
+
+TEMP_DOC_STORE }o--o| TEMP_DOC_TYPE
+
+DOC_CONVERSION_ERROR }o--o| DOC_CONVERSION_ERROR_TYPE
+DOC_CONVERSION_ERROR }o-u-o| DOCUMENTS
+
+common.PRIORITY |o--o{ DOCUMENTS
+mhcs.detention_authorities.DETENTION_AUTHORITY |o--o{ DOCUMENTS
 
 @enduml

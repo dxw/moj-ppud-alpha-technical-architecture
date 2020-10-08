@@ -256,6 +256,7 @@ namespace directions $MinorPackage {
   DIRECTION }o-u-|{ moj.caseworkers.CASEWORKER
   DIRECTION }o-u-|| moj.caseworkers.CASEWORKER_TEAM
   DIRECTION }o-u-|| ppcs.reviews.REVIEW
+  DIRECTION }o-u-o| documents.DOCUMENTS
   DIRECTION }o-u-o| registers.PROBATION_AREA
 
   DIRECTION_COMPLETED }o-u-|| ppcs.reviews.REVIEW

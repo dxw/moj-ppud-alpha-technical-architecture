@@ -52,7 +52,7 @@ namespace downloads $MinorPackage {
   DOCUMENT_DOWNLOAD_BATCH }o-u-o| moj.caseworkers.CASEWORKER
 
   DOCUMENT_UNIT_DOWNLOAD }o-u-o| unknown.UNIT
-  DOCUMENT_UNIT_DOWNLOAD }o-u-o| documents.documents.DOCUMENTS
+  DOCUMENT_UNIT_DOWNLOAD }o-u-o| documents.DOCUMENTS
   DOCUMENT_UNIT_DOWNLOAD }o-u-o| documents.dossiers.DOSSIER
 
 }
