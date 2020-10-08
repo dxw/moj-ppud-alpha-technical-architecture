@@ -4,6 +4,7 @@
 namespace documents $MajorPackage {
 
   !include documents.puml
+  !include minutes.puml
   !include dossiers.puml
   !include downloads.puml
   !include files.puml

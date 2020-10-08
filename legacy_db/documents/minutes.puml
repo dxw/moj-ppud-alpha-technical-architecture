@@ -6,12 +6,8 @@ namespace minutes $MinorPackage {
 	class MINUTES {
 		* ID : int
 		-- Foreign Keys --
-		---
 		OFFENDER : int
 		DETENTION_AUTHORITY : int
-		* PERSONAL_DETAILS : bit
-		* OFFENCE_DETAILS : bit
-		* SENTENCE_DETAILS : bit
 		COURT_APPEARANCE : int
 		RELEASE : int
 		REVIEW : int
@@ -21,10 +17,14 @@ namespace minutes $MinorPackage {
 		CPPC : int
 		SFO : int
 		RECALL : int
-		MINUTES : text
 		CONTACT_LOG : int
 		DIRECTION : int
 		SENTENCE : int
+		---
+		* PERSONAL_DETAILS : bit
+		* OFFENCE_DETAILS : bit
+		* SENTENCE_DETAILS : bit
+		MINUTES : text
 		-- Foreign Keys --
 		---
 		* CHANGED : timestamp
@@ -42,6 +42,20 @@ namespace minutes $MinorPackage {
 		---
 	*	TRANSFORM_XML : xml
 	}
+
+	MINUTES }o-u-o| offenders.OFFENDER
+	MINUTES }o-u-o| offenders.sentences.SENTENCE
+	MINUTES }o-u-o| offenders.sfo.SFO
+	MINUTES }o-u-o| offenders.cppc.CPPC_CASE
+
+	MINUTES }o-u-o| ppcs.directions.DIRECTION
+
+
+	MINUTES }o-u-o| mhcs.movements.MOVEMENT
+	MINUTES }o-u-o| mhcs.leave_requests.LEAVE_REQUEST
+	MINUTES }o-u-o| mhcs.detention_authorities.DETENTION_AUTHORITY
+
+	MINUTES }o-u-o| ppo.contacts.CONTACT
 
 
 }

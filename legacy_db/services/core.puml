@@ -8,6 +8,17 @@ left to right direction
 
 !include ../moj/index.puml
 !include ../offenders/index.puml
+!include ../documents/index.puml
 
+' Remove things that aren't core
 remove application.wam
+remove mhcs.detention_authorities
+remove ppcs.directions
+remove mhcs.leave_requests
+remove ppcs.reviews
+remove ppo.contacts
+remove mhcs.movements
+remove ppcs.panels
+remove ppcs.hearings
+remove unknown
 @enduml
