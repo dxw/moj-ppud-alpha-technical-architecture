@@ -1,8 +1,8 @@
-@startuml Release and Recall
+@startuml
 left to right direction
-!include ../style_minimal.puml
+!include ../legacy_db/style_minimal.puml
 
-!include ../ppcs/index_parole.puml
+!include ../legacy_db/ppcs/index_parole.puml
 
 ' panels and hearings are in another diagram
 remove ppcs.panels

@@ -1,8 +1,8 @@
-@startuml Mental Health
+@startuml
 left to right direction
-!include ../style_minimal.puml
+!include ../legacy_db/style_minimal.puml
 
-!include ../mhcs/index.puml
+!include ../legacy_db/mhcs/index.puml
 
 ' hide references to core for clarity
 remove offenders.offences

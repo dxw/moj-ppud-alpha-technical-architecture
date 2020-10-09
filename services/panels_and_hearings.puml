@@ -1,8 +1,8 @@
-@startuml Panels and Hearings
+@startuml
 left to right direction
-!include ../style_minimal.puml
+!include ../legacy_db/style_minimal.puml
 
-!include ../ppcs/index_panels.puml
+!include ../legacy_db/ppcs/index_panels.puml
 
 ' hide references to core for clarity
 remove offenders.risk_assessments

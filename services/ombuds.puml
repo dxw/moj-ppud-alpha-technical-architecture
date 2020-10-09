@@ -1,8 +1,8 @@
-@startuml Ombuds
+@startuml
 left to right direction
-!include ../style_minimal.puml
+!include ../legacy_db/style_minimal.puml
 
-!include ../ppo/index.puml
+!include ../legacy_db/ppo/index.puml
 
 ' hide references to core for clarity
 remove offenders.sentences

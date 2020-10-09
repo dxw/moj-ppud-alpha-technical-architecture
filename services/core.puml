@@ -1,14 +1,14 @@
-@startuml Core Data
+@startuml
 left to right direction
-!include ../style_minimal.puml
+!include ../legacy_db/style_minimal.puml
 
-!include ../common.puml
-!include ../registers.puml
-!include ../organisations.puml
+!include ../legacy_db/common.puml
+!include ../legacy_db/registers.puml
+!include ../legacy_db/organisations.puml
 
-!include ../moj/index.puml
-!include ../offenders/index.puml
-!include ../documents/index.puml
+!include ../legacy_db/moj/index.puml
+!include ../legacy_db/offenders/index.puml
+!include ../legacy_db/documents/index.puml
 
 ' Remove things that aren't core
 remove application.wam
