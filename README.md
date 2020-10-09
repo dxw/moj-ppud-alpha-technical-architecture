@@ -8,9 +8,11 @@ This repository contains the source code for diagrams generated for the Ministry
 
 ## Usage
 
-To build all diagrams, run `make`. PNG versions of all diagrams will be created in the `out` directory.
+To build all diagrams, run `make`. PNG versions of all diagrams will be created in the `png` directory.
 
 ## Repository layout
+
+The `png` directory contains rendered views of all the PlantUML diagrams discussed below.
 
 ### Legacy database diagrams
 
