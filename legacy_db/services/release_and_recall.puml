@@ -2,14 +2,14 @@
 left to right direction
 !include ../style_minimal.puml
 
-!include ../ppcs/index.puml
+!include ../ppcs/index_parole.puml
 
 ' panels and hearings are in another diagram
 remove ppcs.panels
-remove ppcs.panels.fees
+remove ppcs.fees
 remove ppcs.hearings
 remove ppcs.milestones
-remove ppcs.attendees
+remove ppcs.probation_reports
 
 ' hide references to core for clarity
 remove offenders.risk_assessments
