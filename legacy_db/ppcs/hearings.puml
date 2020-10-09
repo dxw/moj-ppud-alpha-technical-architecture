@@ -190,6 +190,7 @@ namespace hearings $MinorPackage {
 	}
 
 	HEARING }o-u-|| offenders.OFFENDER
+	HEARING }o-u-|| ppcs.reviews.REVIEW
 	HEARING }o--o| HEARING_TYPE
 	HEARING }o--o| HEARING_LISTING_STATUS
 	HEARING }o--o| HEARING_RESULT
