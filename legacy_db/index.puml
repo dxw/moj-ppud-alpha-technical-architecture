@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 !include style_minimal.puml
 
 !include common.puml
@@ -13,13 +14,12 @@
 !include documents/index.puml
 !include notifications/index.puml
 
+!include ppcs/index_parole.puml
+' !include ppcs/index_panels.puml Can't be included at the same time as the line above, due to plantUML crashing
 !include mhcs/index.puml
-!include ppcs/index.puml
 !include ppo/index.puml
-
-!include panels/index.puml
 
 !include reporting/index.puml
 
-' !include unknown.puml
+!include unknown.puml
 @enduml
