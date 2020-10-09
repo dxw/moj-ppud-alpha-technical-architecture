@@ -1,0 +1,16 @@
+@startuml Panels and Hearings
+left to right direction
+!include ../style_minimal.puml
+
+!include ../ppcs/index_panels.puml
+
+' hide references to core for clarity
+remove offenders.risk_assessments
+remove offenders.sentences
+remove moj
+remove registers
+remove mhcs.detention_authorities
+remove common
+remove wam_messages
+remove unknown
+@enduml

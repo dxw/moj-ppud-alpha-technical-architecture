@@ -1,5 +1,5 @@
 @startuml
-!include ../../style.puml
+!include ../style.puml
 
 namespace development $MinorPackage {
 
@@ -115,13 +115,13 @@ namespace development $MinorPackage {
     MEMBER_TYPE : int
   }
 
-  ppcs.panels.members.PANEL_MEMBER ||--o{ PANEL_MEMBER_ACCREDITATION
+  ppcs.members.PANEL_MEMBER ||--o{ PANEL_MEMBER_ACCREDITATION
   PANEL_MEMBER_ACCREDITATION }o--|| ACCREDITATION_TYPE
 
-  ppcs.panels.members.MEMBER_TYPE ||--o{ ACCREDITATION_MEMBER_TYPE
+  ppcs.members.MEMBER_TYPE ||--o{ ACCREDITATION_MEMBER_TYPE
   ACCREDITATION_TYPE ||-u-o{ ACCREDITATION_MEMBER_TYPE
 
-  ppcs.panels.members.PANEL_MEMBER ||--o{ PANEL_MEMBER_DEVELOPMENT
+  ppcs.members.PANEL_MEMBER ||--o{ PANEL_MEMBER_DEVELOPMENT
 
   PANEL_MEMBER_DEVELOPMENT ||--o{ MEMBER_DEVELOPMENT_TYPE
   PANEL_MEMBER_DEVELOPMENT ||--o{ MEMBER_DEVELOPMENT_STATUS

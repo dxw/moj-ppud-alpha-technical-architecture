@@ -2,6 +2,7 @@
 !include ../style.puml
 
 namespace hearings $MinorPackage {
+
 	class HEARING {
 		* ID : int
 		-- Foreign Keys --
@@ -189,8 +190,6 @@ namespace hearings $MinorPackage {
 	}
 
 	HEARING }o-u-|| offenders.OFFENDER
-	HEARING }o-u-|| ppcs.reviews.REVIEW
-	HEARING }o-u-o| ppcs.panels.PANEL
 	HEARING }o--o| HEARING_TYPE
 	HEARING }o--o| HEARING_LISTING_STATUS
 	HEARING }o--o| HEARING_RESULT
@@ -201,7 +200,7 @@ namespace hearings $MinorPackage {
 	HEARING }o-u-o| moj.caseworkers.CASEWORKER_TEAM
 
 	HEARING ||-o{ HEARING_SPECIALIST_REQUIRED
-	HEARING_SPECIALIST_REQUIRED }o--|| ppcs.panels.members.MEMBER_TYPE
+	HEARING_SPECIALIST_REQUIRED }o--|| ppcs.members.MEMBER_TYPE
 
 	HEARING ||-o{ HEARING_ACCREDITATION_REQUIRED
 	HEARING_ACCREDITATION_REQUIRED }o--|| unknown.ACCREDITATION

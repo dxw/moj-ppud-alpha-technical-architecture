@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+!include ../style_minimal.puml
+
+namespace ppcs $MajorPackage {
+
+  !include hearings.puml
+  !include panels.puml
+	!include panel_members.puml
+	!include member_fees.puml
+	!include member_development.puml
+  !include attendees.puml
+  !include deferrals.puml
+  ' !include milestones.puml
+}
+
+@enduml

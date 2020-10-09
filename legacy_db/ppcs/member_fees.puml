@@ -1,5 +1,5 @@
 @startuml
-!include ../../style.puml
+!include ../style.puml
 
 namespace fees $MinorPackage {
 
@@ -95,11 +95,11 @@ namespace fees $MinorPackage {
     * CHANGED_COLUMN : varchar(50)
   }
 
-  ppcs.panels.members.PANEL_MEMBER ||--o{ MEMBER_FEE
+  ppcs.members.PANEL_MEMBER ||--o{ MEMBER_FEE
   ppcs.hearings.HEARING |o--o{ MEMBER_FEE
   ppcs.panels.PANEL |o--o{ MEMBER_FEE
-  ppcs.panels.members.PANEL_MEMBER_ROLE |o--o{ MEMBER_FEE
-  ppcs.panels.members.PANEL_MEMBER_ROLE |o--o{ MEMBER_FEE_VALUES
+  ppcs.members.PANEL_MEMBER_ROLE |o--o{ MEMBER_FEE
+  ppcs.members.PANEL_MEMBER_ROLE |o--o{ MEMBER_FEE_VALUES
   moj.establishments.ESTABLISHMENT |o--o{ MEMBER_FEE
   ppcs.panels.PANEL_TYPE |o--o{ MEMBER_FEE
 

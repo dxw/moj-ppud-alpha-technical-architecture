@@ -1,7 +1,7 @@
 @startuml
-!include ../../style.puml
+!include ../style.puml
 
-namespace panels $MajorPackage {
+namespace panels $MinorPackage {
 
 	class PANEL {
 		* ID : int
@@ -134,11 +134,11 @@ namespace panels $MajorPackage {
 
 	RECORD_FIELD }o--o| RECORD_TYPE
 
-
 	class visit {
 		panel : int
 	}
 
+	ppcs.hearings.HEARING }o--o| PANEL
 	PANEL }o--|| PANEL_TYPE
 	PANEL }o--|| PANEL_STATUS
 	PANEL }o-u-o| moj.establishments.ESTABLISHMENT
@@ -148,10 +148,6 @@ namespace panels $MajorPackage {
 
 	AUDIT_PANEL }o--|| RECORD_FIELD
 	AUDIT_PANEL }o-u-|| moj.caseworkers.CASEWORKER
-
-	!include panel_members.puml
-	!include member_fees.puml
-	!include member_development.puml
 
 }
 
