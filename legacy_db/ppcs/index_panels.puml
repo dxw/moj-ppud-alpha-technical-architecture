@@ -1,6 +1,5 @@
 @startuml
-left to right direction
-!include ../style_minimal.puml
+!include ../style.puml
 
 namespace ppcs $MajorPackage {
 
