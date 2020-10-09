@@ -1,4 +1,4 @@
-OUTDIR = $(shell pwd)/out
+OUTDIR = $(shell pwd)/png
 SRCS = $(shell find . -type f -name '*.puml')
 PNGS = $(addprefix $(OUTDIR)/, $(SRCS:puml=png))
 PLANTUML = plantuml
