@@ -6,13 +6,18 @@ This repository contains the source code for diagrams generated for the Ministry
 
 * [PlantUML](https://plantuml.com/): install (on macOS) from [homebrew](https://brew.sh) with `brew install plantuml`.
 
-## Usage
-
-To build all diagrams, run `make`. PNG versions of all diagrams will be created in the `png` directory.
-
 ## Repository layout
 
-The `png` directory contains rendered views of all the PlantUML diagrams discussed below.
+  * `src` contains the source PlantML code for all diagrams discussed below.
+  * `png` directory contains rendered diagrams in PNG format.
+
+## Usage
+
+To render all diagrams, run `make`. PNG versions of all diagrams will be created in the `png` directory.
+
+`make clean` will remove all rendered images, and `make rebuild` will automatically remove and re-render everything.
+
+## Diagrams
 
 ### Legacy database diagrams
 

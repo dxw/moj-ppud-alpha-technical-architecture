@@ -1,5 +1,6 @@
+SRCDIR = src
 OUTDIR = $(shell pwd)/png
-SRCS = $(shell find . -type f -name '*.puml')
+SRCS = $(shell find $(SRCDIR) -type f -name '*.puml' | sed s,$(SRCDIR)/,,)
 PNGS = $(addprefix $(OUTDIR)/, $(SRCS:puml=png))
 PLANTUML = plantuml
 PUML_VARS = PLANTUML_LIMIT_SIZE=8192
@@ -12,5 +13,7 @@ all: $(PNGS)
 clean:
 	rm -rf $(OUTDIR)
 
-$(OUTDIR)/%.png : %.puml
+$(OUTDIR)/%.png : $(SRCDIR)/%.puml
 	$(PUML_VARS) $(PLANTUML) $^ -o $(dir $@)
+
+rebuild: clean all
