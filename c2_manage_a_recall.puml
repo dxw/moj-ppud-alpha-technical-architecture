@@ -1,4 +1,4 @@
-@startuml Manage a Review
+@startuml
 !includeurl https://raw.githubusercontent.com/scott-wong/C4-PlantUML/master/C4_Container.puml
 
 LAYOUT_WITH_LEGEND()
